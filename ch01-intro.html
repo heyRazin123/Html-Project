@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 1 — Introduction to Programming & Java</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--surface3:#21262d;--border:#30363d;--accent:#f0a500;--accent2:#e05c2a;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#484f58;--red:#ff6b6b;--green:#3fb950;--blue:#58a6ff;--purple:#bc8cff;--yellow:#f0a500;--orange:#e05c2a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.8}
+/* HEADER */
+header{position:sticky;top:0;z-index:100;height:56px;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;backdrop-filter:blur(12px)}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+.logo a{color:var(--accent);text-decoration:none;font-weight:700}
+.logo a:hover{text-decoration:underline}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 10px;border-radius:12px;background:rgba(240,165,0,.1);color:var(--accent);border:1px solid rgba(240,165,0,.3)}
+/* PROGRESS */
+.top-progress{height:3px;background:var(--surface2);position:sticky;top:56px;z-index:99}
+.top-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .1s}
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 56px)}
+/* TOC */
+.toc{position:sticky;top:59px;height:calc(100vh - 59px);overflow-y:auto;border-right:1px solid var(--border);padding:24px 0;background:var(--surface)}
+.toc::-webkit-scrollbar{width:3px}.toc::-webkit-scrollbar-thumb{background:var(--border)}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);padding:0 18px 10px;font-weight:700}
+.toc-item{display:block;padding:6px 18px;font-size:.82rem;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.4}
+.toc-item:hover{color:var(--text);border-left-color:var(--border);background:var(--surface2)}
+.toc-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(240,165,0,.06)}
+.toc-item.sub{padding-left:30px;font-size:.78rem}
+.toc-div{height:1px;background:var(--border);margin:10px 18px}
+/* MAIN */
+.main{padding:52px 60px 80px;max-width:860px}
+/* HERO */
+.ch-hero{margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.ch-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ch-tag::before{content:'';width:28px;height:2px;background:var(--accent)}
+.ch-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;line-height:1.08;margin-bottom:14px;letter-spacing:-1.5px}
+.ch-title em{color:var(--accent);font-style:italic}
+.ch-sub{font-size:1.05rem;color:var(--text-dim);max-width:580px;font-weight:300;line-height:1.7;margin-bottom:28px}
+.ch-meta{display:flex;gap:22px;flex-wrap:wrap}
+.meta{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted)}
+.mdot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+/* SECTION */
+.sec-hdr{display:flex;align-items:center;gap:14px;margin:48px 0 20px}
+.sicon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.ic{background:rgba(88,166,255,.12);color:var(--blue)}
+.ig{background:rgba(63,185,80,.12);color:var(--green)}
+.ip{background:rgba(188,140,255,.12);color:var(--purple)}
+.iy{background:rgba(240,165,0,.12);color:var(--yellow)}
+.ir{background:rgba(255,107,107,.12);color:var(--red)}
+.io{background:rgba(224,92,42,.12);color:var(--orange)}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700}
+.sec-title small{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:2px}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:28px 0 10px;padding-left:12px;border-left:3px solid var(--accent2)}
+h4{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin:18px 0 7px}
+p{margin-bottom:15px}p:last-child{margin-bottom:0}
+strong{color:var(--accent);font-weight:600}em{color:var(--blue);font-style:italic}
+/* CODE */
+.cb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin:20px 0;overflow:hidden}
+.cbh{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);background:var(--surface3)}
+.cbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.dots{display:flex;gap:5px}.dots span{width:10px;height:10px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
+pre{padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.86rem;line-height:1.7}
+pre::-webkit-scrollbar{height:4px}pre::-webkit-scrollbar-thumb{background:var(--border)}
+.kw{color:#ff79c6;font-weight:600}.str{color:#f1fa8c}.num{color:#bd93f9}.cls{color:#8be9fd;font-weight:600}.fn{color:#50fa7b}.cmt{color:#6272a4;font-style:italic}
+code{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--surface3);padding:2px 7px;border-radius:4px;color:var(--purple);border:1px solid var(--border)}
+/* BOXES */
+.box{border-radius:10px;padding:20px 24px;margin:20px 0;border-left:4px solid;position:relative;overflow:hidden}
+.box::before{content:attr(data-icon);position:absolute;right:16px;top:12px;font-size:1.7rem;opacity:.1}
+.bb{background:rgba(88,166,255,.06);border-color:var(--blue)}
+.bg{background:rgba(63,185,80,.06);border-color:var(--green)}
+.by{background:rgba(240,165,0,.06);border-color:var(--yellow)}
+.br{background:rgba(255,107,107,.06);border-color:var(--red)}
+.bp{background:rgba(188,140,255,.06);border-color:var(--purple)}
+.bo{background:rgba(224,92,42,.06);border-color:var(--orange)}
+.btitle{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-weight:700}
+.bb .btitle{color:var(--blue)}.bg .btitle{color:var(--green)}.by .btitle{color:var(--yellow)}.br .btitle{color:var(--red)}.bp .btitle{color:var(--purple)}.bo .btitle{color:var(--orange)}
+/* DIAGRAM */
+.diag{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.65;overflow-x:auto;white-space:pre;color:var(--text)}
+/* TABLE */
+.tw{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead tr{background:var(--surface3)}
+th{padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);border-bottom:2px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+td code{font-family:'JetBrains Mono',monospace;font-size:.8rem;background:var(--surface3);padding:2px 5px;border-radius:4px;color:var(--purple)}
+/* LISTS */
+ul,ol{margin:10px 0 16px;padding-left:0;list-style:none}
+ul li,ol li{padding:5px 0 5px 24px;position:relative}
+ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.8rem}
+ol{counter-reset:cnt}ol li{counter-increment:cnt}
+ol li::before{content:counter(cnt)'.';position:absolute;left:0;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:700}
+/* CMP */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.cside{background:var(--surface2);padding:20px 22px}
+.clbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:700}
+.cr{color:var(--red)}.cg{color:var(--green)}
+/* STEP FLOW */
+.sf{margin:20px 0}
+.si{display:flex;gap:14px;margin-bottom:4px;position:relative}
+.si::before{content:'';position:absolute;left:14px;top:32px;width:2px;height:calc(100% + 4px);background:var(--border)}
+.si:last-child::before{display:none}
+.sdot{width:30px;height:30px;border-radius:50%;flex-shrink:0;background:var(--surface3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:700;margin-top:3px}
+.sbody{flex:1;padding-bottom:18px}
+.stitle{font-weight:600;margin-bottom:3px}
+.sdesc{font-size:.88rem;color:var(--text-dim);line-height:1.6}
+/* DRY RUN */
+.drb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.drh{background:var(--surface3);padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--green);text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid var(--border)}
+.drb table{font-size:.82rem}.drb th{color:var(--green);font-size:.66rem}.drb td{font-family:'JetBrains Mono',monospace}
+.drb tr.hl td{background:rgba(63,185,80,.06);color:var(--green)}
+/* MEMORY */
+.mem{background:linear-gradient(135deg,rgba(188,140,255,.08),rgba(240,165,0,.05));border:1px solid rgba(188,140,255,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative;overflow:hidden}
+.mem::after{content:'🧠';position:absolute;right:18px;top:14px;font-size:1.8rem;opacity:.25}
+.mem-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin-bottom:8px}
+/* TRAP */
+.trap{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative}
+.trap::after{content:'⚠️';position:absolute;right:18px;top:14px;font-size:1.4rem;opacity:.4}
+.trap-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+/* QUIZ */
+.qi{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:14px 0;transition:border-color .2s}
+.qi:hover{border-color:rgba(240,165,0,.3)}
+.qq{font-weight:600;margin-bottom:12px;font-size:.93rem}
+.qnum{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);margin-right:7px}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qo{padding:8px 14px;border-radius:7px;border:1px solid var(--border);cursor:pointer;font-size:.88rem;transition:all .15s;display:flex;align-items:center;gap:10px}
+.qo:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.qo.correct{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);pointer-events:none}
+.qo.wrong{border-color:var(--red);background:rgba(255,107,107,.1);color:var(--red);pointer-events:none}
+.ol{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:18px;font-weight:700}
+.qa{margin-top:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:7px;font-size:.84rem;display:none;color:var(--green);line-height:1.6}
+.qa.show{display:block}
+.rbtn{margin-top:9px;padding:6px 14px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s}
+.rbtn:hover{border-color:var(--accent);color:var(--accent)}
+/* PRACTICE */
+.pgrid{display:grid;gap:10px}
+.pc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;transition:border-color .15s}
+.pc:hover{border-color:rgba(240,165,0,.25)}
+.pnum{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);min-width:28px;padding-top:2px}
+.pt{font-weight:600;margin-bottom:3px;font-size:.9rem}
+.pd{font-size:.84rem;color:var(--text-dim);margin-bottom:5px;line-height:1.55}
+.ptags{display:flex;gap:5px;flex-wrap:wrap}
+.ptag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;border:1px solid}
+.pe{color:var(--green);border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.07)}
+.pm{color:var(--yellow);border-color:rgba(240,165,0,.4);background:rgba(240,165,0,.07)}
+.ph{color:var(--red);border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.07)}
+.pd2{color:var(--purple);border-color:rgba(188,140,255,.4);background:rgba(188,140,255,.07)}
+.po{color:var(--blue);border-color:rgba(88,166,255,.4);background:rgba(88,166,255,.07)}
+/* REVISION */
+.rev{background:linear-gradient(135deg,rgba(240,165,0,.07),rgba(224,92,42,.05));border:1px solid rgba(240,165,0,.25);border-radius:10px;padding:24px 28px;margin:32px 0}
+.rev-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.rev-title::before{content:'★';font-size:.85rem}
+.rvpt{display:flex;gap:10px;align-items:baseline;font-size:.88rem;margin-bottom:6px;line-height:1.65}
+.rvpt::before{content:'→';color:var(--accent);flex-shrink:0;font-family:'JetBrains Mono',monospace}
+/* CHALLENGE */
+.challenge{background:linear-gradient(135deg,rgba(224,92,42,.1),rgba(255,107,107,.07));border:1px solid rgba(224,92,42,.35);border-radius:12px;padding:28px 32px;margin:32px 0}
+.ch-ctitle{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--orange);margin-bottom:8px}
+.ch-ctitle::before{content:'🔥 '}
+/* EXAM CARD */
+.exam-card{background:var(--surface2);border:1px solid rgba(224,92,42,.3);border-radius:10px;padding:20px 24px;margin:14px 0}
+.exam-tag{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--orange);margin-bottom:8px}
+/* CHAPTER NAV */
+.chnav{display:flex;justify-content:space-between;gap:20px;margin-top:60px;padding-top:32px;border-top:1px solid var(--border)}
+.navbtn{background:var(--surface2);border:1px solid var(--border);padding:14px 22px;border-radius:10px;cursor:pointer;transition:all .2s;flex:1;max-width:250px;text-decoration:none;color:inherit;display:block}
+.navbtn:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.navbtn.nxt{text-align:right}
+.navlbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:3px}
+.navtitle{font-weight:600;font-size:.9rem}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.toc{display:none}.main{padding:32px 24px 60px}.ch-title{font-size:2.2rem}.cmp{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">☕ Java Mastery</a> / Chapter 01 — Intro to Programming</div>
+  <span class="ch-badge">Chapter 01 of 21</span>
+</header>
+<div class="top-progress"><div class="top-progress-fill" id="prog"></div></div>
+
+<div class="layout">
+<!-- TOC -->
+<nav class="toc">
+  <div class="toc-title">On This Page</div>
+  <a class="toc-item active" href="#what-prog">What is Programming?</a>
+  <a class="toc-item sub" href="#why-programming">Why We Need It</a>
+  <a class="toc-item sub" href="#prog-langs">Programming Languages</a>
+  <a class="toc-item" href="#how-programs-work">How Programs Work</a>
+  <a class="toc-item" href="#compiler-interpreter">Compiler vs Interpreter</a>
+  <a class="toc-item sub" href="#hybrid">Java's Hybrid Approach</a>
+  <a class="toc-item" href="#jvm-jdk-jre">JVM · JDK · JRE</a>
+  <a class="toc-item sub" href="#jvm-detail">JVM Explained</a>
+  <a class="toc-item" href="#platform-independent">Platform Independence</a>
+  <a class="toc-item" href="#first-program">Hello World Program</a>
+  <a class="toc-item sub" href="#main-method">main() Breakdown</a>
+  <a class="toc-item sub" href="#run-program">How to Run</a>
+  <div class="toc-div"></div>
+  <a class="toc-item" href="#common-mistakes">Common Mistakes</a>
+  <a class="toc-item" href="#dry-run">Dry Run</a>
+  <a class="toc-item" href="#memory-tips">Memory Tips</a>
+  <a class="toc-item" href="#exam-prep">Exam Preparation</a>
+  <a class="toc-item sub" href="#theory-qs">Theory Questions</a>
+  <a class="toc-item sub" href="#mcqs">MCQs</a>
+  <a class="toc-item sub" href="#output-predict">Output Prediction</a>
+  <a class="toc-item sub" href="#debug-ex">Debugging</a>
+  <a class="toc-item" href="#revision">Quick Revision</a>
+  <a class="toc-item" href="#practice">Practice Problems</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="ch-hero">
+    <div class="ch-tag">Chapter 01 — Phase 1: Fundamentals</div>
+    <div class="ch-title">Introduction to<br><em>Programming & Java</em></div>
+    <div class="ch-sub">Before writing a single line of code, understand what programming really is — how a computer thinks, what Java is made of, and why learning it will change how you solve problems forever.</div>
+    <div class="ch-meta">
+      <div class="meta"><div class="mdot"></div>~45 min read</div>
+      <div class="meta"><div class="mdot"></div>5 Core Topics</div>
+      <div class="meta"><div class="mdot"></div>5 MCQs</div>
+      <div class="meta"><div class="mdot"></div>25 Practice Problems</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 1.1 WHAT IS PROGRAMMING ═══════════ -->
+  <div class="sec-hdr" id="what-prog">
+    <div class="sicon ic">💡</div>
+    <div class="sec-title"><small>1.1 — Concept</small>What is Programming?</div>
+  </div>
+  <p>Imagine you want your younger sibling to make tea. They have never made tea before, so you write them a note: <strong>"Boil water → Add tea bag → Pour into cup → Add sugar → Stir."</strong> You just wrote a program — a precise, step-by-step set of instructions for someone to follow.</p>
+  <p>Programming is exactly that, but for a computer. The only critical difference: your sibling can think, guess, and adapt. A computer is completely literal. It does <strong>exactly</strong> what you write — nothing more, nothing less. This is why programming must be <em>precise</em>.</p>
+
+  <div class="box by" data-icon="📖">
+    <div class="btitle">Technical Definition</div>
+    <p>A <strong>program</strong> is an ordered set of instructions written in a programming language, designed to perform a specific task or solve a problem. The act of writing these instructions is called <strong>programming</strong> (also called coding or software development).</p>
+  </div>
+
+  <h3 id="why-programming">Why Do We Need Programming?</h3>
+  <p>Computers are incredibly fast and powerful machines, but they are <strong>completely brainless</strong> — they cannot think independently. Every app on your phone, every website you visit, every ATM transaction — all of it exists because a programmer told the computer exactly what to do, step by step.</p>
+  <ul>
+    <li>Without programming, your phone is just an expensive brick</li>
+    <li>Without programming, hospitals cannot manage patient records</li>
+    <li>Without programming, banks cannot process transactions</li>
+    <li>Without programming, no games, no internet services, nothing digital works</li>
+  </ul>
+
+  <h3 id="prog-langs">What is a Programming Language?</h3>
+  <p>Computers understand only one language: <strong>machine language</strong> — sequences of 0s and 1s (binary). But humans find it nearly impossible to write millions of zeros and ones. So, programming languages were created as human-readable layers that get automatically translated to machine language.</p>
+  <div class="diag">  YOU TYPE:      System.out.println("Hello, World!");
+                          ↓
+  HIGH-LEVEL:    Java, Python, C++  (readable by humans)
+                          ↓  Compiler / Interpreter
+  ASSEMBLY:      MOV AX, 01h       (closer to hardware)
+                          ↓  Assembler
+  MACHINE CODE:  01001000 01100101  (what CPU actually runs)</div>
+
+  <!-- ═══════════ 1.2 HOW PROGRAMS WORK ═══════════ -->
+  <div class="sec-hdr" id="how-programs-work">
+    <div class="sicon ig">⚙️</div>
+    <div class="sec-title"><small>1.2 — Execution Flow</small>How Programs Work</div>
+  </div>
+  <p>Before writing Java code, understand the journey from your fingers to the screen. This is called the <strong>program execution model</strong>.</p>
+  <div class="sf">
+    <div class="si"><div class="sdot">1</div><div class="sbody"><div class="stitle">Write Source Code</div><div class="sdesc">You type instructions in a high-level language like Java. The file is human-readable and saved with a <code>.java</code> extension. Example: <code>HelloWorld.java</code></div></div></div>
+    <div class="si"><div class="sdot">2</div><div class="sbody"><div class="stitle">Compilation</div><div class="sdesc">The <strong>Java compiler</strong> (<code>javac</code>) reads your source code and translates it into <strong>bytecode</strong> — an intermediate, platform-neutral language. This produces a <code>.class</code> file.</div></div></div>
+    <div class="si"><div class="sdot">3</div><div class="sbody"><div class="stitle">JVM Loads Bytecode</div><div class="sdesc">The <strong>Java Virtual Machine (JVM)</strong> on your computer reads the <code>.class</code> bytecode and translates it into the actual machine language for your specific CPU and OS.</div></div></div>
+    <div class="si"><div class="sdot">4</div><div class="sbody"><div class="stitle">CPU Executes</div><div class="sdesc">The CPU runs the machine code. Your output appears on screen. The program has completed its run.</div></div></div>
+  </div>
+  <div class="diag">  HelloWorld.java  →  javac  →  HelloWorld.class  →  JVM  →  Output
+   (Source Code)    (Compiler)   (Bytecode)        (Runtime)  (Screen)</div>
+
+  <!-- ═══════════ 1.3 COMPILER VS INTERPRETER ═══════════ -->
+  <div class="sec-hdr" id="compiler-interpreter">
+    <div class="sicon ip">🔄</div>
+    <div class="sec-title"><small>1.3 — Core Concept</small>Compiler vs Interpreter</div>
+  </div>
+  <p>Both are programs that translate code to machine language — but they work in completely different ways. This is one of the <strong>most frequently asked concepts in university exams</strong>.</p>
+
+  <div class="box by" data-icon="📚">
+    <div class="btitle">The Best Analogy — French Book</div>
+    <p>You have a French book to read but don't understand French.</p>
+    <p><strong>Compiler</strong> = A translator who translates the <em>entire book first</em>, gives you the complete English copy, then you read it at full speed. Slow start, fast to read afterward.</p>
+    <p><strong>Interpreter</strong> = A translator who sits next to you and translates <em>sentence by sentence</em> as you read. Starts immediately, but always slower because they translate in real time.</p>
+  </div>
+
+  <div class="cmp">
+    <div class="cside">
+      <div class="clbl cr">Compiler</div>
+      <ul>
+        <li>Translates <strong>entire program at once</strong></li>
+        <li>Creates a separate output file</li>
+        <li>All errors reported together</li>
+        <li>Faster execution (translation already done)</li>
+        <li>Examples: javac (Java), gcc (C/C++)</li>
+        <li>Must recompile after code changes</li>
+      </ul>
+    </div>
+    <div class="cside">
+      <div class="clbl cg">Interpreter</div>
+      <ul>
+        <li>Translates and runs <strong>line by line</strong></li>
+        <li>No separate output file created</li>
+        <li>Stops at first error found</li>
+        <li>Slower execution (translating while running)</li>
+        <li>Examples: Python, Ruby, PHP</li>
+        <li>No recompile needed — just run again</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 id="hybrid">Java's Special Hybrid Approach</h3>
+  <div class="box bp" data-icon="💎">
+    <div class="btitle">Java = Compiled + Interpreted</div>
+    <p><strong>Step 1:</strong> <code>javac</code> compiles <code>.java</code> → <code>.class</code> (bytecode) — <em>Compilation phase</em></p>
+    <p><strong>Step 2:</strong> JVM interprets/executes the bytecode at runtime — <em>Interpretation phase</em></p>
+    <p><strong>Step 3:</strong> Modern JVMs use <strong>JIT (Just-In-Time)</strong> compilation to convert hot bytecode directly to native machine code for near-native speed.</p>
+    <p>This hybrid gives Java the <em>portability</em> of interpreters and the <em>speed</em> of compiled languages.</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Feature</th><th>Compiler</th><th>Interpreter</th><th>Java (Hybrid)</th></tr></thead>
+      <tbody>
+        <tr><td>Translation</td><td>All at once</td><td>Line by line</td><td>Compiled to bytecode → JVM runs it</td></tr>
+        <tr><td>Speed</td><td>⚡ Fast execution</td><td>🐢 Slower</td><td>🚀 Fast (with JIT)</td></tr>
+        <tr><td>Error reporting</td><td>All at compile time</td><td>Stops at first error</td><td>All at compile time</td></tr>
+        <tr><td>Output file</td><td>Yes (.exe/.out)</td><td>No</td><td>Yes (.class bytecode)</td></tr>
+        <tr><td>Portability</td><td>Platform-specific</td><td>Needs interpreter per OS</td><td>Platform-independent (via JVM)</td></tr>
+        <tr><td>Examples</td><td>C, C++, Go</td><td>Python, Ruby</td><td>Java, Kotlin, Scala</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════ 1.4 JVM JDK JRE ═══════════ -->
+  <div class="sec-hdr" id="jvm-jdk-jre">
+    <div class="sicon iy">🏗️</div>
+    <div class="sec-title"><small>1.4 — Java Architecture</small>JVM, JDK, and JRE</div>
+  </div>
+  <p>You'll hear these three terms constantly. Most beginners confuse them. Let's fix that once and for all.</p>
+
+  <div class="box by" data-icon="🍕">
+    <div class="btitle">Pizza Restaurant Analogy</div>
+    <p><strong>JVM (Java Virtual Machine)</strong> = The <em>oven</em> — the machine that actually bakes (runs) the pizza (program).</p>
+    <p><strong>JRE (Java Runtime Environment)</strong> = The <em>restaurant</em> — everything needed to eat pizza (run Java programs). Includes the oven, tables, and staff.</p>
+    <p><strong>JDK (Java Development Kit)</strong> = The <em>restaurant + cooking school</em> — everything in JRE, PLUS all the tools to create new pizzas (write and compile Java programs). If you're a developer (chef), you need JDK.</p>
+  </div>
+
+  <div class="diag">  ╔══════════════════════════════════════════════════════╗
+  ║              JDK (Java Development Kit)               ║
+  ║  ┌──────────────────────────────────────────────┐    ║
+  ║  │          JRE (Java Runtime Environment)       │    ║
+  ║  │  ┌────────────────────────────────────────┐  │    ║
+  ║  │  │       JVM (Java Virtual Machine)        │  │    ║
+  ║  │  │  [Class Loader] [Execution Engine/JIT]  │  │    ║
+  ║  │  │  [Garbage Collector] [Memory Areas]     │  │    ║
+  ║  │  └────────────────────────────────────────┘  │    ║
+  ║  │  + Java Standard Libraries (java.lang, etc.) │    ║
+  ║  └──────────────────────────────────────────────┘    ║
+  ║  + javac (compiler) + javadoc + jdb + jar + tools    ║
+  ╚══════════════════════════════════════════════════════╝
+
+  You are a developer → Install JDK
+  End user (just running apps) → Needs only JRE
+  Note: JDK 11+ bundles JRE — no separate JRE download needed</div>
+
+  <h3 id="jvm-detail">JVM — The Heart of Java</h3>
+  <p>The Java Virtual Machine is a program that runs on your computer and acts as a <strong>virtual CPU</strong>. It reads bytecode and converts it to instructions your real CPU understands. The key insight: <strong>different operating systems have different JVMs</strong>, but they all understand the same bytecode.</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>JDK Tool</th><th>Command</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><strong>javac</strong></td><td><code>javac HelloWorld.java</code></td><td>Compiler — converts .java → .class</td></tr>
+        <tr><td><strong>java</strong></td><td><code>java HelloWorld</code></td><td>Launcher — runs .class file via JVM</td></tr>
+        <tr><td><strong>javadoc</strong></td><td><code>javadoc HelloWorld.java</code></td><td>Generates HTML documentation</td></tr>
+        <tr><td><strong>jar</strong></td><td><code>jar -cf app.jar *.class</code></td><td>Packages .class files into archive</td></tr>
+        <tr><td><strong>jdb</strong></td><td><code>jdb HelloWorld</code></td><td>Debugger — find bugs in programs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════ 1.5 PLATFORM INDEPENDENCE ═══════════ -->
+  <div class="sec-hdr" id="platform-independent">
+    <div class="sicon ic">🌐</div>
+    <div class="sec-title"><small>1.5 — Java's Superpower</small>"Write Once, Run Anywhere"</div>
+  </div>
+  <p>Java's most famous feature — officially called <strong>WORA (Write Once, Run Anywhere)</strong>. Here's why it exists and exactly how it works.</p>
+
+  <h3>The Problem Before Java</h3>
+  <p>C++ compiles directly to machine code. Windows machine code ≠ Mac machine code ≠ Linux machine code. If you wrote a C++ program on Windows and wanted it to run on Mac, you had to <strong>recompile separately for every platform</strong>. For large projects, this was a nightmare.</p>
+
+  <div class="diag">  C++ PROBLEM:
+  source.cpp → Compile for Windows → .exe (Windows only)
+             → Compile for Mac    → binary (Mac only)
+             → Compile for Linux  → binary (Linux only)
+  ✗ Must recompile for every platform
+
+
+  JAVA SOLUTION:
+  HelloWorld.java → javac → HelloWorld.class (bytecode)
+                                    │
+                   ┌────────────────┼──────────────────┐
+                   ▼                ▼                   ▼
+             JVM (Windows)    JVM (Mac)          JVM (Linux)
+              runs fine ✓     runs fine ✓         runs fine ✓
+
+  ✓ Compile ONCE. Run on ANY platform with a JVM installed.
+  Bytecode is platform-NEUTRAL. JVM is platform-SPECIFIC.</div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ Examiner Trap — "Is Java 100% Platform Independent?"</div>
+    <p>Many students say "Yes!" — but the precise answer is: <strong>Java programs (bytecode) are platform-independent</strong>. The <strong>JVM itself is platform-dependent</strong> (different JVM for Windows, Mac, Linux). The JVM is the bridge that makes Java programs <em>appear</em> platform-independent.</p>
+    <p style="color:var(--green);margin-top:8px"><strong>✓ Model Answer:</strong> "Java source code and bytecode are platform-independent. The JVM is platform-specific, but since JVMs are provided for all major operating systems, Java programs can run anywhere without modification."</p>
+  </div>
+
+  <!-- ═══════════ 1.6 HELLO WORLD ═══════════ -->
+  <div class="sec-hdr" id="first-program">
+    <div class="sicon io">☕</div>
+    <div class="sec-title"><small>1.6 — First Code</small>The Hello World Program — Every Character Explained</div>
+  </div>
+  <p>This is every Java developer's first program. Don't just type it — understand every single character before moving on.</p>
+
+  <div class="cb">
+    <div class="cbh"><div class="cbl">HelloWorld.java — Complete First Program</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// File: HelloWorld.java</span>
+<span class="cmt">// This is your very first Java program</span>
+
+<span class="kw">public</span> <span class="kw">class</span> <span class="cls">HelloWorld</span> {
+
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello, World!"</span>);
+
+    }
+
+}</pre>
+  </div>
+
+  <div class="box bg" data-icon="✅">
+    <div class="btitle">Output</div>
+    <p style="font-family:'JetBrains Mono',monospace;color:var(--green);font-size:.9rem">Hello, World!</p>
+  </div>
+
+  <h3 id="main-method">Line-by-Line Breakdown</h3>
+
+  <div class="box bb" data-icon="①">
+    <div class="btitle">public class HelloWorld</div>
+    <ul>
+      <li><code>public</code> — Access modifier. This class is visible to everyone, including the JVM.</li>
+      <li><code>class</code> — Keyword declaring this is a class. Every Java program needs at least one class. A class is a container for your code.</li>
+      <li><code>HelloWorld</code> — The class name. <strong>Must EXACTLY match the filename</strong> (HelloWorld.java). Java is case-sensitive — <code>helloworld</code> ≠ <code>HelloWorld</code>.</li>
+      <li><code>{ }</code> — Curly braces. Everything between them is the class body.</li>
+    </ul>
+  </div>
+
+  <div class="box bp" data-icon="②">
+    <div class="btitle">public static void main(String[] args)</div>
+    <p>This is the <strong>entry point</strong> of every Java program. The JVM searches for this exact signature when it starts running your program. If it's not there, the program won't run.</p>
+    <ul>
+      <li><code>public</code> — The JVM (which is outside your class) needs to call this. Must be public.</li>
+      <li><code>static</code> — The JVM calls main without creating an object of your class first. static allows this.</li>
+      <li><code>void</code> — This method returns nothing to the caller.</li>
+      <li><code>main</code> — The exact name the JVM looks for. Cannot be changed or misspelled.</li>
+      <li><code>String[] args</code> — An array that holds command-line arguments. Can be empty — you don't have to use it.</li>
+    </ul>
+  </div>
+
+  <div class="box by" data-icon="③">
+    <div class="btitle">System.out.println("Hello, World!");</div>
+    <ul>
+      <li><code>System</code> — A built-in Java class representing the computer system.</li>
+      <li><code>out</code> — A static field inside System representing the standard output (your screen).</li>
+      <li><code>println</code> — A method that prints text AND moves to a new line (print + line).</li>
+      <li><code>("Hello, World!")</code> — The String argument — text in double quotes.</li>
+      <li><code>;</code> — <strong>Semicolon terminates every statement.</strong> Missing this is the #1 beginner mistake.</li>
+    </ul>
+  </div>
+
+  <div class="diag">  ANATOMY OF System.out.println("Hello, World!");
+
+  System   .   out   .   println   (  "Hello, World!"  )  ;
+  ──────      ─────     ────────       ──────────────      ─
+  Class    field     method            String argument     Statement
+  name     access    call              (what to print)     terminator
+
+  println()  → prints text + moves cursor to NEXT line
+  print()    → prints text, cursor STAYS on same line
+  printf()   → formatted print, like C's printf</div>
+
+  <h3 id="run-program">How to Compile and Run</h3>
+  <div class="sf">
+    <div class="si"><div class="sdot">1</div><div class="sbody"><div class="stitle">Save the file</div><div class="sdesc">Save as <code>HelloWorld.java</code>. Filename must match class name exactly. Check capitalization carefully.</div></div></div>
+    <div class="si"><div class="sdot">2</div><div class="sbody"><div class="stitle">Open Terminal</div><div class="sdesc">On Windows: Command Prompt or PowerShell. On Mac/Linux: Terminal. Navigate to your file's folder with <code>cd path/to/folder</code></div></div></div>
+    <div class="si"><div class="sdot">3</div><div class="sbody"><div class="stitle">Compile</div><div class="sdesc">Type: <code>javac HelloWorld.java</code> and press Enter. If no errors, a <code>HelloWorld.class</code> file appears in the folder.</div></div></div>
+    <div class="si"><div class="sdot">4</div><div class="sbody"><div class="stitle">Run</div><div class="sdesc">Type: <code>java HelloWorld</code> (no .class extension!) and press Enter. You should see <code>Hello, World!</code> printed.</div></div></div>
+  </div>
+
+  <!-- ═══════════ COMMON MISTAKES ═══════════ -->
+  <div class="sec-hdr" id="common-mistakes">
+    <div class="sicon ir">🚫</div>
+    <div class="sec-title"><small>1.7 — Watch Out</small>Most Common Beginner Mistakes</div>
+  </div>
+  <div class="trap">
+    <div class="trap-title">Top 7 Mistakes in Chapter 1</div>
+    <ol>
+      <li><strong>Filename doesn't match class name</strong> — Saving as <code>hello.java</code> but writing <code>public class HelloWorld</code>. Error: "class HelloWorld is public, should be declared in a file named HelloWorld.java"</li>
+      <li><strong>Missing semicolon</strong> — <code>System.out.println("Hi")</code> without <code>;</code>. Most common compile error.</li>
+      <li><strong>Wrong capitalisation</strong> — <code>system.out.println</code> won't work. Java is case-sensitive. Must be <code>System.out.println</code>.</li>
+      <li><strong>Running with .class extension</strong> — Typing <code>java HelloWorld.class</code> instead of <code>java HelloWorld</code>.</li>
+      <li><strong>Misspelling main</strong> — Writing <code>Main</code> or <code>MAIN</code> instead of <code>main</code>. JVM won't find the entry point.</li>
+      <li><strong>Missing curly braces</strong> — Every <code>{</code> needs a matching <code>}</code>. Count your braces.</li>
+      <li><strong>Code outside a class</strong> — In Java, ALL code must live inside a class. Nothing can be written at the "top level" outside a class.</li>
+    </ol>
+  </div>
+
+  <!-- ═══════════ DRY RUN ═══════════ -->
+  <div class="sec-hdr" id="dry-run">
+    <div class="sicon ig">🔍</div>
+    <div class="sec-title"><small>1.8 — Trace It</small>Dry Run — What Exactly Happens</div>
+  </div>
+  <div class="drb">
+    <div class="drh">📋 Complete Execution Trace — HelloWorld</div>
+    <table>
+      <thead><tr><th>Step</th><th>Action</th><th>By</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>User types <code>javac HelloWorld.java</code></td><td>Terminal</td><td>Compiler starts reading source file</td></tr>
+        <tr><td>2</td><td>Compiler checks for syntax errors</td><td>javac</td><td>No errors found</td></tr>
+        <tr><td>3</td><td>Compiler translates source to bytecode</td><td>javac</td><td><code>HelloWorld.class</code> created on disk</td></tr>
+        <tr><td>4</td><td>User types <code>java HelloWorld</code></td><td>Terminal</td><td>JVM starts up</td></tr>
+        <tr><td>5</td><td>JVM loads <code>HelloWorld.class</code></td><td>JVM</td><td>Bytecode loaded into memory</td></tr>
+        <tr><td>6</td><td>JVM searches for <code>public static void main(String[] args)</code></td><td>JVM</td><td>Found in HelloWorld class</td></tr>
+        <tr class="hl"><td>7</td><td>JVM executes <code>System.out.println("Hello, World!")</code></td><td>JVM</td><td><strong>Hello, World!</strong> printed to screen</td></tr>
+        <tr><td>8</td><td>main() body ends, no more statements</td><td>JVM</td><td>Program terminates normally</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════ MEMORY TIPS ═══════════ -->
+  <div class="sec-hdr" id="memory-tips">
+    <div class="sicon ip">🧠</div>
+    <div class="sec-title"><small>1.9 — Remember It</small>Memory Tips & Tricks</div>
+  </div>
+  <div class="mem">
+    <div class="mem-title">Memory Tricks — Chapter 1</div>
+    <ul>
+      <li><strong>JDK / JRE / JVM:</strong> "D is for Developers, R is for Running, V is the Virtual machine inside" → JDK (develop), JRE (run), JVM (virtual engine)</li>
+      <li><strong>WORA:</strong> Think of bytecode as a universal power adapter — same plug (bytecode) works in any country's socket (OS via JVM).</li>
+      <li><strong>public static void main:</strong> "Please Stop Visiting My house" → <strong>P</strong>ublic <strong>S</strong>tatic <strong>V</strong>oid <strong>M</strong>ain</li>
+      <li><strong>Compiler vs Interpreter:</strong> Compiler = full book translator (translate all, then read). Interpreter = live translator (sentence by sentence, right now).</li>
+      <li><strong>Semicolons:</strong> Every Java statement ends with <code>;</code> — treat it like the full stop (period) at the end of an English sentence.</li>
+      <li><strong>Java file naming:</strong> Class name = filename. Always. PascalCase. No exceptions.</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════ EXAM PREP ═══════════ -->
+  <div class="sec-hdr" id="exam-prep">
+    <div class="sicon io">📝</div>
+    <div class="sec-title"><small>1.10 — Exam</small>University Exam Preparation</div>
+  </div>
+
+  <h3 id="theory-qs">Theory Questions with Model Answers</h3>
+
+  <div class="exam-card">
+    <div class="exam-tag">2 Marks — Short Answer</div>
+    <p><strong>Q: What is a program? Why is it needed?</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> A program is an ordered set of instructions written in a programming language that directs a computer to perform a specific task. Programs are needed because computers have no intelligence of their own — they require precise, step-by-step instructions for every operation. Without programs, a computer is an inert machine incapable of any useful function.</p>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">4 Marks — Compare</div>
+    <p><strong>Q: Distinguish between a compiler and an interpreter with examples.</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> A <strong>compiler</strong> translates the entire source code into machine code or an intermediate form at once, before execution begins. It detects all syntax errors at compile time and produces a separate executable file. Examples: javac (Java), gcc (C/C++). An <strong>interpreter</strong> translates and executes the source code line-by-line at runtime. It stops at the first error encountered and produces no separate file. Examples: Python interpreter, Ruby. Java uniquely combines both: javac compiles source to bytecode (.class), then the JVM interprets and executes that bytecode at runtime.</p>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">5 Marks — Explain in Depth</div>
+    <p><strong>Q: Explain the role of JVM in making Java platform-independent. Differentiate between JVM, JRE, and JDK.</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> Java achieves platform independence through a two-step process. First, the Java compiler (javac) compiles source code (.java) into bytecode (.class files) — a platform-neutral intermediate format not tied to any specific OS. Second, the JVM installed on each target OS reads bytecode and converts it to platform-specific machine code at runtime. Since every major OS has its own JVM implementation, the same bytecode runs unchanged on all platforms — this is "Write Once, Run Anywhere."<br><br><strong>JVM (Java Virtual Machine):</strong> The runtime engine that executes bytecode. Platform-specific — a different JVM exists for Windows, Mac, and Linux.<br><strong>JRE (Java Runtime Environment):</strong> Contains the JVM plus the Java standard class libraries. Used to RUN Java programs.<br><strong>JDK (Java Development Kit):</strong> Contains the JRE plus development tools (compiler javac, debugger jdb, etc.). Used to DEVELOP and compile Java programs.</p>
+  </div>
+
+  <h3>Viva Questions</h3>
+  <ul>
+    <li>What is the difference between source code and bytecode?</li>
+    <li>If only JRE is installed on a machine, can you compile Java programs? Why?</li>
+    <li>Why must the Java filename exactly match the public class name?</li>
+    <li>What would happen if you removed the <code>static</code> keyword from the main method?</li>
+    <li>Can a single .java file have multiple classes? What restriction applies?</li>
+    <li>What does JIT compilation mean? How does it improve Java performance?</li>
+    <li>Is Java purely object-oriented? Why or why not?</li>
+  </ul>
+
+  <h3 id="mcqs">MCQ Bank</h3>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q1.</span>Which of the following is the correct extension of a compiled Java file?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>.java</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>.class</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>.exe</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>.jar</div>
+    </div>
+    <div class="qa">✓ <strong>.class</strong> files contain bytecode produced by the javac compiler. .java is the source file. .exe is a Windows executable. .jar is a Java Archive (package of .class files).</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q2.</span>Which component of Java is platform-dependent?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>Bytecode (.class file)</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>Source code (.java file)</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>JVM (Java Virtual Machine)</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>Java Standard Library</div>
+    </div>
+    <div class="qa">✓ The <strong>JVM is platform-dependent</strong> — a different JVM binary exists for Windows, Mac, and Linux. Bytecode and source code are platform-neutral. The JVM is what makes Java programs <em>appear</em> platform-independent by doing the platform-specific translation at runtime.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q3.</span>What is the correct signature of the main method in Java?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>public void main(String args)</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>static void main(String[] args)</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>public static void main(String[] args)</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>public static int main(String[] args)</div>
+    </div>
+    <div class="qa">✓ The exact signature must be: <code>public static void main(String[] args)</code>. Every keyword matters. Missing 'public' or 'static' causes a runtime error: "Main method not found in class."</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q4.</span>What happens if you run: <code>java HelloWorld.class</code>?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>Program runs normally</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>Error: Could not find or load main class HelloWorld.class</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>Compilation error</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>Warning printed but runs</div>
+    </div>
+    <div class="qa">✓ The <code>java</code> command takes a <em>class name</em>, not a filename. <code>java HelloWorld.class</code> looks for a class literally named "HelloWorld.class" (with a dot), which doesn't exist. The correct command is <code>java HelloWorld</code> (no extension).</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q5.</span>Which of the following BEST describes a JDK?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>Only the runtime environment for running Java programs</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>Only the Java compiler</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>A complete package including JRE plus development tools like javac, jdb, javadoc</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>Just the Java Virtual Machine</div>
+    </div>
+    <div class="qa">✓ JDK = JRE + development tools. JRE is for running programs. JDK includes JRE AND adds the compiler (javac), debugger (jdb), documentation generator (javadoc), and other tools developers need.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <h3 id="output-predict">Output Prediction Exercises</h3>
+  <div class="box bb" data-icon="👁️">
+    <div class="btitle">Predict Before You Click</div>
+    <p><strong>Code 1:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict Output</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Line 1"</span>);
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"Line 2"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Line 3"</span>);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">Line 1<br>Line 2Line 3<br><br><strong>Why:</strong> println("Line 1") prints and moves to next line. print("Line 2") prints WITHOUT moving to next line. println("Line 3") prints on the same line as "Line 2", then moves to next line.</div>
+
+    <p style="margin-top:16px"><strong>Code 2:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict Output</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello\nWorld"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"A\tB\tC"</span>);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">Hello<br>World<br>A&nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;C<br><br><strong>Why:</strong> \n is the newline escape sequence — moves to next line mid-string. \t is the tab escape sequence — adds horizontal spacing.</div>
+  </div>
+
+  <h3 id="debug-ex">Debugging Exercises</h3>
+  <div class="box br" data-icon="🐛">
+    <div class="btitle">Bug Hunt — Find ALL Errors</div>
+    <div class="cb"><div class="cbh"><div class="cbl">Buggy Code #1</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">Public</span> <span class="kw">Class</span> myProgram {
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">Void</span> Main(<span class="cls">String</span>[] args) {
+        system.out.println(<span class="str">"Hello"</span>)
+    }
+}</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal All 5 Bugs</button>
+    <div class="qa">
+      Bug 1: <code>Public</code> → must be <code>public</code> (lowercase p)<br>
+      Bug 2: <code>Class</code> → must be <code>class</code> (lowercase c)<br>
+      Bug 3: <code>Void</code> → must be <code>void</code> (lowercase v)<br>
+      Bug 4: <code>Main</code> → must be <code>main</code> (lowercase m — JVM looks for "main")<br>
+      Bug 5: <code>system</code> → must be <code>System</code> (capital S)<br>
+      Bug 6: Missing semicolon after println("Hello")
+    </div>
+  </div>
+
+  <!-- ═══════════ QUICK REVISION ═══════════ -->
+  <div class="rev" id="revision">
+    <div class="rev-title">Quick Revision — Chapter 1 — All Key Points</div>
+    <div class="rvpt">A <strong>program</strong> is a set of precise instructions for a computer. Computers are fast but completely literal.</div>
+    <div class="rvpt"><strong>Compiler</strong> translates all at once (C, Java's javac). <strong>Interpreter</strong> translates line-by-line (Python). Java uses <em>both</em>.</div>
+    <div class="rvpt"><strong>JVM</strong> = engine that runs bytecode (platform-specific). <strong>JRE</strong> = JVM + libraries (run programs). <strong>JDK</strong> = JRE + tools (develop programs).</div>
+    <div class="rvpt">Java platform independence: <code>javac</code> compiles to platform-neutral <strong>bytecode</strong> → JVM on each OS executes it. <strong>WORA</strong>.</div>
+    <div class="rvpt">JVM is platform-specific; Java programs (bytecode) are platform-independent. This is the precise answer.</div>
+    <div class="rvpt"><code>public class ClassName</code> — class name must exactly match filename (case-sensitive).</div>
+    <div class="rvpt"><code>public static void main(String[] args)</code> — exact JVM entry point. Every word matters. Trick: <strong>P</strong>lease <strong>S</strong>top <strong>V</strong>isiting <strong>M</strong>y house.</div>
+    <div class="rvpt"><code>System.out.println()</code> prints + newline. <code>System.out.print()</code> prints, no newline. <code>System.out.printf()</code> formatted.</div>
+    <div class="rvpt">Every Java statement ends with <code>;</code> — missing it is the most common error.</div>
+    <div class="rvpt">Compile: <code>javac FileName.java</code>. Run: <code>java ClassName</code> (no .class extension).</div>
+  </div>
+
+  <!-- ═══════════ PRACTICE PROBLEMS ═══════════ -->
+  <div class="sec-hdr" id="practice">
+    <div class="sicon ic">💪</div>
+    <div class="sec-title"><small>1.11 — Practice</small>Practice Problems</div>
+  </div>
+
+  <h3>Easy Problems</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P1.1</div><div><div class="pt">Hello Name</div><div class="pd">Write a Java program that prints "Hello, [YourName]!" to the screen. Run it from the terminal and confirm the output.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.2</div><div><div class="pt">Three-Line Bio</div><div class="pd">Print your full name, university name, and department — each on a separate line using three <code>println()</code> calls.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.3</div><div><div class="pt">Same-Line Print</div><div class="pd">Print "Hello " and "World!" on the SAME line by combining <code>print()</code> and <code>println()</code>. Expected: <code>Hello World!</code></div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.4</div><div><div class="pt">Escape Sequences</div><div class="pd">Using a SINGLE <code>println()</code>, print three lines of text using <code>\n</code> inside the string. Then add tabs using <code>\t</code>.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.5</div><div><div class="pt">Print a Box</div><div class="pd">Using only print/println statements, draw this box in the console:<br><code>*****</code> / <code>*   *</code> / <code>*   *</code> / <code>*****</code></div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.6</div><div><div class="pt">Quote Inside String</div><div class="pd">Print the text: She said "Java is amazing!" — the double quotes must appear in the output. Use <code>\"</code>.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.7</div><div><div class="pt">Windows File Path</div><div class="pd">Print the path: <code>C:\Users\Student\Desktop\Java</code>. You need <code>\\</code> for each backslash. Tricky!</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.8</div><div><div class="pt">Fix the Bugs</div><div class="pd">Fix every error: <code>public Class Test { public static void main(String args) { System.out.println("Hi") } }</code></div><div class="ptags"><span class="ptag pe">Easy</span><span class="ptag pd2">Debug</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.9</div><div><div class="pt">Count the Errors</div><div class="pd">How many errors does this have? <code>Public class test { Public Static Void Main(String[] Args) { system.out.Println("ok") }}</code></div><div class="ptags"><span class="ptag pe">Easy</span><span class="ptag pd2">Debug</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.10</div><div><div class="pt">Terminal Practice</div><div class="pd">Write HelloWorld, compile it with <code>javac</code>, run with <code>java</code> in the terminal. What files are created? What happens if you skip compilation?</div><div class="ptags"><span class="ptag pe">Easy</span><span class="ptag po">Practical</span></div></div></div>
+  </div>
+
+  <h3>Medium Problems</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P1.11</div><div><div class="pt">Formatted Table</div><div class="pd">Use <code>\t</code> to print a table with three columns (Name, Age, City) and three rows of data. Columns should be aligned.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.12</div><div><div class="pt">ASCII Art Name</div><div class="pd">Print your first name using ASCII art — each letter made of stars. Each letter must be at least 5 rows tall.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.13</div><div><div class="pt">Output Prediction</div><div class="pd">Predict the output of: <code>System.out.println(1 + 2 + "3");</code> and <code>System.out.println("1" + 2 + 3);</code>. Explain why they differ, then verify.</div><div class="ptags"><span class="ptag pm">Medium</span><span class="ptag po">Predict</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.14</div><div><div class="pt">Multiple Classes Experiment</div><div class="pd">Create one .java file with two non-public classes (ClassA and ClassB), each with a main. Compile. Then run <code>java ClassA</code> vs <code>java ClassB</code>. What do you observe?</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.15</div><div><div class="pt">JVM Architecture</div><div class="pd">In a Java comment block, draw an ASCII diagram showing: source file → javac → bytecode → JVM (Class Loader → Execution Engine) → Output. Annotate each step.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.16</div><div><div class="pt">printf Practice</div><div class="pd">Use <code>printf</code> to print: "Name: Ahmed, Score: 95.50, Grade: A" using format specifiers <code>%s</code>, <code>%.2f</code>, <code>%c</code>.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.17</div><div><div class="pt">Missing Main Experiment</div><div class="pd">Write a Java class with no main method. Compile it (does it succeed?). Try to run it (what error appears?). Document: what is the difference between compile-time and runtime errors?</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.18</div><div><div class="pt">Unicode Characters</div><div class="pd">Run: <code>System.out.println("\u0048\u0065\u006C\u006C\u006F");</code> — what prints? Research what Unicode is and write a 3-sentence explanation in a comment block.</div><div class="ptags"><span class="ptag pm">Medium</span><span class="ptag po">Research</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.19</div><div><div class="pt">WORA Essay in Code</div><div class="pd">Write a Java program that prints (as output) a full explanation of platform independence — what it is, how bytecode enables it, and what JVM's role is. At least 5 lines of output.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.20</div><div><div class="pt">Comment Documentation</div><div class="pd">Rewrite the HelloWorld program with thorough Javadoc comments explaining every line — use <code>/** */</code> style. Practice professional documentation habits from day one.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+  </div>
+
+  <h3>Hard Problems</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P1.21</div><div><div class="pt">Command-Line Greeter</div><div class="pd">Modify HelloWorld to use <code>args[0]</code>: running <code>java Greeter Alice</code> prints "Hello, Alice!". Handle the case where no argument is provided (use args.length check).</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.22</div><div><div class="pt">Self-Describing Program</div><div class="pd">Write a Java program whose output describes its own structure: prints the class name, main method signature, and all statement descriptions — formatted like a report.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.23</div><div><div class="pt">Escape Sequence Master</div><div class="pd">Using ONLY <code>System.out.print()</code> and escape sequences, produce this exact output on three lines: (1) a quoted sentence, (2) a Windows file path, (3) a tab-aligned table row.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.24</div><div><div class="pt">JIT Research</div><div class="pd">Research what JIT (Just-In-Time) compilation is. Write a 200-word explanation in a comment block: what it is, how it differs from normal compilation, and why it makes Java faster at runtime.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P1.25</div><div><div class="pt">Java vs Python Deep Compare</div><div class="pd">In a comment block, write a structured comparison of Java and Python covering: compilation model, platform independence, typing system, speed, and typical use cases. Use a table format in the comment.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+  </div>
+
+  <div class="challenge">
+    <div class="ch-ctitle">Chapter 1 Challenge</div>
+    <p style="color:var(--text-dim);margin-bottom:14px">If you can answer all of these without notes, you truly own Chapter 1.</p>
+    <ul>
+      <li>Write the complete HelloWorld program from memory — every keyword, every punctuation mark, correct capitalisation.</li>
+      <li>Explain to a friend (out loud): the entire Java execution pipeline from source code to screen output.</li>
+      <li>Answer without looking: What is the difference between JDK, JRE, and JVM? Which do you install as a developer and why?</li>
+      <li>Predict and explain: <code>System.out.println("A" + "B" + 1 + 2);</code> vs <code>System.out.println(1 + 2 + "A" + "B");</code></li>
+    </ul>
+  </div>
+
+  <!-- CHAPTER NAV -->
+  <div class="chnav">
+    <a href="index.html" class="navbtn">
+      <div class="navlbl">← Back to</div>
+      <div class="navtitle">Course Index</div>
+    </a>
+    <a href="ch02-setup.html" class="navbtn nxt">
+      <div class="navlbl">Next Chapter →</div>
+      <div class="navtitle">Chapter 2: Setting Up Java</div>
+    </a>
+  </div>
+
+</div><!-- end .main -->
+</div><!-- end .layout -->
+
+<script>
+// Reading progress bar
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const pct = (doc.scrollTop / (doc.scrollHeight - doc.clientHeight)) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+});
+// Active TOC highlighting
+const tocLinks = document.querySelectorAll('.toc-item');
+const sections = [...document.querySelectorAll('[id]')].filter(el =>
+  [...tocLinks].some(l => l.getAttribute('href') === '#' + el.id)
+);
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  tocLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + cur);
+  });
+});
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+});
+// Quiz
+function ca(el, correct) {
+  el.closest('.qopts').querySelectorAll('.qo').forEach(o => o.style.pointerEvents = 'none');
+  if (correct) {
+    el.classList.add('correct');
+    el.querySelector('.ol').textContent = '✓';
+  } else {
+    el.classList.add('wrong');
+    el.closest('.qopts').querySelectorAll('.qo').forEach(o => {
+      if (o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+    });
+  }
+  const qa = el.closest('.qi').querySelector('.qa');
+  if (qa) qa.classList.add('show');
+}
+function ra(btn) {
+  const qa = btn.previousElementSibling;
+  qa.classList.toggle('show');
+  btn.textContent = qa.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+}
+</script>
+</body>
+</html>

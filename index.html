@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Java Mastery — Complete Coursebook Index</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--surface3:#21262d;--border:#30363d;--accent:#f0a500;--accent2:#e05c2a;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#484f58;--red:#ff6b6b;--green:#3fb950;--blue:#58a6ff;--purple:#bc8cff;--yellow:#f0a500;--orange:#e05c2a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.75;min-height:100vh}
+/* ── HEADER ── */
+header{background:rgba(13,17,23,.98);border-bottom:1px solid var(--border);padding:0 40px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--accent);display:flex;align-items:center;gap:10px}
+.logo span{font-size:.75rem;color:var(--text-muted);font-family:'Source Serif 4',serif;font-weight:400}
+.hbadges{display:flex;gap:8px}
+.badge{font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:3px 10px;border-radius:20px;border:1px solid}
+.bj{color:var(--orange);border-color:var(--orange)}.bl{color:var(--green);border-color:var(--green)}.bp{color:var(--purple);border-color:var(--purple)}
+/* ── HERO ── */
+.hero{padding:70px 40px 60px;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border)}
+.hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,.07),transparent 65%);pointer-events:none}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:16px}
+.hero-title{font-family:'Playfair Display',serif;font-size:3.8rem;font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:20px}
+.hero-title em{color:var(--accent);font-style:italic}
+.hero-sub{font-size:1.1rem;color:var(--text-dim);max-width:580px;margin:0 auto 36px;font-weight:300;line-height:1.7}
+.hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--accent);line-height:1}
+.stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-top:4px}
+/* ── PROGRESS OVERVIEW ── */
+.progress-bar-wrap{max-width:700px;margin:40px auto 0;padding:0 40px}
+.prog-row{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.prog-lbl{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-dim);min-width:120px}
+.prog-track{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s ease}
+.prog-pct{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);min-width:32px;text-align:right}
+/* ── PHASE SECTIONS ── */
+.phases{max-width:1100px;margin:0 auto;padding:60px 40px}
+.phase-hdr{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.phase-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;border-radius:20px;font-weight:700}
+.p1{background:rgba(88,166,255,.1);color:var(--blue);border:1px solid rgba(88,166,255,.3)}
+.p2{background:rgba(63,185,80,.1);color:var(--green);border:1px solid rgba(63,185,80,.3)}
+.p3{background:rgba(188,140,255,.1);color:var(--purple);border:1px solid rgba(188,140,255,.3)}
+.p4{background:rgba(240,165,0,.1);color:var(--yellow);border:1px solid rgba(240,165,0,.3)}
+.p5{background:rgba(224,92,42,.1);color:var(--orange);border:1px solid rgba(224,92,42,.3)}
+.phase-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700}
+.phase-sub{font-size:.88rem;color:var(--text-muted);margin-left:auto;font-family:'JetBrains Mono',monospace}
+/* ── CHAPTER GRID ── */
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:60px}
+.ch-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px 24px;text-decoration:none;color:inherit;display:block;transition:all .2s;position:relative;overflow:hidden}
+.ch-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--border);transition:background .2s}
+.ch-card:hover{border-color:rgba(240,165,0,.4);background:var(--surface2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.ch-card:hover::before{background:var(--accent)}
+.ch-card.done::before{background:var(--green)}
+.ch-card.done{border-color:rgba(63,185,80,.2)}
+.ch-card.wip::before{background:var(--yellow)}
+.ch-card.wip{border-color:rgba(240,165,0,.2)}
+.ch-card.locked{opacity:.55;cursor:not-allowed;pointer-events:none}
+.ch-card.locked::before{background:var(--border)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.ch-num{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);font-weight:700}
+.ch-status{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px}
+.s-done{background:rgba(63,185,80,.12);color:var(--green);border:1px solid rgba(63,185,80,.3)}
+.s-wip{background:rgba(240,165,0,.12);color:var(--yellow);border:1px solid rgba(240,165,0,.3)}
+.s-soon{background:rgba(72,79,88,.3);color:var(--text-muted);border:1px solid var(--border)}
+.ch-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;line-height:1.2}
+.ch-desc{font-size:.83rem;color:var(--text-dim);line-height:1.55;margin-bottom:14px}
+.ch-tags{display:flex;gap:6px;flex-wrap:wrap}
+.ctag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:2px 8px;border-radius:8px;background:var(--surface3);color:var(--text-muted);border:1px solid var(--border)}
+.ch-arrow{position:absolute;bottom:20px;right:22px;font-size:.8rem;color:var(--text-muted);transition:all .2s}
+.ch-card:hover .ch-arrow{color:var(--accent);transform:translateX(3px)}
+/* ── QUICK START ── */
+.quickstart{background:linear-gradient(135deg,rgba(240,165,0,.08),rgba(224,92,42,.05));border:1px solid rgba(240,165,0,.2);border-radius:14px;padding:36px 40px;margin:0 40px 60px;max-width:1020px;margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.qs-text h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;margin-bottom:8px}
+.qs-text p{color:var(--text-dim);font-size:.92rem;max-width:500px}
+.qs-btn{background:var(--accent);color:#000;font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:700;padding:12px 28px;border-radius:8px;text-decoration:none;text-transform:uppercase;letter-spacing:1px;white-space:nowrap;transition:all .2s;display:inline-block}
+.qs-btn:hover{background:#ffc107;transform:translateY(-1px);box-shadow:0 4px 16px rgba(240,165,0,.3)}
+/* ── HOW TO USE ── */
+.how{max-width:1100px;margin:0 auto;padding:0 40px 60px}
+.how h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:24px}
+.steps-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:700;color:var(--accent);margin-bottom:8px;line-height:1}
+.step-t{font-weight:600;margin-bottom:4px;font-size:.9rem}
+.step-d{font-size:.82rem;color:var(--text-dim);line-height:1.5}
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:30px 40px;text-align:center}
+footer p{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--text-muted)}
+footer strong{color:var(--accent)}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:700px){.hero-title{font-size:2.4rem}.phases,.how{padding-left:20px;padding-right:20px}.hero{padding:50px 20px 40px}.ch-grid{grid-template-columns:1fr}.quickstart{margin-left:20px;margin-right:20px;padding:24px}.hero-stats{gap:24px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">☕ Java Mastery <span>Complete Coursebook — Zero to OOP</span></div>
+  <div class="hbadges">
+    <span class="badge bj">Java SE 17+</span>
+    <span class="badge bl">21 Chapters</span>
+    <span class="badge bp">5 Phases</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">University CSE · Beginner to Intermediate</div>
+  <div class="hero-title">Master <em>Java</em><br>From Zero to OOP</div>
+  <div class="hero-sub">A complete, structured coursebook built for university students. Deep explanations, real analogies, exam prep, and hundreds of practice problems — chapter by chapter.</div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">21</div><div class="stat-lbl">Chapters</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">Phases</div></div>
+    <div class="stat"><div class="stat-num">200+</div><div class="stat-lbl">Practice Problems</div></div>
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl">MCQs & Quizzes</div></div>
+    <div class="stat"><div class="stat-num">10</div><div class="stat-lbl">Mini Projects</div></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar-wrap">
+  <div class="prog-row">
+    <span class="prog-lbl">Phase 1 — Fundamentals</span>
+    <div class="prog-track"><div class="prog-fill" style="width:20%"></div></div>
+    <span class="prog-pct">20%</span>
+  </div>
+  <div class="prog-row">
+    <span class="prog-lbl">Phase 2 — Problem Solving</span>
+    <div class="prog-track"><div class="prog-fill" style="width:0%"></div></div>
+    <span class="prog-pct">0%</span>
+  </div>
+  <div class="prog-row">
+    <span class="prog-lbl">Phase 3 — OOP in Java</span>
+    <div class="prog-track"><div class="prog-fill" style="width:60%"></div></div>
+    <span class="prog-pct">60%</span>
+  </div>
+  <div class="prog-row">
+    <span class="prog-lbl">Phase 4 — Exam Prep</span>
+    <div class="prog-track"><div class="prog-fill" style="width:0%"></div></div>
+    <span class="prog-pct">0%</span>
+  </div>
+  <div class="prog-row">
+    <span class="prog-lbl">Phase 5 — Practice</span>
+    <div class="prog-track"><div class="prog-fill" style="width:0%"></div></div>
+    <span class="prog-pct">0%</span>
+  </div>
+</div>
+
+<!-- QUICK START -->
+<div style="max-width:1100px;margin:50px auto 0;padding:0 40px 0">
+  <div class="quickstart">
+    <div class="qs-text">
+      <h2>Ready to Start Learning?</h2>
+      <p>Begin with Chapter 1 — no prior programming experience needed. Each chapter builds on the last, with complete explanations, code examples, and exercises.</p>
+    </div>
+    <a href="ch01-intro.html" class="qs-btn">Start Chapter 1 →</a>
+  </div>
+</div>
+
+<!-- PHASES -->
+<div class="phases">
+
+  <!-- PHASE 1 -->
+  <div class="phase-hdr">
+    <span class="phase-badge p1">Phase 1</span>
+    <span class="phase-title">Java Fundamentals</span>
+    <span class="phase-sub">Chapters 1–10</span>
+  </div>
+  <div class="ch-grid">
+
+    <a href="ch01-intro.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 01</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Introduction to Programming</div>
+      <div class="ch-desc">What programming is, how computers work, JVM/JDK/JRE, platform independence, and your first Java program — line by line.</div>
+      <div class="ch-tags"><span class="ctag">JVM</span><span class="ctag">Compiler</span><span class="ctag">HelloWorld</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch02-setup.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 02</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Setting Up Java</div>
+      <div class="ch-desc">Install JDK, configure IntelliJ or VS Code, understand the compile-run workflow, and fix the most common setup errors.</div>
+      <div class="ch-tags"><span class="ctag">JDK Install</span><span class="ctag">IntelliJ</span><span class="ctag">Terminal</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch03-syntax.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 03</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Java Syntax Basics</div>
+      <div class="ch-desc">Program structure, three types of comments, println vs print vs printf, and all escape sequences with examples.</div>
+      <div class="ch-tags"><span class="ctag">Comments</span><span class="ctag">println</span><span class="ctag">Escape Seqs</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch04-variables.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 04</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Variables & Data Types</div>
+      <div class="ch-desc">All 8 primitive types, variable declaration, naming conventions, type widening & narrowing, casting, and the final keyword.</div>
+      <div class="ch-tags"><span class="ctag">int/double</span><span class="ctag">Casting</span><span class="ctag">final</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch05-operators.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 05</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Operators & Expressions</div>
+      <div class="ch-desc">Arithmetic, relational, logical, assignment, unary, increment/decrement, ternary operator, and full precedence table.</div>
+      <div class="ch-tags"><span class="ctag">Arithmetic</span><span class="ctag">Logical</span><span class="ctag">Ternary</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch06-input.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 06</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Taking Input</div>
+      <div class="ch-desc">The Scanner class, all input methods, the critical nextLine() after nextInt() bug, and clean input handling patterns.</div>
+      <div class="ch-tags"><span class="ctag">Scanner</span><span class="ctag">nextInt</span><span class="ctag">nextLine</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch07-conditionals.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 07</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Conditional Statements</div>
+      <div class="ch-desc">if, if-else, else-if ladder, nested if, and switch-case with fall-through explained. Decision-making in full depth.</div>
+      <div class="ch-tags"><span class="ctag">if-else</span><span class="ctag">switch</span><span class="ctag">Fall-through</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch08-loops.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 08</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Loops & Iteration</div>
+      <div class="ch-desc">for, while, do-while, nested loops, break and continue — with flow diagrams, dry runs, and 7 classic loop problems.</div>
+      <div class="ch-tags"><span class="ctag">for</span><span class="ctag">while</span><span class="ctag">do-while</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch09-patterns.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 09</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Pattern Printing</div>
+      <div class="ch-desc">The ultimate loop test. Right triangle, inverted triangle, full pyramid, diamond, Floyd's triangle — with a proven formula for every pattern.</div>
+      <div class="ch-tags"><span class="ctag">Stars</span><span class="ctag">Numbers</span><span class="ctag">Pyramids</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch10-methods.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 10</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Methods & Functions</div>
+      <div class="ch-desc">Method declaration, parameters vs arguments, void vs return, overloading, and how the call stack actually works in memory.</div>
+      <div class="ch-tags"><span class="ctag">Parameters</span><span class="ctag">Overloading</span><span class="ctag">Call Stack</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-hdr">
+    <span class="phase-badge p2">Phase 2</span>
+    <span class="phase-title">Problem Solving</span>
+    <span class="phase-sub">Chapters 11–13</span>
+  </div>
+  <div class="ch-grid">
+
+    <a href="ch11-arrays.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 11</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Arrays</div>
+      <div class="ch-desc">1D and 2D arrays, traversal, searching, bubble sort, max/min/sum, frequency counting, and the most common array mistakes.</div>
+      <div class="ch-tags"><span class="ctag">1D Array</span><span class="ctag">2D Array</span><span class="ctag">Sorting</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch12-strings.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 12</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Strings & Text Processing</div>
+      <div class="ch-desc">String immutability, 15+ key methods, the == vs .equals() trap, StringBuilder for efficiency, and character-level operations.</div>
+      <div class="ch-tags"><span class="ctag">Immutable</span><span class="ctag">.equals()</span><span class="ctag">StringBuilder</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch13-algorithms.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 13</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Basic Algorithms</div>
+      <div class="ch-desc">Linear search O(n), binary search O(log n), bubble sort, selection sort — with time complexity intuition and step-by-step traces.</div>
+      <div class="ch-tags"><span class="ctag">Search</span><span class="ctag">Sort</span><span class="ctag">Big-O</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-hdr">
+    <span class="phase-badge p3">Phase 3</span>
+    <span class="phase-title">OOP in Java</span>
+    <span class="phase-sub">Chapters 14–21</span>
+  </div>
+  <div class="ch-grid">
+
+    <a href="ch14-oop-intro.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 14</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Introduction to OOP</div>
+      <div class="ch-desc">Why OOP exists, procedural vs OOP thinking, the 4 pillars explained with real-world analogies before any code is written.</div>
+      <div class="ch-tags"><span class="ctag">4 Pillars</span><span class="ctag">OOP Philosophy</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch15-classes.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 15</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Classes & Objects</div>
+      <div class="ch-desc">Writing classes, creating objects, default/parameterized/copy constructors, the this keyword, and constructor chaining.</div>
+      <div class="ch-tags"><span class="ctag">Class</span><span class="ctag">Constructor</span><span class="ctag">this</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch16-encapsulation.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapter 16</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Encapsulation</div>
+      <div class="ch-desc">Access modifiers, private fields, public getters and setters with validation, data hiding principle, and why encapsulation matters.</div>
+      <div class="ch-tags"><span class="ctag">private</span><span class="ctag">Getters</span><span class="ctag">Setters</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+    <a href="ch17-21-oop.html" class="ch-card done">
+      <div class="card-top">
+        <span class="ch-num">Chapters 17–21</span>
+        <span class="ch-status s-done">✓ Done</span>
+      </div>
+      <div class="ch-name">Inheritance · Polymorphism · Abstraction · Static · Exceptions</div>
+      <div class="ch-desc">The complete OOP deep dive — extends, super, @Override, dynamic dispatch, abstract classes, interfaces, static keyword, and try-catch-finally.</div>
+      <div class="ch-tags"><span class="ctag">extends</span><span class="ctag">Interfaces</span><span class="ctag">Exceptions</span></div>
+      <span class="ch-arrow">→</span>
+    </a>
+
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-hdr">
+    <span class="phase-badge p4">Phase 4</span>
+    <span class="phase-title">University Exam Preparation</span>
+    <span class="phase-sub">Coming Soon</span>
+  </div>
+  <div class="ch-grid">
+
+    <div class="ch-card locked">
+      <div class="card-top">
+        <span class="ch-num">Exam Pack E1</span>
+        <span class="ch-status s-soon">Coming Soon</span>
+      </div>
+      <div class="ch-name">Theory & Viva Question Bank</div>
+      <div class="ch-desc">200+ university-style theory questions with model answers for all 21 chapters. Short-answer, long-answer, and viva questions.</div>
+      <div class="ch-tags"><span class="ctag">Theory</span><span class="ctag">Viva</span><span class="ctag">200+ Qs</span></div>
+    </div>
+
+    <div class="ch-card locked">
+      <div class="card-top">
+        <span class="ch-num">Exam Pack E2</span>
+        <span class="ch-status s-soon">Coming Soon</span>
+      </div>
+      <div class="ch-name">MCQ Bank + Output Tracing</div>
+      <div class="ch-desc">100+ MCQs with explanations. 50 output prediction exercises. 30 code debugging problems. Tricky examiner-style questions.</div>
+      <div class="ch-tags"><span class="ctag">MCQs</span><span class="ctag">Output Trace</span><span class="ctag">Debug</span></div>
+    </div>
+
+  </div>
+
+  <!-- PHASE 5 -->
+  <div class="phase-hdr">
+    <span class="phase-badge p5">Phase 5</span>
+    <span class="phase-title">Practice System</span>
+    <span class="phase-sub">Coming Soon</span>
+  </div>
+  <div class="ch-grid">
+
+    <div class="ch-card locked">
+      <div class="card-top">
+        <span class="ch-num">Practice P1</span>
+        <span class="ch-status s-soon">Coming Soon</span>
+      </div>
+      <div class="ch-name">50 Mixed Revision Problems</div>
+      <div class="ch-desc">Comprehensive problem set covering all chapters. Easy → Hard progression. Full solutions and explanations included.</div>
+      <div class="ch-tags"><span class="ctag">50 Problems</span><span class="ctag">Mixed</span><span class="ctag">Solutions</span></div>
+    </div>
+
+    <div class="ch-card locked">
+      <div class="card-top">
+        <span class="ch-num">Practice P2</span>
+        <span class="ch-status s-soon">Coming Soon</span>
+      </div>
+      <div class="ch-name">20 OOP Problems + 10 Mini Projects</div>
+      <div class="ch-desc">Advanced OOP problems combining all four pillars. 10 mini projects: Library System, Student Manager, Bank App, and more.</div>
+      <div class="ch-tags"><span class="ctag">OOP</span><span class="ctag">Projects</span><span class="ctag">Real-world</span></div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- HOW TO USE -->
+<div class="how">
+  <h2>How to Use This Coursebook</h2>
+  <div class="steps-row">
+    <div class="step-card">
+      <div class="step-n">01</div>
+      <div class="step-t">Read the Concept</div>
+      <div class="step-d">Every chapter starts with an intuitive explanation and a real-life analogy before any code.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">02</div>
+      <div class="step-t">Study the Code</div>
+      <div class="step-d">Read every line carefully. Every comment explains the why, not just the what.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">03</div>
+      <div class="step-t">Do the Dry Run</div>
+      <div class="step-d">Trace through code manually on paper before running it. This builds real understanding.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">04</div>
+      <div class="step-t">Take the Quiz</div>
+      <div class="step-d">Test yourself with MCQs. Read the explanations even for questions you got right.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">05</div>
+      <div class="step-t">Solve Problems</div>
+      <div class="step-d">Start with Easy, move to Medium, then Hard. Debugging problems build the most skill.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-n">06</div>
+      <div class="step-t">Review Often</div>
+      <div class="step-d">Use the Quick Revision card at the end of each chapter before your exam.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>☕ <strong>Java Mastery Coursebook</strong> · Built for university CSE students · Java SE 17+ · Zero to OOP</p>
+  <p style="margin-top:6px">Open each chapter file in any browser · No internet required after download</p>
+</footer>
+
+</body>
+</html>

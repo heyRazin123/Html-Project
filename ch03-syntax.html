@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 3 — Java Syntax Basics</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--surface3:#21262d;--border:#30363d;--accent:#f0a500;--accent2:#e05c2a;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#484f58;--red:#ff6b6b;--green:#3fb950;--blue:#58a6ff;--purple:#bc8cff;--yellow:#f0a500;--orange:#e05c2a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.8}
+header{position:sticky;top:0;z-index:100;height:56px;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;backdrop-filter:blur(12px)}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+.logo a{color:var(--accent);text-decoration:none;font-weight:700}.logo a:hover{text-decoration:underline}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 10px;border-radius:12px;background:rgba(240,165,0,.1);color:var(--accent);border:1px solid rgba(240,165,0,.3)}
+.top-progress{height:3px;background:var(--surface2);position:sticky;top:56px;z-index:99}
+.top-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%;transition:width .1s}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 56px)}
+.toc{position:sticky;top:59px;height:calc(100vh - 59px);overflow-y:auto;border-right:1px solid var(--border);padding:24px 0;background:var(--surface)}
+.toc::-webkit-scrollbar{width:3px}.toc::-webkit-scrollbar-thumb{background:var(--border)}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);padding:0 18px 10px;font-weight:700}
+.toc-item{display:block;padding:6px 18px;font-size:.82rem;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.4}
+.toc-item:hover{color:var(--text);border-left-color:var(--border);background:var(--surface2)}
+.toc-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(240,165,0,.06)}
+.toc-item.sub{padding-left:30px;font-size:.78rem}
+.toc-div{height:1px;background:var(--border);margin:10px 18px}
+.main{padding:52px 60px 80px;max-width:860px}
+.ch-hero{margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.ch-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ch-tag::before{content:'';width:28px;height:2px;background:var(--accent)}
+.ch-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;line-height:1.08;margin-bottom:14px;letter-spacing:-1.5px}
+.ch-title em{color:var(--accent);font-style:italic}
+.ch-sub{font-size:1.05rem;color:var(--text-dim);max-width:580px;font-weight:300;line-height:1.7;margin-bottom:28px}
+.ch-meta{display:flex;gap:22px;flex-wrap:wrap}
+.meta{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted)}
+.mdot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.sec-hdr{display:flex;align-items:center;gap:14px;margin:48px 0 20px}
+.sicon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.ic{background:rgba(88,166,255,.12);color:var(--blue)}.ig{background:rgba(63,185,80,.12);color:var(--green)}.ip{background:rgba(188,140,255,.12);color:var(--purple)}.iy{background:rgba(240,165,0,.12);color:var(--yellow)}.ir{background:rgba(255,107,107,.12);color:var(--red)}.io{background:rgba(224,92,42,.12);color:var(--orange)}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700}
+.sec-title small{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:2px}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:28px 0 10px;padding-left:12px;border-left:3px solid var(--accent2)}
+h4{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin:18px 0 7px}
+p{margin-bottom:15px}p:last-child{margin-bottom:0}
+strong{color:var(--accent);font-weight:600}em{color:var(--blue);font-style:italic}
+.cb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin:20px 0;overflow:hidden}
+.cbh{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);background:var(--surface3)}
+.cbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.dots{display:flex;gap:5px}.dots span{width:10px;height:10px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
+pre{padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.86rem;line-height:1.7}
+pre::-webkit-scrollbar{height:4px}pre::-webkit-scrollbar-thumb{background:var(--border)}
+.kw{color:#ff79c6;font-weight:600}.str{color:#f1fa8c}.num{color:#bd93f9}.cls{color:#8be9fd;font-weight:600}.fn{color:#50fa7b}.cmt{color:#6272a4;font-style:italic}.type{color:#cba6f7}.ann{color:#ffb86c}
+code{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--surface3);padding:2px 7px;border-radius:4px;color:var(--purple);border:1px solid var(--border)}
+.box{border-radius:10px;padding:20px 24px;margin:20px 0;border-left:4px solid;position:relative;overflow:hidden}
+.box::before{content:attr(data-icon);position:absolute;right:16px;top:12px;font-size:1.7rem;opacity:.1}
+.bb{background:rgba(88,166,255,.06);border-color:var(--blue)}.bg{background:rgba(63,185,80,.06);border-color:var(--green)}.by{background:rgba(240,165,0,.06);border-color:var(--yellow)}.br{background:rgba(255,107,107,.06);border-color:var(--red)}.bp{background:rgba(188,140,255,.06);border-color:var(--purple)}.bo{background:rgba(224,92,42,.06);border-color:var(--orange)}
+.btitle{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-weight:700}
+.bb .btitle{color:var(--blue)}.bg .btitle{color:var(--green)}.by .btitle{color:var(--yellow)}.br .btitle{color:var(--red)}.bp .btitle{color:var(--purple)}.bo .btitle{color:var(--orange)}
+.diag{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.65;overflow-x:auto;white-space:pre;color:var(--text)}
+.tw{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead tr{background:var(--surface3)}
+th{padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);border-bottom:2px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+td code{font-family:'JetBrains Mono',monospace;font-size:.8rem;background:var(--surface3);padding:2px 5px;border-radius:4px;color:var(--purple)}
+ul,ol{margin:10px 0 16px;padding-left:0;list-style:none}
+ul li,ol li{padding:5px 0 5px 24px;position:relative}
+ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.8rem}
+ol{counter-reset:cnt}ol li{counter-increment:cnt}
+ol li::before{content:counter(cnt)'.';position:absolute;left:0;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:700}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.cside{background:var(--surface2);padding:20px 22px}
+.clbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:700}
+.cr{color:var(--red)}.cg{color:var(--green)}.cb2{color:var(--blue)}
+.mem{background:linear-gradient(135deg,rgba(188,140,255,.08),rgba(240,165,0,.05));border:1px solid rgba(188,140,255,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative;overflow:hidden}
+.mem::after{content:'🧠';position:absolute;right:18px;top:14px;font-size:1.8rem;opacity:.25}
+.mem-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin-bottom:8px}
+.trap{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative}
+.trap::after{content:'⚠️';position:absolute;right:18px;top:14px;font-size:1.4rem;opacity:.4}
+.trap-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.qi{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:14px 0;transition:border-color .2s}
+.qi:hover{border-color:rgba(240,165,0,.3)}
+.qq{font-weight:600;margin-bottom:12px;font-size:.93rem}
+.qnum{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);margin-right:7px}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qo{padding:8px 14px;border-radius:7px;border:1px solid var(--border);cursor:pointer;font-size:.88rem;transition:all .15s;display:flex;align-items:center;gap:10px}
+.qo:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.qo.correct{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);pointer-events:none}
+.qo.wrong{border-color:var(--red);background:rgba(255,107,107,.1);color:var(--red);pointer-events:none}
+.ol{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:18px;font-weight:700}
+.qa{margin-top:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:7px;font-size:.84rem;display:none;color:var(--green);line-height:1.6}
+.qa.show{display:block}
+.rbtn{margin-top:9px;padding:6px 14px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s}
+.rbtn:hover{border-color:var(--accent);color:var(--accent)}
+/* output box */
+.out-box{background:var(--surface3);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:8px;padding:14px 18px;margin:12px 0;font-family:'JetBrains Mono',monospace;font-size:.85rem;line-height:1.65}
+.out-lbl{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--green);margin-bottom:6px}
+/* annotation line */
+.ann-line{display:flex;gap:16px;align-items:baseline;margin-bottom:6px;font-size:.88rem}
+.ann-code{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--purple);min-width:140px;flex-shrink:0}
+.ann-desc{color:var(--text-dim)}
+/* keyword grid */
+.kw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:16px 0}
+.kw-pill{font-family:'JetBrains Mono',monospace;font-size:.75rem;padding:6px 12px;background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--purple);text-align:center}
+.pgrid{display:grid;gap:10px}
+.pc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;transition:border-color .15s}
+.pc:hover{border-color:rgba(240,165,0,.25)}
+.pnum{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);min-width:28px;padding-top:2px}
+.pt{font-weight:600;margin-bottom:3px;font-size:.9rem}
+.pd{font-size:.84rem;color:var(--text-dim);margin-bottom:5px;line-height:1.55}
+.ptags{display:flex;gap:5px;flex-wrap:wrap}
+.ptag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;border:1px solid}
+.pe{color:var(--green);border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.07)}
+.pm{color:var(--yellow);border-color:rgba(240,165,0,.4);background:rgba(240,165,0,.07)}
+.ph{color:var(--red);border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.07)}
+.pd2{color:var(--purple);border-color:rgba(188,140,255,.4);background:rgba(188,140,255,.07)}
+.po{color:var(--blue);border-color:rgba(88,166,255,.4);background:rgba(88,166,255,.07)}
+.rev{background:linear-gradient(135deg,rgba(240,165,0,.07),rgba(224,92,42,.05));border:1px solid rgba(240,165,0,.25);border-radius:10px;padding:24px 28px;margin:32px 0}
+.rev-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.rev-title::before{content:'★';font-size:.85rem}
+.rvpt{display:flex;gap:10px;align-items:baseline;font-size:.88rem;margin-bottom:6px;line-height:1.65}
+.rvpt::before{content:'→';color:var(--accent);flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.challenge{background:linear-gradient(135deg,rgba(224,92,42,.1),rgba(255,107,107,.07));border:1px solid rgba(224,92,42,.35);border-radius:12px;padding:28px 32px;margin:32px 0}
+.ch-ctitle{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--orange);margin-bottom:8px}
+.ch-ctitle::before{content:'🔥 '}
+.exam-card{background:var(--surface2);border:1px solid rgba(224,92,42,.3);border-radius:10px;padding:20px 24px;margin:14px 0}
+.exam-tag{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--orange);margin-bottom:8px}
+.chnav{display:flex;justify-content:space-between;gap:20px;margin-top:60px;padding-top:32px;border-top:1px solid var(--border)}
+.navbtn{background:var(--surface2);border:1px solid var(--border);padding:14px 22px;border-radius:10px;cursor:pointer;transition:all .2s;flex:1;max-width:250px;text-decoration:none;color:inherit;display:block}
+.navbtn:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.navbtn.nxt{text-align:right}
+.navlbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:3px}
+.navtitle{font-weight:600;font-size:.9rem}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.toc{display:none}.main{padding:32px 24px 60px}.ch-title{font-size:2.2rem}.cmp{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">☕ Java Mastery</a> / Chapter 03 — Java Syntax Basics</div>
+  <span class="ch-badge">Chapter 03 of 21</span>
+</header>
+<div class="top-progress"><div class="top-progress-fill" id="prog"></div></div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">On This Page</div>
+  <a class="toc-item active" href="#prog-structure">Program Structure</a>
+  <a class="toc-item sub" href="#anatomy">Full Anatomy</a>
+  <a class="toc-item sub" href="#keywords">Reserved Keywords</a>
+  <a class="toc-item sub" href="#tokens">Tokens & Identifiers</a>
+  <a class="toc-item" href="#comments">Comments</a>
+  <a class="toc-item sub" href="#single-line">Single-line //</a>
+  <a class="toc-item sub" href="#multi-line">Multi-line /* */</a>
+  <a class="toc-item sub" href="#javadoc">Javadoc /** */</a>
+  <a class="toc-item" href="#printing">Printing Output</a>
+  <a class="toc-item sub" href="#println">println()</a>
+  <a class="toc-item sub" href="#print">print()</a>
+  <a class="toc-item sub" href="#printf">printf()</a>
+  <a class="toc-item" href="#escape">Escape Sequences</a>
+  <a class="toc-item sub" href="#escape-table">Complete Table</a>
+  <a class="toc-item sub" href="#escape-examples">Examples</a>
+  <a class="toc-item" href="#format-specifiers">Format Specifiers</a>
+  <a class="toc-item" href="#case-sensitive">Case Sensitivity</a>
+  <a class="toc-item" href="#whitespace">Whitespace & Style</a>
+  <div class="toc-div"></div>
+  <a class="toc-item" href="#common-mistakes">Common Mistakes</a>
+  <a class="toc-item" href="#dry-run">Dry Run</a>
+  <a class="toc-item" href="#memory-tips">Memory Tips</a>
+  <a class="toc-item" href="#exam-prep">Exam Prep</a>
+  <a class="toc-item" href="#revision">Quick Revision</a>
+  <a class="toc-item" href="#practice">Practice Problems</a>
+</nav>
+
+<div class="main">
+  <div class="ch-hero">
+    <div class="ch-tag">Chapter 03 — Phase 1: Fundamentals</div>
+    <div class="ch-title">Java Syntax <em>Basics</em></div>
+    <div class="ch-sub">The grammar of Java. Structure, comments, printing, escape sequences, and format specifiers — the foundation every other chapter builds on. Master these and the rest of Java becomes much easier.</div>
+    <div class="ch-meta">
+      <div class="meta"><div class="mdot"></div>~40 min read</div>
+      <div class="meta"><div class="mdot"></div>6 Core Topics</div>
+      <div class="meta"><div class="mdot"></div>5 MCQs</div>
+      <div class="meta"><div class="mdot"></div>20 Practice Problems</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 3.1 PROGRAM STRUCTURE ═══════════ -->
+  <div class="sec-hdr" id="prog-structure">
+    <div class="sicon ic">🏛️</div>
+    <div class="sec-title"><small>3.1 — Architecture</small>Structure of a Java Program</div>
+  </div>
+  <p>Every Java program follows the same layered structure. Think of it like a set of nesting boxes: the <strong>package</strong> is the outer container, then the <strong>class</strong>, then <strong>methods</strong>, then <strong>statements</strong> inside methods. Nothing exists outside this hierarchy.</p>
+
+  <div class="box by" data-icon="🏗️">
+    <div class="btitle">Analogy — A Book</div>
+    <p>A Java program is like a book: <strong>package</strong> = the library shelf (organises files). <strong>import</strong> = the bibliography (other books you reference). <strong>class</strong> = one book. <strong>method</strong> = a chapter. <strong>statement</strong> = a sentence. Every sentence (statement) ends with a full stop (semicolon <code>;</code>).</p>
+  </div>
+
+  <h3 id="anatomy">Complete Program Anatomy</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Complete Java Program — All Layers Labelled</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// ① PACKAGE DECLARATION (optional — organises .java files into folders)</span>
+<span class="kw">package</span> com.university.java;
+
+<span class="cmt">// ② IMPORT STATEMENTS (bring in classes from other packages)</span>
+<span class="kw">import</span> java.util.Scanner;
+<span class="kw">import</span> java.util.Arrays;
+
+<span class="cmt">// ③ CLASS DECLARATION (required — wraps ALL code)</span>
+<span class="kw">public</span> <span class="kw">class</span> <span class="cls">MyProgram</span> {
+
+    <span class="cmt">// ④ FIELDS / CLASS VARIABLES (optional — data at class level)</span>
+    <span class="kw">static</span> <span class="kw">int</span> counter = <span class="num">0</span>;
+
+    <span class="cmt">// ⑤ MAIN METHOD (required entry point — JVM starts here)</span>
+    <span class="kw">public</span> <span class="kw">static</span> <span class="kw">void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+
+        <span class="cmt">// ⑥ LOCAL VARIABLE DECLARATION</span>
+        <span class="kw">int</span> age = <span class="num">20</span>;
+
+        <span class="cmt">// ⑦ STATEMENTS (instructions — each ends with ;)</span>
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello from MyProgram!"</span>);
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Age: "</span> + age);
+
+    } <span class="cmt">// end main</span>
+
+    <span class="cmt">// ⑧ OTHER METHODS (optional user-defined methods)</span>
+    <span class="kw">static</span> <span class="kw">void</span> <span class="fn">greet</span>() {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello!"</span>);
+    }
+
+} <span class="cmt">// end class MyProgram</span></pre>
+  </div>
+
+  <div class="diag">  NESTING STRUCTURE (outer to inner):
+  ┌─────────────────────────────────────────┐
+  │  Package declaration                    │
+  │  ┌───────────────────────────────────┐  │
+  │  │  Import statements                │  │
+  │  │  ┌────────────────────────────┐   │  │
+  │  │  │  Class body                │   │  │
+  │  │  │  ┌─────────────────────┐   │   │  │
+  │  │  │  │  Method body        │   │   │  │
+  │  │  │  │  ┌───────────────┐  │   │   │  │
+  │  │  │  │  │  Statements;  │  │   │   │  │
+  │  │  │  │  └───────────────┘  │   │   │  │
+  │  │  │  └─────────────────────┘   │   │  │
+  │  │  └────────────────────────────┘   │  │
+  │  └───────────────────────────────────┘  │
+  └─────────────────────────────────────────┘
+
+  Rule: CODE ONLY EXISTS INSIDE A CLASS.
+  Rule: EXECUTABLE CODE ONLY EXISTS INSIDE A METHOD.
+  Rule: EVERY STATEMENT ENDS WITH A SEMICOLON.</div>
+
+  <h3 id="keywords">Java Reserved Keywords</h3>
+  <p>Keywords are words that Java has already claimed for its own use. You <strong>cannot use these as variable names, class names, or method names</strong>. Java has 53 reserved keywords.</p>
+  <div class="kw-grid">
+    <div class="kw-pill">abstract</div><div class="kw-pill">assert</div><div class="kw-pill">boolean</div><div class="kw-pill">break</div>
+    <div class="kw-pill">byte</div><div class="kw-pill">case</div><div class="kw-pill">catch</div><div class="kw-pill">char</div>
+    <div class="kw-pill">class</div><div class="kw-pill">const*</div><div class="kw-pill">continue</div><div class="kw-pill">default</div>
+    <div class="kw-pill">do</div><div class="kw-pill">double</div><div class="kw-pill">else</div><div class="kw-pill">enum</div>
+    <div class="kw-pill">extends</div><div class="kw-pill">final</div><div class="kw-pill">finally</div><div class="kw-pill">float</div>
+    <div class="kw-pill">for</div><div class="kw-pill">goto*</div><div class="kw-pill">if</div><div class="kw-pill">implements</div>
+    <div class="kw-pill">import</div><div class="kw-pill">instanceof</div><div class="kw-pill">int</div><div class="kw-pill">interface</div>
+    <div class="kw-pill">long</div><div class="kw-pill">native</div><div class="kw-pill">new</div><div class="kw-pill">package</div>
+    <div class="kw-pill">private</div><div class="kw-pill">protected</div><div class="kw-pill">public</div><div class="kw-pill">return</div>
+    <div class="kw-pill">short</div><div class="kw-pill">static</div><div class="kw-pill">strictfp</div><div class="kw-pill">super</div>
+    <div class="kw-pill">switch</div><div class="kw-pill">synchronized</div><div class="kw-pill">this</div><div class="kw-pill">throw</div>
+    <div class="kw-pill">throws</div><div class="kw-pill">transient</div><div class="kw-pill">try</div><div class="kw-pill">void</div>
+    <div class="kw-pill">volatile</div><div class="kw-pill">while</div><div class="kw-pill">true</div><div class="kw-pill">false</div>
+    <div class="kw-pill">null</div>
+  </div>
+  <p style="font-size:.84rem;color:var(--text-muted)">* <code>const</code> and <code>goto</code> are reserved but not used in Java. <code>true</code>, <code>false</code>, <code>null</code> are literals, not keywords — but also cannot be used as identifiers.</p>
+
+  <h3 id="tokens">Tokens and Identifiers</h3>
+  <p>A Java program is made of <strong>tokens</strong> — the smallest meaningful units the compiler reads. There are 5 types:</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Token Type</th><th>Description</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Keywords</strong></td><td>Reserved words with special meaning</td><td><code>public</code>, <code>class</code>, <code>int</code>, <code>if</code></td></tr>
+        <tr><td><strong>Identifiers</strong></td><td>Names you create for variables, classes, methods</td><td><code>age</code>, <code>HelloWorld</code>, <code>calculateSum</code></td></tr>
+        <tr><td><strong>Literals</strong></td><td>Fixed values written directly in code</td><td><code>42</code>, <code>3.14</code>, <code>"Hello"</code>, <code>true</code></td></tr>
+        <tr><td><strong>Operators</strong></td><td>Symbols that perform operations</td><td><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>=</code>, <code>==</code></td></tr>
+        <tr><td><strong>Separators</strong></td><td>Characters that separate tokens</td><td><code>;</code> <code>,</code> <code>()</code> <code>{}</code> <code>[]</code> <code>.</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="box bb" data-icon="📏">
+    <div class="btitle">Identifier Rules</div>
+    <div class="cmp">
+      <div class="cside">
+        <div class="clbl cg">Valid Identifiers ✓</div>
+        <ul>
+          <li><code>age</code> — letters only</li>
+          <li><code>myAge</code> — camelCase</li>
+          <li><code>_count</code> — underscore start</li>
+          <li><code>$value</code> — dollar sign start</li>
+          <li><code>totalScore2</code> — digit after start</li>
+          <li><code>MAX_SIZE</code> — underscores ok</li>
+        </ul>
+      </div>
+      <div class="cside">
+        <div class="clbl cr">Invalid Identifiers ✗</div>
+        <ul>
+          <li><code>2age</code> — starts with digit</li>
+          <li><code>my-name</code> — hyphen not allowed</li>
+          <li><code>my name</code> — space not allowed</li>
+          <li><code>class</code> — reserved keyword</li>
+          <li><code>@value</code> — @ not allowed</li>
+          <li><code>hello!</code> — ! not allowed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 3.2 COMMENTS ═══════════ -->
+  <div class="sec-hdr" id="comments">
+    <div class="sicon ig">💬</div>
+    <div class="sec-title"><small>3.2 — Comments</small>Three Types of Comments</div>
+  </div>
+  <p>Comments are <strong>notes for humans</strong>. The Java compiler reads your code and completely ignores every comment. They have no effect on program execution — they exist purely to explain your code to yourself and others.</p>
+  <div class="box by" data-icon="📝">
+    <div class="btitle">When to Write Comments</div>
+    <p>Comment the <strong>WHY</strong>, not the WHAT. Don't write <code>// increment i by 1</code> above <code>i++</code> — that's obvious. Write <em>why</em> you're incrementing: <code>// move to next student record</code>. Good comments explain reasoning; bad comments repeat what the code already says.</p>
+  </div>
+
+  <h3 id="single-line">① Single-Line Comment  <code>//</code></h3>
+  <p>Anything after <code>//</code> on the same line is a comment. Use for short explanations on a single line.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Single-Line Comments</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// This entire line is a comment — compiler ignores it</span>
+<span class="kw">int</span> age = <span class="num">20</span>;    <span class="cmt">// inline comment: this variable stores the student's age</span>
+
+<span class="cmt">// Comments can temporarily disable code (useful for debugging):</span>
+<span class="cmt">// System.out.println("This line is commented out — won't run");</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"This line runs"</span>);   <span class="cmt">// active code</span></pre>
+  </div>
+
+  <h3 id="multi-line">② Multi-Line Comment  <code>/* */</code></h3>
+  <p>Everything between <code>/*</code> and <code>*/</code> is a comment, no matter how many lines. Cannot be nested.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Multi-Line Comments</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">/*
+ * This is a multi-line comment.
+ * Useful for longer explanations,
+ * algorithm descriptions, or section headers.
+ * The * at the start of each line is just convention — not required.
+ */</span>
+<span class="kw">int</span> result = <span class="num">0</span>;
+
+<span class="cmt">/* You can also write it without the leading stars:
+   This is still a valid multi-line comment.
+   It ends here: */</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(result);</pre>
+  </div>
+  <div class="trap">
+    <div class="trap-title">Multi-Line Comment Cannot Be Nested</div>
+    <p><code>/* outer /* inner */ still outer? */</code> — this causes a compile error. The first <code>*/</code> closes the entire comment. If you need to comment out a block that already has <code>/* */</code> comments, use <code>//</code> on each line or an IDE shortcut (Ctrl+/ in IntelliJ selects multiple lines).</p>
+  </div>
+
+  <h3 id="javadoc">③ Javadoc Comment  <code>/** */</code></h3>
+  <p>Special comments used to generate official HTML documentation (like the Java API docs you see online). Start with <code>/**</code> (two stars), end with <code>*/</code>.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Javadoc Comments — Professional Documentation</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">/**
+ * Calculates the area of a rectangle.
+ * This method multiplies length by width to compute the area.
+ *
+ * @param length  The length of the rectangle (must be positive)
+ * @param width   The width of the rectangle (must be positive)
+ * @return        The area of the rectangle as a double
+ * @author        Ahmed Ali
+ * @version       1.0
+ */</span>
+<span class="kw">public static double</span> <span class="fn">rectangleArea</span>(<span class="kw">double</span> length, <span class="kw">double</span> width) {
+    <span class="kw">return</span> length * width;
+}</pre>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Javadoc Tag</th><th>Purpose</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td><code>@param</code></td><td>Describes a method parameter</td><td><code>@param name The student's full name</code></td></tr>
+        <tr><td><code>@return</code></td><td>Describes what the method returns</td><td><code>@return The calculated area</code></td></tr>
+        <tr><td><code>@author</code></td><td>Names the code author</td><td><code>@author Ahmed Ali</code></td></tr>
+        <tr><td><code>@version</code></td><td>Version of the code</td><td><code>@version 2.0</code></td></tr>
+        <tr><td><code>@throws</code></td><td>Documents exceptions thrown</td><td><code>@throws IOException if file not found</code></td></tr>
+        <tr><td><code>@see</code></td><td>Links to related class/method</td><td><code>@see Math#sqrt(double)</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Feature</th><th>// Single-line</th><th>/* */ Multi-line</th><th>/** */ Javadoc</th></tr></thead>
+      <tbody>
+        <tr><td>Spans multiple lines</td><td>✗</td><td>✓</td><td>✓</td></tr>
+        <tr><td>Generates documentation</td><td>✗</td><td>✗</td><td>✓</td></tr>
+        <tr><td>Best for</td><td>Short inline notes</td><td>Block explanations</td><td>API documentation</td></tr>
+        <tr><td>Can be nested</td><td>✓ (use more //)</td><td>✗</td><td>✗</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════ 3.3 PRINTING OUTPUT ═══════════ -->
+  <div class="sec-hdr" id="printing">
+    <div class="sicon iy">🖨️</div>
+    <div class="sec-title"><small>3.3 — Output</small>Printing to the Console</div>
+  </div>
+  <p>Java has three print methods. Knowing exactly when to use each is essential — examiners love to ask output prediction questions that depend on the difference between them.</p>
+
+  <h3 id="println">① System.out.println() — Print + New Line</h3>
+  <p><code>println</code> stands for <strong>print line</strong>. It prints the given value and then <strong>automatically moves the cursor to the next line</strong>. Think of it as printing text + pressing Enter.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">println — Examples</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello"</span>);        <span class="cmt">// prints: Hello↵</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"World"</span>);        <span class="cmt">// prints: World↵</span>
+
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">42</span>);             <span class="cmt">// int: 42</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">3.14</span>);           <span class="cmt">// double: 3.14</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="kw">true</span>);           <span class="cmt">// boolean: true</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">'A'</span>);            <span class="cmt">// char: A</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">2</span> + <span class="num">3</span>);         <span class="cmt">// expression: 5</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>();              <span class="cmt">// empty println → blank line</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Age: "</span> + <span class="num">20</span>); <span class="cmt">// concatenation: Age: 20</span></pre>
+  </div>
+  <div class="out-box">
+    <div class="out-lbl">Output</div>
+    Hello<br>World<br>42<br>3.14<br>true<br>A<br>5<br><br>Age: 20
+  </div>
+
+  <h3 id="print">② System.out.print() — Print, Stay on Same Line</h3>
+  <p><code>print</code> (no 'ln') prints the value but <strong>does NOT add a newline</strong>. The cursor stays right after the last printed character. The next print call continues from there.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">print vs println — Side by Side</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Using print — all on same line:</span>
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"A"</span>);
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"B"</span>);
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"C"</span>);
+<span class="cmt">// Output: ABC  (one line, cursor stays after C)</span>
+
+<span class="cls">System</span>.out.<span class="fn">println</span>();  <span class="cmt">// manually add newline</span>
+
+<span class="cmt">// Mixing print and println:</span>
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"First "</span>);
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"Second "</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Third"</span>);   <span class="cmt">// adds newline</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Fourth"</span>);  <span class="cmt">// starts on new line</span>
+<span class="cmt">// Output:
+// First Second Third
+// Fourth</span></pre>
+  </div>
+
+  <h3 id="printf">③ System.out.printf() — Formatted Print</h3>
+  <p><code>printf</code> gives you precise control over how values are displayed — number of decimal places, column widths, alignment. Think of it as filling in a template with placeholders.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">printf — Format String + Arguments</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Syntax: System.out.printf("format string", arg1, arg2, ...);</span>
+<span class="cmt">// Each %specifier in the format string is replaced by the next argument</span>
+
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"Name: %s%n"</span>, <span class="str">"Ahmed"</span>);
+<span class="cmt">// Output: Name: Ahmed</span>
+
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"Age: %d%n"</span>, <span class="num">20</span>);
+<span class="cmt">// Output: Age: 20</span>
+
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"GPA: %.2f%n"</span>, <span class="num">3.75689</span>);
+<span class="cmt">// Output: GPA: 3.76  (rounds to 2 decimal places)</span>
+
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-10s %5d %8.2f%n"</span>, <span class="str">"Ahmed"</span>, <span class="num">20</span>, <span class="num">3.75</span>);
+<span class="cmt">// Output: Ahmed          20     3.75
+//         ↑ left-aligned  ↑ right-aligned in 5 chars</span>
+
+<span class="cmt">// Multiple values in one printf:</span>
+<span class="cls">String</span> name = <span class="str">"Sara"</span>;
+<span class="kw">int</span> age = <span class="num">19</span>;
+<span class="kw">double</span> gpa = <span class="num">3.9</span>;
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"Student: %s | Age: %d | GPA: %.1f%n"</span>, name, age, gpa);
+<span class="cmt">// Output: Student: Sara | Age: 19 | GPA: 3.9</span></pre>
+  </div>
+  <div class="box bb" data-icon="📊">
+    <div class="btitle">println vs print vs printf — At a Glance</div>
+    <div class="tw"><table><thead><tr><th>Method</th><th>Adds Newline?</th><th>Formatting?</th><th>When to Use</th></tr></thead><tbody>
+      <tr><td><code>println()</code></td><td>✓ Always</td><td>Basic</td><td>General output, one item per line</td></tr>
+      <tr><td><code>print()</code></td><td>✗ Never</td><td>Basic</td><td>When you need items on the same line</td></tr>
+      <tr><td><code>printf()</code></td><td>Only with <code>%n</code></td><td>✓ Full control</td><td>Tables, decimal precision, alignment</td></tr>
+    </tbody></table></div>
+  </div>
+
+  <!-- ═══════════ 3.4 ESCAPE SEQUENCES ═══════════ -->
+  <div class="sec-hdr" id="escape">
+    <div class="sicon ip">🔤</div>
+    <div class="sec-title"><small>3.4 — Special Characters</small>Escape Sequences</div>
+  </div>
+  <p>Some characters are impossible to type directly inside a String — like a newline, a tab, or a double quote (since double quotes mark the start/end of the string). <strong>Escape sequences</strong> are special two-character combinations starting with a backslash <code>\</code> that represent these characters.</p>
+  <div class="box by" data-icon="🔑">
+    <div class="btitle">Why "Escape"?</div>
+    <p>The backslash tells Java to <em>escape</em> (break out of) the normal meaning of the next character. <code>"</code> normally means "end of string". But <code>\"</code> means "literal double quote character inside the string." The backslash changes the character's meaning.</p>
+  </div>
+
+  <h3 id="escape-table">Complete Escape Sequence Table</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Escape</th><th>Name</th><th>What It Does</th><th>Example</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr><td><code>\n</code></td><td>Newline</td><td>Moves cursor to start of next line</td><td><code>"Hi\nBye"</code></td><td>Hi<br>Bye</td></tr>
+        <tr><td><code>\t</code></td><td>Horizontal Tab</td><td>Inserts a tab space (typically 4-8 spaces)</td><td><code>"A\tB"</code></td><td>A&nbsp;&nbsp;&nbsp;&nbsp;B</td></tr>
+        <tr><td><code>\"</code></td><td>Double Quote</td><td>Prints a literal <code>"</code> inside a String</td><td><code>"He said \"Hi\""</code></td><td>He said "Hi"</td></tr>
+        <tr><td><code>\'</code></td><td>Single Quote</td><td>Prints a literal <code>'</code> inside a char</td><td><code>'\''</code></td><td>'</td></tr>
+        <tr><td><code>\\</code></td><td>Backslash</td><td>Prints a literal <code>\</code></td><td><code>"C:\\Java"</code></td><td>C:\Java</td></tr>
+        <tr><td><code>\r</code></td><td>Carriage Return</td><td>Moves cursor to start of same line</td><td><code>"Hi\rBye"</code></td><td>Bye (overwrites)</td></tr>
+        <tr><td><code>\b</code></td><td>Backspace</td><td>Deletes one character before</td><td><code>"Helo\b"</code></td><td>Hel</td></tr>
+        <tr><td><code>\f</code></td><td>Form Feed</td><td>New page (printers) — rarely used</td><td>—</td><td>—</td></tr>
+        <tr><td><code>\uXXXX</code></td><td>Unicode</td><td>Any Unicode character by hex code</td><td><code>"\u0041"</code></td><td>A</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 id="escape-examples">Escape Sequence Examples — Full Programs</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Escape Sequences in Action</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// \n — newline within a single string</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Line 1\nLine 2\nLine 3"</span>);
+<span class="cmt">// Output:
+// Line 1
+// Line 2
+// Line 3</span>
+
+<span class="cmt">// \t — tab alignment</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Name\tAge\tCity"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Ahmed\t20\tDubai"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Sara\t19\tAbu Dhabi"</span>);
+<span class="cmt">// Output:
+// Name    Age     City
+// Ahmed   20      Dubai
+// Sara    19      Abu Dhabi</span>
+
+<span class="cmt">// \" — printing double quotes</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"She said \"Java is powerful!\""</span>);
+<span class="cmt">// Output: She said "Java is powerful!"</span>
+
+<span class="cmt">// \\ — printing backslash (Windows file path)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Path: C:\\Users\\Ahmed\\Desktop"</span>);
+<span class="cmt">// Output: Path: C:\Users\Ahmed\Desktop</span>
+
+<span class="cmt">// \u — Unicode character</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"\u0048\u0065\u006C\u006C\u006F"</span>);
+<span class="cmt">// Output: Hello  (each \uXXXX is one Unicode character)</span>
+
+<span class="cmt">// Combining multiple escapes:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Results:\n\tMath:\t95\n\tScience:\t88"</span>);
+<span class="cmt">// Output:
+// Results:
+//     Math:   95
+//     Science:    88</span></pre>
+  </div>
+
+  <!-- ═══════════ 3.5 FORMAT SPECIFIERS ═══════════ -->
+  <div class="sec-hdr" id="format-specifiers">
+    <div class="sicon io">📐</div>
+    <div class="sec-title"><small>3.5 — printf</small>Format Specifiers — Complete Guide</div>
+  </div>
+  <p>Format specifiers are placeholders inside a <code>printf</code> format string. They start with <code>%</code> and tell Java what type of value to insert and how to format it.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Specifier</th><th>Type</th><th>Example Code</th><th>Output</th></tr></thead>
+      <tbody>
+        <tr><td><code>%d</code></td><td>Integer (decimal)</td><td><code>printf("%d", 42)</code></td><td>42</td></tr>
+        <tr><td><code>%f</code></td><td>Float/Double (6 decimals default)</td><td><code>printf("%f", 3.14)</code></td><td>3.140000</td></tr>
+        <tr><td><code>%.2f</code></td><td>Float/Double, 2 decimal places</td><td><code>printf("%.2f", 3.14159)</code></td><td>3.14</td></tr>
+        <tr><td><code>%s</code></td><td>String</td><td><code>printf("%s", "Hello")</code></td><td>Hello</td></tr>
+        <tr><td><code>%c</code></td><td>Character</td><td><code>printf("%c", 'A')</code></td><td>A</td></tr>
+        <tr><td><code>%b</code></td><td>Boolean</td><td><code>printf("%b", true)</code></td><td>true</td></tr>
+        <tr><td><code>%n</code></td><td>Platform newline</td><td><code>printf("Hi%n")</code></td><td>Hi + newline</td></tr>
+        <tr><td><code>%o</code></td><td>Integer in octal</td><td><code>printf("%o", 8)</code></td><td>10</td></tr>
+        <tr><td><code>%x</code></td><td>Integer in hex (lowercase)</td><td><code>printf("%x", 255)</code></td><td>ff</td></tr>
+        <tr><td><code>%X</code></td><td>Integer in hex (uppercase)</td><td><code>printf("%X", 255)</code></td><td>FF</td></tr>
+        <tr><td><code>%e</code></td><td>Scientific notation</td><td><code>printf("%e", 123456.0)</code></td><td>1.234560e+05</td></tr>
+        <tr><td><code>%%</code></td><td>Literal percent sign</td><td><code>printf("100%%")</code></td><td>100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Width and Alignment in printf</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Width, Precision, Alignment</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// %10d → right-align integer in 10-character-wide field</span>
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%10d%n"</span>, <span class="num">42</span>);
+<span class="cmt">// Output: "        42"  (8 spaces + 42)</span>
+
+<span class="cmt">// %-10d → left-align in 10-character-wide field</span>
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-10d|%n"</span>, <span class="num">42</span>);
+<span class="cmt">// Output: "42        |"</span>
+
+<span class="cmt">// Building a formatted table:</span>
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %5s %8s%n"</span>, <span class="str">"Name"</span>, <span class="str">"Age"</span>, <span class="str">"GPA"</span>);
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %5d %8.2f%n"</span>, <span class="str">"Ahmed Ali"</span>, <span class="num">20</span>, <span class="num">3.75</span>);
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %5d %8.2f%n"</span>, <span class="str">"Sara Khan"</span>, <span class="num">19</span>, <span class="num">3.90</span>);
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %5d %8.2f%n"</span>, <span class="str">"Omar Salem"</span>, <span class="num">21</span>, <span class="num">3.55</span>);
+<span class="cmt">// Output:
+// Name              Age      GPA
+// Ahmed Ali          20     3.75
+// Sara Khan          19     3.90
+// Omar Salem         21     3.55</span></pre>
+  </div>
+
+  <!-- ═══════════ 3.6 CASE SENSITIVITY ═══════════ -->
+  <div class="sec-hdr" id="case-sensitive">
+    <div class="sicon ir">🔡</div>
+    <div class="sec-title"><small>3.6 — Rules</small>Case Sensitivity in Java</div>
+  </div>
+  <p>Java is <strong>100% case-sensitive</strong>. Uppercase and lowercase letters are completely different characters. This is one of the most common sources of beginner errors.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Case Sensitivity — Every Example</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Keywords are lowercase — uppercase versions don't exist:</span>
+<span class="kw">public</span>  ✓    Public  ✗    PUBLIC  ✗
+<span class="kw">class</span>   ✓    Class   ✗    CLASS   ✗
+<span class="kw">static</span>  ✓    Static  ✗    STATIC  ✗
+<span class="kw">void</span>    ✓    Void    ✗    VOID    ✗
+<span class="kw">int</span>     ✓    Int     ✗    INT     ✗
+
+<span class="cmt">// Class names — MUST match filename exactly:</span>
+<span class="cls">HelloWorld</span>  ✓  (file: HelloWorld.java)
+<span class="cls">helloworld</span>  ✗  (would need file: helloworld.java)
+
+<span class="cmt">// System.out.println — all three parts case-sensitive:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>()   ✓
+system.out.println()   ✗  (system must be capital S)
+System.Out.println()   ✗  (out must be lowercase)
+System.out.PrintLn()   ✗  (method name must be println)
+
+<span class="cmt">// Variable names — case creates completely different variables:</span>
+<span class="kw">int</span> age = <span class="num">20</span>;
+<span class="kw">int</span> Age = <span class="num">25</span>;   <span class="cmt">// different variable! 'age' ≠ 'Age'</span>
+<span class="kw">int</span> AGE = <span class="num">30</span>;   <span class="cmt">// another different variable!</span></pre>
+  </div>
+
+  <!-- ═══════════ 3.7 WHITESPACE ═══════════ -->
+  <div class="sec-hdr" id="whitespace">
+    <div class="sicon ig">📏</div>
+    <div class="sec-title"><small>3.7 — Style</small>Whitespace, Indentation & Code Style</div>
+  </div>
+  <p>Java <strong>ignores extra whitespace</strong> (spaces, tabs, newlines) between tokens. The following two programs are identical to the compiler:</p>
+  <div class="cmp">
+    <div class="cside">
+      <div class="clbl cr">Ugly but valid ✓</div>
+      <pre style="font-size:.78rem;padding:14px">public class A{public static void main(String[] a){System.out.println("Hi");}}</pre>
+    </div>
+    <div class="cside">
+      <div class="clbl cg">Clean and readable ✓</div>
+      <pre style="font-size:.78rem;padding:14px"><span class="kw">public class</span> <span class="cls">A</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] a) {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hi"</span>);
+    }
+}</pre>
+    </div>
+  </div>
+  <p>Both compile identically. But always write <strong>clean code</strong> — readability is a professional skill and is sometimes graded in university assignments.</p>
+  <div class="box bg" data-icon="✅">
+    <div class="btitle">Java Code Style Conventions</div>
+    <ul>
+      <li><strong>Indentation:</strong> Use 4 spaces (or 1 tab) per nesting level. Be consistent.</li>
+      <li><strong>Opening brace:</strong> On the same line as the declaration — <code>class Foo {</code> not on a new line.</li>
+      <li><strong>One statement per line:</strong> Never put two statements on one line (even though it's allowed).</li>
+      <li><strong>Blank lines:</strong> Separate logical sections with a blank line for readability.</li>
+      <li><strong>Naming:</strong> Classes → PascalCase. Variables/methods → camelCase. Constants → ALL_CAPS.</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════ COMMON MISTAKES ═══════════ -->
+  <div class="sec-hdr" id="common-mistakes">
+    <div class="sicon ir">🚫</div>
+    <div class="sec-title"><small>3.8 — Watch Out</small>Most Common Syntax Mistakes</div>
+  </div>
+  <div class="trap">
+    <div class="trap-title">Top Syntax Mistakes — Chapter 3</div>
+    <ol>
+      <li><strong>Mixing up print and println</strong> — Using <code>print</code> when you need a newline, leading to output piling up on one line unexpectedly.</li>
+      <li><strong>Forgetting %n in printf</strong> — <code>printf</code> does NOT automatically add a newline. Use <code>%n</code> at the end of the format string, or output won't start on a new line.</li>
+      <li><strong>Typing \ instead of \\</strong> — <code>"C:\Users"</code> causes an error because <code>\U</code> is an invalid escape. Must be <code>"C:\\Users"</code>.</li>
+      <li><strong>Wrong quote type for chars</strong> — <code>char c = "A"</code> is wrong (double quotes = String). Must be <code>char c = 'A'</code> (single quotes).</li>
+      <li><strong>Using wrong format specifier</strong> — <code>printf("%d", 3.14)</code> causes a runtime exception. Use <code>%f</code> for floats/doubles, <code>%d</code> for integers only.</li>
+      <li><strong>Keyword as variable name</strong> — <code>int class = 5;</code> causes a compile error. <code>class</code> is a keyword.</li>
+      <li><strong>Missing semicolon after statement</strong> — The most common of all. Every statement ends with <code>;</code>. Comments and class/method declarations do NOT use semicolons.</li>
+    </ol>
+  </div>
+
+  <!-- ═══════════ DRY RUN ═══════════ -->
+  <div class="sec-hdr" id="dry-run">
+    <div class="sicon ig">🔍</div>
+    <div class="sec-title"><small>3.9 — Trace</small>Dry Run — Output Prediction</div>
+  </div>
+  <p>Before running code, trace through it manually. This skill is tested directly in university exams.</p>
+
+  <div class="box bb" data-icon="👁️">
+    <div class="btitle">Trace These — Predict Before Revealing</div>
+
+    <p><strong>Program 1:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict Output</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"A"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"B"</span>);
+<span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"C"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"D"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"E"</span>);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">AB<br>CD<br>E<br><br>Trace: print("A") → A (no newline). println("B") → B then newline. Line 1: AB. print("C") → C (no newline). println("D") → D then newline. Line 2: CD. println("E") → E then newline. Line 3: E.</div>
+
+    <p style="margin-top:18px"><strong>Program 2:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict Output</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%.1f%n"</span>, <span class="num">3.76</span>);
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%.0f%n"</span>, <span class="num">3.76</span>);
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%5d%n"</span>, <span class="num">42</span>);
+<span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-5d|%n"</span>, <span class="num">42</span>);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">3.8<br>4<br>&nbsp;&nbsp;&nbsp;42<br>42&nbsp;&nbsp;&nbsp;|<br><br>Trace: %.1f → 1 decimal, rounds 3.76 to 3.8. %.0f → 0 decimals, rounds 3.76 to 4. %5d → right-aligned in 5 chars: "   42". %-5d → left-aligned in 5 chars: "42   " then the pipe.</div>
+
+    <p style="margin-top:18px"><strong>Program 3:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict Output</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello\tWorld\nJava\tProgramming"</span>);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">Hello&nbsp;&nbsp;&nbsp;&nbsp;World<br>Java&nbsp;&nbsp;&nbsp;&nbsp;Programming<br><br>Trace: \t = tab, \n = newline. So: "Hello" + tab + "World" + newline then "Java" + tab + "Programming".</div>
+  </div>
+
+  <!-- ═══════════ MEMORY TIPS ═══════════ -->
+  <div class="mem" id="memory-tips">
+    <div class="mem-title">Memory Tips — Chapter 3</div>
+    <ul>
+      <li><strong>println vs print:</strong> "ln = line = LINE BREAK. print has no ln = no line break."</li>
+      <li><strong>printf %n vs \n:</strong> Use <code>%n</code> inside printf (platform-safe). Use <code>\n</code> inside println/print strings.</li>
+      <li><strong>Escape sequences:</strong> "Backslash breaks the spell" — \n = newline, \t = tab, \\ = backslash, \" = quote.</li>
+      <li><strong>Case sensitivity rule:</strong> "Java sees A and a as strangers — they've never met." Treat every letter's case as significant.</li>
+      <li><strong>Semicolons:</strong> "Every sentence (statement) needs a full stop (;). Class and method headers are NOT sentences — no semicolon."</li>
+      <li><strong>%.2f</strong> → "dot 2 = 2 decimal places". %.0f = no decimals. %8.2f = 8-wide, 2 decimals.</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════ EXAM PREP ═══════════ -->
+  <div class="sec-hdr" id="exam-prep">
+    <div class="sicon io">📝</div>
+    <div class="sec-title"><small>3.10 — Exam</small>University Exam Preparation</div>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">2 Marks — Short Answer</div>
+    <p><strong>Q: What is the difference between System.out.print() and System.out.println()?</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> <code>System.out.println()</code> prints the given value and then moves the cursor to the beginning of the next line (adds a newline character at the end). <code>System.out.print()</code> prints the value and leaves the cursor on the same line — no newline is added. The next output from <code>print()</code> or <code>println()</code> will continue from the cursor's current position. Example: two consecutive <code>print("A")</code> and <code>print("B")</code> calls produce <code>AB</code> on one line, while two <code>println()</code> calls produce A and B on separate lines.</p>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">3 Marks — Explain with Example</div>
+    <p><strong>Q: What are escape sequences in Java? List any four with examples.</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> Escape sequences are special two-character combinations within a String that begin with a backslash (<code>\</code>) and represent characters that cannot be typed directly in code or have special meaning. The backslash "escapes" the normal meaning of the following character.<br><br>
+    Four important escape sequences:<br>
+    <code>\n</code> — Newline: moves cursor to start of next line. Example: <code>println("Hello\nWorld")</code> prints on two lines.<br>
+    <code>\t</code> — Tab: inserts horizontal tab space. Example: <code>println("Name\tAge")</code> adds tab between words.<br>
+    <code>\"</code> — Double quote: prints a literal " inside a String. Example: <code>println("She said \"Hi\"")</code> outputs: She said "Hi"<br>
+    <code>\\</code> — Backslash: prints a single \. Example: <code>println("C:\\Java")</code> outputs: C:\Java</p>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">4 Marks — Code + Output</div>
+    <p><strong>Q: Write a Java program using printf to print a formatted student report with name, roll number, and GPA — right-aligned in 15, 8, and 6 character columns respectively.</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Model Answer</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">public class</span> <span class="cls">StudentReport</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cmt">// Header</span>
+        <span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %8s %6s%n"</span>, <span class="str">"Name"</span>, <span class="str">"Roll No"</span>, <span class="str">"GPA"</span>);
+        <span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %8s %6s%n"</span>, <span class="str">"----------"</span>, <span class="str">"-------"</span>, <span class="str">"---"</span>);
+        <span class="cmt">// Data rows</span>
+        <span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %8d %6.2f%n"</span>, <span class="str">"Ahmed Ali"</span>, <span class="num">2023001</span>, <span class="num">3.75</span>);
+        <span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %8d %6.2f%n"</span>, <span class="str">"Sara Khan"</span>, <span class="num">2023002</span>, <span class="num">3.90</span>);
+        <span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%-15s %8d %6.2f%n"</span>, <span class="str">"Omar Salem"</span>, <span class="num">2023003</span>, <span class="num">3.55</span>);
+    }
+}</pre></div>
+  </div>
+
+  <h3>MCQ Bank</h3>
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q1.</span>What is the output of: <code>System.out.print("A"); System.out.println("B"); System.out.print("C");</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>A B C (each on new line)</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>AB on line 1, then C on same line (no trailing newline)</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>ABC all on one line</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>A on line 1, BC on line 2</div>
+    </div>
+    <div class="qa">✓ print("A") → A (no newline, cursor stays). println("B") → B then newline. So first visible line = "AB". print("C") → C (no newline, cursor stays after C). Output: line 1 = AB, then C without a newline at end.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q2.</span>What does the escape sequence <code>\\</code> produce inside a String?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>Two backslashes \\</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>A single backslash \</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>A newline character</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>An empty string</div>
+    </div>
+    <div class="qa">✓ <code>\\</code> is the escape sequence for a literal backslash. The first <code>\</code> tells Java "escape the next character". The second <code>\</code> is the character being escaped. Result: one printed backslash. So <code>"C:\\Java"</code> prints <code>C:\Java</code>.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q3.</span>What is the output of: <code>System.out.printf("%.2f", 3.14567);</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>3.14567</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>3.14</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>3.15</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>3.1</div>
+    </div>
+    <div class="qa">✓ <code>%.2f</code> formats a float/double to exactly 2 decimal places with rounding. 3.14567 rounded to 2 decimals: the third decimal is 5, so the second decimal rounds up from 4 to 5. Result: 3.15.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q4.</span>Which of the following is NOT a valid Java identifier?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span><code>_myVar</code></div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span><code>$amount</code></div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span><code>2count</code></div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span><code>myVar2</code></div>
+    </div>
+    <div class="qa">✓ <code>2count</code> is invalid because identifiers cannot start with a digit. They can start with a letter, underscore (_), or dollar sign ($). A digit can appear AFTER the first character (e.g., <code>count2</code> is valid).</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q5.</span>What is the purpose of Javadoc comments (<code>/** */</code>)?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>They are faster to write than // comments</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>They can span multiple lines unlike // comments</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>They can be processed by the javadoc tool to generate HTML documentation</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>They are executed by the JVM as special instructions</div>
+    </div>
+    <div class="qa">✓ Javadoc comments (/** */) are read by the <code>javadoc</code> tool to automatically generate HTML API documentation — like the official Java docs at docs.oracle.com. They support special tags like @param, @return, @author to structure the documentation.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <!-- ═══════════ REVISION ═══════════ -->
+  <div class="rev" id="revision">
+    <div class="rev-title">Quick Revision — Chapter 3</div>
+    <div class="rvpt">Java program structure: package → imports → class → fields → main method → statements. All code inside a class. All executable code inside methods.</div>
+    <div class="rvpt">Tokens: keywords, identifiers, literals, operators, separators. Identifiers can start with letter, _, or $ — not digits. Cannot use keywords as names.</div>
+    <div class="rvpt">Three comment types: <code>//</code> single-line, <code>/* */</code> multi-line (not nestable), <code>/** */</code> Javadoc (generates HTML documentation).</div>
+    <div class="rvpt"><code>println()</code> = print + newline. <code>print()</code> = print only, no newline. <code>printf()</code> = formatted, newline only with <code>%n</code>.</div>
+    <div class="rvpt">Key escape sequences: <code>\n</code> newline, <code>\t</code> tab, <code>\"</code> double quote, <code>\\</code> backslash, <code>\uXXXX</code> unicode.</div>
+    <div class="rvpt">printf specifiers: <code>%d</code> int, <code>%f</code> float, <code>%.2f</code> 2 decimals, <code>%s</code> string, <code>%c</code> char, <code>%%</code> literal percent.</div>
+    <div class="rvpt">Java is 100% case-sensitive. <code>System</code> ≠ <code>system</code>. <code>main</code> ≠ <code>Main</code>. <code>int</code> ≠ <code>Int</code>.</div>
+    <div class="rvpt">Whitespace is ignored by compiler. But always write properly indented, readable code.</div>
+    <div class="rvpt">Semicolons end statements. Class/method headers and comments do NOT get semicolons.</div>
+  </div>
+
+  <!-- ═══════════ PRACTICE ═══════════ -->
+  <div class="sec-hdr" id="practice">
+    <div class="sicon ic">💪</div>
+    <div class="sec-title"><small>3.11 — Practice</small>Practice Problems</div>
+  </div>
+
+  <h3>Easy</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P3.1</div><div><div class="pt">Comment Every Line</div><div class="pd">Take the HelloWorld program and add a meaningful comment above EVERY line explaining what it does and why. Practice all three comment styles.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.2</div><div><div class="pt">print vs println Race</div><div class="pd">Write a program using ONLY <code>print()</code> (no println) that produces output on exactly 4 separate lines. Hint: you'll need <code>\n</code> escape sequences.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.3</div><div><div class="pt">Escape Sequence Gallery</div><div class="pd">Write one println statement per escape sequence demonstrating: <code>\n</code>, <code>\t</code>, <code>\"</code>, <code>\\</code>. Show clearly what each one produces in the output.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.4</div><div><div class="pt">Windows Path Printer</div><div class="pd">Print this exact path: <code>C:\Program Files\Java\jdk-17\bin\javac.exe</code>. Count carefully — how many backslashes do you need in the code?</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.5</div><div><div class="pt">Quoted Dialogue</div><div class="pd">Print this exact dialogue (with all punctuation):<br>Teacher: "What is Java?"<br>Student: "Java is 'awesome'!"</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.6</div><div><div class="pt">Spot the Keyword</div><div class="pd">From this list, identify which are Java keywords and which are valid identifiers: <code>class</code>, <code>myClass</code>, <code>static</code>, <code>Static</code>, <code>int</code>, <code>integer</code>, <code>void</code>, <code>Void</code>, <code>true</code>, <code>isTrue</code></div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.7</div><div><div class="pt">Invalid Identifier Hunt</div><div class="pd">Write down which of these are invalid and why: <code>_test</code>, <code>2value</code>, <code>my-name</code>, <code>$price</code>, <code>for</code>, <code>goto</code>, <code>MAX SIZE</code>, <code>camelCase</code></div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.8</div><div><div class="pt">printf Basic</div><div class="pd">Use printf to print your name (string), age (integer), and GPA (float to 2 decimals) in one formatted line using %s, %d, %.2f.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+  </div>
+
+  <h3>Medium</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P3.9</div><div><div class="pt">Formatted Grade Card</div><div class="pd">Use printf to print a student grade card with 4 subjects. Each row: subject name (left-aligned, 15 chars), marks (right-aligned, 5 chars), grade (3 chars). Add a header row and separator line.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.10</div><div><div class="pt">Output Prediction Sheet</div><div class="pd">Without running, predict the exact output of 5 given code snippets mixing print, println, printf, and escape sequences. Then verify each one. Document every prediction that was wrong and explain why.</div><div class="ptags"><span class="ptag pm">Medium</span><span class="ptag po">Predict</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.11</div><div><div class="pt">Javadoc Practice</div><div class="pd">Write a class with 3 static methods (add, subtract, multiply). Write complete Javadoc for each: @param for each parameter, @return, and a description. Then run javadoc to generate the HTML docs.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.12</div><div><div class="pt">Bug Collector</div><div class="pd">Find and fix all errors: <code>System.out.Println("Hello\World"); System.Out.print("Tab:\there"); system.out.printf("%.d", 3.14);</code></div><div class="ptags"><span class="ptag pm">Medium</span><span class="ptag pd2">Debug</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.13</div><div><div class="pt">Receipt Printer</div><div class="pd">Print a shopping receipt using printf: item name (left-aligned 20 chars), quantity (5 chars), unit price (8.2f), total (8.2f). Include header, 3 items, and a total row. All columns aligned perfectly.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.14</div><div><div class="pt">Unicode Art</div><div class="pd">Research Unicode character codes for: stars (★ = \u2605), arrows (→ = \u2192), checkmarks (✓ = \u2713), hearts (♥ = \u2665). Use them to print a decorative information card using println.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+  </div>
+
+  <h3>Hard</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P3.15</div><div><div class="pt">Single-Statement Multi-line</div><div class="pd">Using ONE System.out.println() statement, reproduce this exact output (7 lines, tabs for alignment): a formatted ASCII table with borders made of ─, │, ┌, ┐, └, ┘ unicode characters.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.16</div><div><div class="pt">Precision Rounding Experiment</div><div class="pd">Predict then verify: what does printf produce for %.0f with 0.5, 1.5, 2.5, 3.5? Research "banker's rounding" — does Java use it? Write your findings as comments in the code.</div><div class="ptags"><span class="ptag ph">Hard</span><span class="ptag po">Research</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.17</div><div><div class="pt">Reverse-Engineer</div><div class="pd">Given this exact output, write the Java code that produces it — you must figure out which print method and escape sequences were used:<br><code>Line "one"<br>&nbsp;&nbsp;&nbsp;&nbsp;Tab→here<br>Path: C:\test\run<br>Done!</code></div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P3.18</div><div><div class="pt">The Great Printf Table</div><div class="pd">Using printf exclusively, print a complete class timetable: days as column headers, times as row headers, subject names in cells. Use %-Ns for left-aligned strings and ensure all columns are perfectly aligned regardless of cell content length.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+  </div>
+
+  <div class="challenge">
+    <div class="ch-ctitle">Chapter 3 Challenge</div>
+    <p style="color:var(--text-dim);margin-bottom:14px">Test your real mastery of Java syntax.</p>
+    <ul>
+      <li><strong>No-IDE test:</strong> Without autocomplete, write from memory a complete Java program with correct package declaration, import, class, Javadoc comment, and main method. No errors allowed.</li>
+      <li><strong>Escape puzzle:</strong> What does this print — trace it completely before running: <code>System.out.println("\\n is a \\\"newline\\\"\\ttab is \\t");</code></li>
+      <li><strong>printf challenge:</strong> Print a multiplication table from 1×1 to 5×5 using ONLY printf — all values right-aligned in a 4-character-wide column. No println allowed.</li>
+      <li><strong>Research:</strong> What is <code>System.out.format()</code>? How is it different from (or the same as) <code>printf()</code>? Test it.</li>
+    </ul>
+  </div>
+
+  <!-- NAV -->
+  <div class="chnav">
+    <a href="ch02-setup.html" class="navbtn">
+      <div class="navlbl">← Previous</div>
+      <div class="navtitle">Chapter 2: Setting Up Java</div>
+    </a>
+    <a href="ch04-variables.html" class="navbtn nxt">
+      <div class="navlbl">Next Chapter →</div>
+      <div class="navtitle">Chapter 4: Variables & Data Types</div>
+    </a>
+  </div>
+
+</div><!-- .main -->
+</div><!-- .layout -->
+
+<script>
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('prog').style.width =
+    (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+});
+const tocLinks = document.querySelectorAll('.toc-item');
+const secs = [...document.querySelectorAll('[id]')].filter(el =>
+  [...tocLinks].some(l => l.getAttribute('href') === '#' + el.id));
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+  tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+  });
+});
+function ca(el, correct) {
+  el.closest('.qopts').querySelectorAll('.qo').forEach(o => o.style.pointerEvents = 'none');
+  el.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) el.closest('.qopts').querySelectorAll('.qo').forEach(o => {
+    if (o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+  });
+  const qa = el.closest('.qi').querySelector('.qa');
+  if (qa) qa.classList.add('show');
+}
+function ra(btn) {
+  const qa = btn.previousElementSibling;
+  qa.classList.toggle('show');
+  btn.textContent = qa.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+}
+</script>
+</body>
+</html>
