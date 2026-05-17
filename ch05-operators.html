@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 5 — Operators & Expressions</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--surface3:#21262d;--border:#30363d;--accent:#f0a500;--accent2:#e05c2a;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#484f58;--red:#ff6b6b;--green:#3fb950;--blue:#58a6ff;--purple:#bc8cff;--yellow:#f0a500;--orange:#e05c2a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.8}
+header{position:sticky;top:0;z-index:100;height:56px;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;backdrop-filter:blur(12px)}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+.logo a{color:var(--accent);text-decoration:none;font-weight:700}.logo a:hover{text-decoration:underline}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 10px;border-radius:12px;background:rgba(240,165,0,.1);color:var(--accent);border:1px solid rgba(240,165,0,.3)}
+.top-progress{height:3px;background:var(--surface2);position:sticky;top:56px;z-index:99}
+.top-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 56px)}
+.toc{position:sticky;top:59px;height:calc(100vh - 59px);overflow-y:auto;border-right:1px solid var(--border);padding:24px 0;background:var(--surface)}
+.toc::-webkit-scrollbar{width:3px}.toc::-webkit-scrollbar-thumb{background:var(--border)}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);padding:0 18px 10px;font-weight:700}
+.toc-item{display:block;padding:6px 18px;font-size:.82rem;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.4}
+.toc-item:hover{color:var(--text);border-left-color:var(--border);background:var(--surface2)}
+.toc-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(240,165,0,.06)}
+.toc-item.sub{padding-left:30px;font-size:.78rem}
+.toc-div{height:1px;background:var(--border);margin:10px 18px}
+.main{padding:52px 60px 80px;max-width:860px}
+.ch-hero{margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.ch-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ch-tag::before{content:'';width:28px;height:2px;background:var(--accent)}
+.ch-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;line-height:1.08;margin-bottom:14px;letter-spacing:-1.5px}
+.ch-title em{color:var(--accent);font-style:italic}
+.ch-sub{font-size:1.05rem;color:var(--text-dim);max-width:580px;font-weight:300;line-height:1.7;margin-bottom:28px}
+.ch-meta{display:flex;gap:22px;flex-wrap:wrap}
+.meta{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted)}
+.mdot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.sec-hdr{display:flex;align-items:center;gap:14px;margin:48px 0 20px}
+.sicon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.ic{background:rgba(88,166,255,.12);color:var(--blue)}.ig{background:rgba(63,185,80,.12);color:var(--green)}.ip{background:rgba(188,140,255,.12);color:var(--purple)}.iy{background:rgba(240,165,0,.12);color:var(--yellow)}.ir{background:rgba(255,107,107,.12);color:var(--red)}.io{background:rgba(224,92,42,.12);color:var(--orange)}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700}
+.sec-title small{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:2px}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:28px 0 10px;padding-left:12px;border-left:3px solid var(--accent2)}
+h4{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin:18px 0 7px}
+p{margin-bottom:15px}p:last-child{margin-bottom:0}
+strong{color:var(--accent);font-weight:600}em{color:var(--blue);font-style:italic}
+.cb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin:20px 0;overflow:hidden}
+.cbh{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);background:var(--surface3)}
+.cbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.dots{display:flex;gap:5px}.dots span{width:10px;height:10px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
+pre{padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.86rem;line-height:1.7}
+pre::-webkit-scrollbar{height:4px}pre::-webkit-scrollbar-thumb{background:var(--border)}
+.kw{color:#ff79c6;font-weight:600}.str{color:#f1fa8c}.num{color:#bd93f9}.cls{color:#8be9fd;font-weight:600}.fn{color:#50fa7b}.cmt{color:#6272a4;font-style:italic}.type{color:#cba6f7}
+code{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--surface3);padding:2px 7px;border-radius:4px;color:var(--purple);border:1px solid var(--border)}
+.box{border-radius:10px;padding:20px 24px;margin:20px 0;border-left:4px solid;position:relative;overflow:hidden}
+.box::before{content:attr(data-icon);position:absolute;right:16px;top:12px;font-size:1.7rem;opacity:.1}
+.bb{background:rgba(88,166,255,.06);border-color:var(--blue)}.bg{background:rgba(63,185,80,.06);border-color:var(--green)}.by{background:rgba(240,165,0,.06);border-color:var(--yellow)}.br{background:rgba(255,107,107,.06);border-color:var(--red)}.bp{background:rgba(188,140,255,.06);border-color:var(--purple)}.bo{background:rgba(224,92,42,.06);border-color:var(--orange)}
+.btitle{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-weight:700}
+.bb .btitle{color:var(--blue)}.bg .btitle{color:var(--green)}.by .btitle{color:var(--yellow)}.br .btitle{color:var(--red)}.bp .btitle{color:var(--purple)}.bo .btitle{color:var(--orange)}
+.diag{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.65;overflow-x:auto;white-space:pre;color:var(--text)}
+.tw{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead tr{background:var(--surface3)}
+th{padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);border-bottom:2px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+td code{font-family:'JetBrains Mono',monospace;font-size:.8rem;background:var(--surface3);padding:2px 5px;border-radius:4px;color:var(--purple)}
+ul,ol{margin:10px 0 16px;padding-left:0;list-style:none}
+ul li,ol li{padding:5px 0 5px 24px;position:relative}
+ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.8rem}
+ol{counter-reset:cnt}ol li{counter-increment:cnt}
+ol li::before{content:counter(cnt)'.';position:absolute;left:0;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:700}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.cside{background:var(--surface2);padding:20px 22px}
+.clbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:700}
+.cr{color:var(--red)}.cg{color:var(--green)}.cb2{color:var(--blue)}.cp{color:var(--purple)}
+.drb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.drh{background:var(--surface3);padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--green);text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid var(--border)}
+.drb table{font-size:.82rem}.drb th{color:var(--green);font-size:.66rem}.drb td{font-family:'JetBrains Mono',monospace}
+.drb tr.hl td{background:rgba(63,185,80,.06);color:var(--green)}
+.mem{background:linear-gradient(135deg,rgba(188,140,255,.08),rgba(240,165,0,.05));border:1px solid rgba(188,140,255,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative;overflow:hidden}
+.mem::after{content:'🧠';position:absolute;right:18px;top:14px;font-size:1.8rem;opacity:.25}
+.mem-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin-bottom:8px}
+.trap{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative}
+.trap::after{content:'⚠️';position:absolute;right:18px;top:14px;font-size:1.4rem;opacity:.4}
+.trap-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.qi{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:14px 0;transition:border-color .2s}
+.qi:hover{border-color:rgba(240,165,0,.3)}
+.qq{font-weight:600;margin-bottom:12px;font-size:.93rem}
+.qnum{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);margin-right:7px}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qo{padding:8px 14px;border-radius:7px;border:1px solid var(--border);cursor:pointer;font-size:.88rem;transition:all .15s;display:flex;align-items:center;gap:10px}
+.qo:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.qo.correct{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);pointer-events:none}
+.qo.wrong{border-color:var(--red);background:rgba(255,107,107,.1);color:var(--red);pointer-events:none}
+.ol{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:18px;font-weight:700}
+.qa{margin-top:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:7px;font-size:.84rem;display:none;color:var(--green);line-height:1.6}
+.qa.show{display:block}
+.rbtn{margin-top:9px;padding:6px 14px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s}
+.rbtn:hover{border-color:var(--accent);color:var(--accent)}
+/* truth table */
+.tt{background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.tt table{font-size:.84rem;font-family:'JetBrains Mono',monospace}
+.tt th{font-size:.7rem;color:var(--blue);letter-spacing:1px}
+.tt td{text-align:center}
+.tt td.t{color:var(--green)}.tt td.f{color:var(--red)}
+/* precedence table */
+.prec-row{display:flex;align-items:stretch;gap:0;margin:6px 0}
+.prec-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:32px;display:flex;align-items:center;justify-content:center;background:var(--surface3);border:1px solid var(--border);border-right:none;border-radius:6px 0 0 6px;padding:6px}
+.prec-body{flex:1;background:var(--surface2);border:1px solid var(--border);padding:8px 14px;border-radius:0 6px 6px 0}
+.prec-ops{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--purple)}
+.prec-desc{font-size:.78rem;color:var(--text-dim);margin-top:2px}
+.pgrid{display:grid;gap:10px}
+.pc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;transition:border-color .15s}
+.pc:hover{border-color:rgba(240,165,0,.25)}
+.pnum{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);min-width:28px;padding-top:2px}
+.pt{font-weight:600;margin-bottom:3px;font-size:.9rem}
+.pd{font-size:.84rem;color:var(--text-dim);margin-bottom:5px;line-height:1.55}
+.ptags{display:flex;gap:5px;flex-wrap:wrap}
+.ptag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;border:1px solid}
+.pe{color:var(--green);border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.07)}
+.pm{color:var(--yellow);border-color:rgba(240,165,0,.4);background:rgba(240,165,0,.07)}
+.ph{color:var(--red);border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.07)}
+.pd2{color:var(--purple);border-color:rgba(188,140,255,.4);background:rgba(188,140,255,.07)}
+.po{color:var(--blue);border-color:rgba(88,166,255,.4);background:rgba(88,166,255,.07)}
+.rev{background:linear-gradient(135deg,rgba(240,165,0,.07),rgba(224,92,42,.05));border:1px solid rgba(240,165,0,.25);border-radius:10px;padding:24px 28px;margin:32px 0}
+.rev-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.rev-title::before{content:'★';font-size:.85rem}
+.rvpt{display:flex;gap:10px;align-items:baseline;font-size:.88rem;margin-bottom:6px;line-height:1.65}
+.rvpt::before{content:'→';color:var(--accent);flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.challenge{background:linear-gradient(135deg,rgba(224,92,42,.1),rgba(255,107,107,.07));border:1px solid rgba(224,92,42,.35);border-radius:12px;padding:28px 32px;margin:32px 0}
+.ch-ctitle{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--orange);margin-bottom:8px}
+.ch-ctitle::before{content:'🔥 '}
+.exam-card{background:var(--surface2);border:1px solid rgba(224,92,42,.3);border-radius:10px;padding:20px 24px;margin:14px 0}
+.exam-tag{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--orange);margin-bottom:8px}
+.chnav{display:flex;justify-content:space-between;gap:20px;margin-top:60px;padding-top:32px;border-top:1px solid var(--border)}
+.navbtn{background:var(--surface2);border:1px solid var(--border);padding:14px 22px;border-radius:10px;cursor:pointer;transition:all .2s;flex:1;max-width:250px;text-decoration:none;color:inherit;display:block}
+.navbtn:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.navbtn.nxt{text-align:right}
+.navlbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:3px}
+.navtitle{font-weight:600;font-size:.9rem}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.toc{display:none}.main{padding:32px 24px 60px}.ch-title{font-size:2.2rem}.cmp{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">☕ Java Mastery</a> / Chapter 05 — Operators &amp; Expressions</div>
+  <span class="ch-badge">Chapter 05 of 21</span>
+</header>
+<div class="top-progress"><div class="top-progress-fill" id="prog"></div></div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">On This Page</div>
+  <a class="toc-item active" href="#what-operator">What is an Operator?</a>
+  <a class="toc-item" href="#arithmetic">Arithmetic Operators</div>
+  <a class="toc-item sub" href="#int-division">Integer Division</a>
+  <a class="toc-item sub" href="#modulus">Modulus %</a>
+  <a class="toc-item" href="#relational">Relational Operators</a>
+  <a class="toc-item" href="#logical">Logical Operators</a>
+  <a class="toc-item sub" href="#short-circuit">Short-Circuit Eval</a>
+  <a class="toc-item" href="#assignment">Assignment Operators</a>
+  <a class="toc-item" href="#unary">Unary Operators</a>
+  <a class="toc-item sub" href="#increment">Increment & Decrement</a>
+  <a class="toc-item" href="#bitwise">Bitwise Operators</a>
+  <a class="toc-item" href="#ternary">Ternary Operator</a>
+  <a class="toc-item" href="#string-concat">String Concatenation</a>
+  <a class="toc-item" href="#precedence">Operator Precedence</a>
+  <a class="toc-item sub" href="#prec-examples">Precedence Examples</a>
+  <div class="toc-div"></div>
+  <a class="toc-item" href="#common-mistakes">Common Mistakes</a>
+  <a class="toc-item" href="#dry-run">Dry Run</a>
+  <a class="toc-item" href="#memory-tips">Memory Tips</a>
+  <a class="toc-item" href="#exam-prep">Exam Prep</a>
+  <a class="toc-item" href="#revision">Quick Revision</a>
+  <a class="toc-item" href="#practice">Practice Problems</a>
+</nav>
+
+<div class="main">
+  <div class="ch-hero">
+    <div class="ch-tag">Chapter 05 — Phase 1: Fundamentals</div>
+    <div class="ch-title">Operators &amp; <em>Expressions</em></div>
+    <div class="ch-sub">Operators are the verbs of Java — they perform actions on data. Master every operator, understand short-circuit evaluation, and learn operator precedence so you never misread an expression again.</div>
+    <div class="ch-meta">
+      <div class="meta"><div class="mdot"></div>~50 min read</div>
+      <div class="meta"><div class="mdot"></div>8 Operator Types</div>
+      <div class="meta"><div class="mdot"></div>7 MCQs</div>
+      <div class="meta"><div class="mdot"></div>25 Practice Problems</div>
+    </div>
+  </div>
+
+  <!-- ════ 5.1 WHAT IS AN OPERATOR ════ -->
+  <div class="sec-hdr" id="what-operator">
+    <div class="sicon ic">⚡</div>
+    <div class="sec-title"><small>5.1 — Concept</small>What is an Operator?</div>
+  </div>
+  <p>An <strong>operator</strong> is a special symbol that tells Java to perform a specific action on one or more values (called <em>operands</em>). The combination of operators and operands forms an <strong>expression</strong>. Every expression evaluates to a single value.</p>
+  <div class="box by" data-icon="🔧">
+    <div class="btitle">Analogy — Kitchen Tools</div>
+    <p>Operands are ingredients (5, 3, "Hello"). Operators are the kitchen tools that do something with them: <code>+</code> is the mixer (combines), <code>-</code> is the knife (subtracts), <code>*</code> is the oven (multiplies). The result is the final dish — the evaluated value of the expression.</p>
+  </div>
+  <div class="diag">  Expression:    5  +  3  *  2
+                 ↑     ↑     ↑
+              operand  operator  operand
+              
+  An expression always evaluates to a VALUE:
+  5 + 3 * 2  →  11   (number)
+  10 > 5     →  true  (boolean)
+  "Hi" + "!"  →  "Hi!"  (String)
+  a = 5       →  5    (assignment returns the value assigned)</div>
+
+  <p>Java operators are grouped into 8 categories. We will cover each one in depth.</p>
+
+  <!-- ════ 5.2 ARITHMETIC ════ -->
+  <div class="sec-hdr" id="arithmetic">
+    <div class="sicon ig">➕</div>
+    <div class="sec-title"><small>5.2 — Category 1</small>Arithmetic Operators</div>
+  </div>
+  <p>These perform standard mathematical operations. They work on numeric types (byte, short, int, long, float, double).</p>
+
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Arithmetic Operators — Complete</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> a = <span class="num">17</span>, b = <span class="num">5</span>;
+
+<span class="cls">System</span>.out.<span class="fn">println</span>(a + b);   <span class="cmt">// 22  — addition</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a - b);   <span class="cmt">// 12  — subtraction</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a * b);   <span class="cmt">// 85  — multiplication</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a / b);   <span class="cmt">// 3   — INTEGER division (truncated!)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a % b);   <span class="cmt">// 2   — modulus (remainder: 17 = 5×3 + 2)</span>
+
+<span class="cmt">// Result type follows the "larger" operand type:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">10</span> + <span class="num">3.5</span>);  <span class="cmt">// 13.5 (double — int widened)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">7</span> + <span class="num">3</span>);     <span class="cmt">// 10   (int)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">7.0</span> + <span class="num">3</span>);   <span class="cmt">// 10.0 (double)</span></pre>
+  </div>
+
+  <h3 id="int-division">Integer Division — The #1 Beginner Trap</h3>
+  <p>When <strong>both operands are integers</strong>, the division result is also an integer — the decimal part is <em>silently dropped</em>. This surprises nearly every beginner.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Integer Division — The Trap</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// int / int = int  (decimal silently dropped)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">7</span> / <span class="num">2</span>);      <span class="cmt">// 3  (NOT 3.5!)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">1</span> / <span class="num">4</span>);      <span class="cmt">// 0  (NOT 0.25!)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">9</span> / <span class="num">10</span>);     <span class="cmt">// 0  (NOT 0.9!)</span>
+
+<span class="cmt">// FIX 1: make one operand a double literal</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">7.0</span> / <span class="num">2</span>);    <span class="cmt">// 3.5 ✓</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">7</span> / <span class="num">2.0</span>);    <span class="cmt">// 3.5 ✓</span>
+
+<span class="cmt">// FIX 2: cast one operand to double</span>
+<span class="kw">int</span> x = <span class="num">7</span>, y = <span class="num">2</span>;
+<span class="kw">double</span> result = (<span class="kw">double</span>) x / y;  <span class="cmt">// 3.5 ✓  — cast BEFORE dividing</span>
+<span class="kw">double</span> wrong  = (<span class="kw">double</span>)(x / y); <span class="cmt">// 3.0 ✗  — divides first, THEN casts!</span></pre>
+  </div>
+  <div class="box br" data-icon="🎯">
+    <div class="btitle">Cast BEFORE Dividing, Not After</div>
+    <p><code>(double)(x / y)</code> first computes integer division (3), then casts to double (3.0). Still wrong! Always cast BEFORE the division: <code>(double)x / y</code> makes x a double first, forcing double division.</p>
+  </div>
+
+  <h3 id="modulus">Modulus % — Remainder Operator</h3>
+  <p>The <code>%</code> operator returns the <strong>remainder</strong> after integer division. It is one of the most useful operators in programming.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Modulus — Uses & Examples</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">17</span> % <span class="num">5</span>);   <span class="cmt">// 2  (17 = 5×3 + 2)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">10</span> % <span class="num">3</span>);   <span class="cmt">// 1  (10 = 3×3 + 1)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">8</span>  % <span class="num">4</span>);   <span class="cmt">// 0  (8 = 4×2 + 0, exactly divisible)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">3</span>  % <span class="num">7</span>);   <span class="cmt">// 3  (3 &lt; 7, so remainder IS 3)</span>
+
+<span class="cmt">// Real-world uses of %:</span>
+<span class="kw">int</span> n = <span class="num">42</span>;
+<span class="kw">boolean</span> isEven = (n % <span class="num">2</span> == <span class="num">0</span>);     <span class="cmt">// true — even/odd check</span>
+<span class="kw">int</span> lastDigit = n % <span class="num">10</span>;             <span class="cmt">// 2 — extract last digit</span>
+<span class="kw">int</span> secondLastDigit = (n / <span class="num">10</span>) % <span class="num">10</span>; <span class="cmt">// 4 — extract 2nd last digit</span>
+
+<span class="cmt">// Cycling / wrapping around (e.g., 7 days of week):</span>
+<span class="kw">int</span> day = <span class="num">9</span>;
+<span class="kw">int</span> dayOfWeek = day % <span class="num">7</span>;  <span class="cmt">// 2 (day 9 → day 2 in the week cycle)</span>
+
+<span class="cmt">// Negative modulus (Java keeps sign of dividend):</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(-<span class="num">7</span> % <span class="num">3</span>);  <span class="cmt">// -1 (not 2!) — sign follows -7</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">7</span> % -<span class="num">3</span>);  <span class="cmt">// 1  — sign follows 7</span></pre>
+  </div>
+
+  <!-- ════ 5.3 RELATIONAL ════ -->
+  <div class="sec-hdr" id="relational">
+    <div class="sicon iy">⚖️</div>
+    <div class="sec-title"><small>5.3 — Category 2</small>Relational (Comparison) Operators</div>
+  </div>
+  <p>Relational operators <strong>compare two values</strong> and always return a <code>boolean</code> result — either <code>true</code> or <code>false</code>. They are essential for decision-making (if statements, loops).</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Relational Operators</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> a = <span class="num">10</span>, b = <span class="num">20</span>;
+
+<span class="cls">System</span>.out.<span class="fn">println</span>(a == b);  <span class="cmt">// false — equal to (NOTE: == not =)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a != b);  <span class="cmt">// true  — not equal to</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a &gt;  b);  <span class="cmt">// false — greater than</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a &lt;  b);  <span class="cmt">// true  — less than</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a &gt;= b);  <span class="cmt">// false — greater than or equal</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a &lt;= b);  <span class="cmt">// true  — less than or equal</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a == <span class="num">10</span>); <span class="cmt">// true  — a equals 10</span>
+
+<span class="cmt">// Store result in boolean variable:</span>
+<span class="kw">boolean</span> isAdult = (a >= <span class="num">18</span>);  <span class="cmt">// false (10 is not >= 18)</span>
+<span class="kw">boolean</span> passed  = (a &gt; <span class="num">5</span>);    <span class="cmt">// true  (10 > 5)</span></pre>
+  </div>
+  <div class="trap">
+    <div class="trap-title">= vs == — The Most Common Bug in All of Programming</div>
+    <p><code>=</code> is the <strong>assignment</strong> operator — it puts a value INTO a variable. <code>==</code> is the <strong>equality comparison</strong> — it checks if two values are equal and returns boolean. Writing <code>if (x = 5)</code> instead of <code>if (x == 5)</code> causes a compile error in Java (assignment doesn't return boolean). In C/C++ this is a silent bug — in Java, the compiler catches it.</p>
+  </div>
+
+  <!-- ════ 5.4 LOGICAL ════ -->
+  <div class="sec-hdr" id="logical">
+    <div class="sicon ip">🧩</div>
+    <div class="sec-title"><small>5.4 — Category 3</small>Logical Operators</div>
+  </div>
+  <p>Logical operators combine multiple <strong>boolean expressions</strong> into a single boolean result. Think of them as the words "AND", "OR", "NOT" in English sentences.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Logical Operators</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">boolean</span> p = <span class="kw">true</span>, q = <span class="kw">false</span>;
+
+<span class="cmt">// && (AND) — BOTH must be true</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(p &amp;&amp; q);   <span class="cmt">// false (true AND false = false)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(p &amp;&amp; p);   <span class="cmt">// true  (true AND true  = true)</span>
+
+<span class="cmt">// || (OR) — AT LEAST ONE must be true</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(p || q);   <span class="cmt">// true  (true OR false = true)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(q || q);   <span class="cmt">// false (false OR false = false)</span>
+
+<span class="cmt">// ! (NOT) — reverses the boolean</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(!p);       <span class="cmt">// false (!true = false)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(!q);       <span class="cmt">// true  (!false = true)</span>
+
+<span class="cmt">// Real-world combined conditions:</span>
+<span class="kw">int</span> age = <span class="num">25</span>;
+<span class="kw">double</span> income = <span class="num">40000</span>;
+<span class="kw">boolean</span> loanEligible = (age >= <span class="num">18</span>) &amp;&amp; (income >= <span class="num">30000</span>);  <span class="cmt">// true</span>
+
+<span class="kw">int</span> marks = <span class="num">75</span>;
+<span class="kw">boolean</span> distinction = (marks >= <span class="num">80</span>) || (marks == <span class="num">75</span>);  <span class="cmt">// true (second part)</span>
+
+<span class="kw">boolean</span> notPassed = !(marks >= <span class="num">50</span>);  <span class="cmt">// false (marks IS >= 50)</span></pre>
+  </div>
+
+  <h3>Truth Tables</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:20px 0">
+    <div class="tt">
+      <table><thead><tr><th>A</th><th>B</th><th>A &amp;&amp; B</th></tr></thead>
+      <tbody>
+        <tr><td class="t">T</td><td class="t">T</td><td class="t">T</td></tr>
+        <tr><td class="t">T</td><td class="f">F</td><td class="f">F</td></tr>
+        <tr><td class="f">F</td><td class="t">T</td><td class="f">F</td></tr>
+        <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td></tr>
+      </tbody></table>
+    </div>
+    <div class="tt">
+      <table><thead><tr><th>A</th><th>B</th><th>A || B</th></tr></thead>
+      <tbody>
+        <tr><td class="t">T</td><td class="t">T</td><td class="t">T</td></tr>
+        <tr><td class="t">T</td><td class="f">F</td><td class="t">T</td></tr>
+        <tr><td class="f">F</td><td class="t">T</td><td class="t">T</td></tr>
+        <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td></tr>
+      </tbody></table>
+    </div>
+    <div class="tt">
+      <table><thead><tr><th>A</th><th>!A</th></tr></thead>
+      <tbody>
+        <tr><td class="t">T</td><td class="f">F</td></tr>
+        <tr><td class="f">F</td><td class="t">T</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <h3 id="short-circuit">Short-Circuit Evaluation — Critical Concept</h3>
+  <p>Java's <code>&&</code> and <code>||</code> use <strong>short-circuit evaluation</strong>: they stop evaluating as soon as the result is determined. This is not just an optimization — it prevents errors and is tested in exams.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Short-Circuit — How and Why It Matters</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// && SHORT-CIRCUIT: if LEFT is FALSE, RIGHT is NEVER evaluated</span>
+<span class="kw">int</span> n = <span class="num">0</span>;
+<span class="kw">if</span> (n != <span class="num">0</span> &amp;&amp; <span class="num">10</span>/n &gt; <span class="num">1</span>) {  <span class="cmt">// SAFE! 10/n never runs (n != 0 is false)</span>
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"safe"</span>);
+}
+<span class="cmt">// Without short-circuit: 10/0 would throw ArithmeticException</span>
+
+<span class="cmt">// || SHORT-CIRCUIT: if LEFT is TRUE, RIGHT is NEVER evaluated</span>
+<span class="kw">int</span> x = <span class="num">5</span>;
+<span class="kw">if</span> (x &gt; <span class="num">0</span> || ++x &gt; <span class="num">0</span>) {  <span class="cmt">// x > 0 is TRUE, so ++x is NEVER executed</span>
+    <span class="cls">System</span>.out.<span class="fn">println</span>(x);  <span class="cmt">// prints 5, NOT 6!</span>
+}
+
+<span class="cmt">// Non-short-circuit versions: & and | (evaluate BOTH sides always)</span>
+<span class="kw">if</span> (n != <span class="num">0</span> &amp; <span class="num">10</span>/n &gt; <span class="num">1</span>) { }  <span class="cmt">// DANGEROUS — evaluates both, throws exception</span></pre>
+  </div>
+  <div class="box bb" data-icon="💡">
+    <div class="btitle">Short-Circuit Rules</div>
+    <ul>
+      <li><code>false && anything</code> → always false. Right side never evaluated.</li>
+      <li><code>true || anything</code> → always true. Right side never evaluated.</li>
+      <li>Use <code>&amp;</code> and <code>|</code> (no double) only when you <em>need</em> both sides evaluated (rare).</li>
+      <li>Place cheaper/safer conditions on the LEFT side of <code>&amp;&amp;</code>/<code>||</code>.</li>
+    </ul>
+  </div>
+
+  <!-- ════ 5.5 ASSIGNMENT ════ -->
+  <div class="sec-hdr" id="assignment">
+    <div class="sicon io">📝</div>
+    <div class="sec-title"><small>5.5 — Category 4</small>Assignment Operators</div>
+  </div>
+  <p>The simple <code>=</code> assigns a value. <strong>Compound assignment operators</strong> combine a math operation with assignment — they are shorthand that makes code cleaner.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Assignment Operators — All Forms</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> x = <span class="num">10</span>;   <span class="cmt">// simple assignment: x = 10</span>
+
+<span class="cmt">// Compound assignment operators:</span>
+x += <span class="num">5</span>;    <span class="cmt">// x = x + 5  → x = 15</span>
+x -= <span class="num">3</span>;    <span class="cmt">// x = x - 3  → x = 12</span>
+x *= <span class="num">2</span>;    <span class="cmt">// x = x * 2  → x = 24</span>
+x /= <span class="num">4</span>;    <span class="cmt">// x = x / 4  → x = 6</span>
+x %= <span class="num">4</span>;    <span class="cmt">// x = x % 4  → x = 2</span>
+
+<span class="cmt">// Also works for strings:</span>
+<span class="cls">String</span> s = <span class="str">"Hello"</span>;
+s += <span class="str">" World"</span>;  <span class="cmt">// s = "Hello World"</span>
+
+<span class="cmt">// Chained assignment (right to left):</span>
+<span class="kw">int</span> a, b, c;
+a = b = c = <span class="num">5</span>;  <span class="cmt">// c=5 first, then b=5, then a=5 — all equal 5</span>
+
+<span class="cmt">// Compound with implicit narrowing cast:</span>
+<span class="kw">byte</span> byt = <span class="num">10</span>;
+byt += <span class="num">5</span>;    <span class="cmt">// ✓ implicit cast: equivalent to byt = (byte)(byt + 5)</span>
+<span class="cmt">// byt = byt + 5  would cause error (int result, needs explicit cast)</span></pre>
+  </div>
+  <div class="box bg" data-icon="💡">
+    <div class="btitle">Hidden Benefit: Compound Operators Include Implicit Cast</div>
+    <p><code>byte b = 10; b += 5;</code> works even though <code>b + 5</code> produces an int. The <code>+=</code> operator automatically includes a narrowing cast back to byte. This is different from <code>b = b + 5</code> which would give a compile error without an explicit cast.</p>
+  </div>
+
+  <!-- ════ 5.6 UNARY ════ -->
+  <div class="sec-hdr" id="unary">
+    <div class="sicon iy">1️⃣</div>
+    <div class="sec-title"><small>5.6 — Category 5</small>Unary Operators</div>
+  </div>
+  <p>Unary operators work on <strong>a single operand</strong>. The most important ones are the increment and decrement operators — they are among the most heavily tested in Java exams.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Unary Operators</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> x = <span class="num">5</span>;
+
+<span class="cmt">// Unary plus and minus:</span>
+<span class="kw">int</span> pos = +x;   <span class="cmt">// +5 — no change (unary plus rarely used)</span>
+<span class="kw">int</span> neg = -x;   <span class="cmt">// -5 — negates the value</span>
+
+<span class="cmt">// Logical NOT:</span>
+<span class="kw">boolean</span> t = <span class="kw">true</span>;
+<span class="kw">boolean</span> f = !t;  <span class="cmt">// false</span></pre>
+  </div>
+
+  <h3 id="increment">Increment & Decrement — The Most Tested Operators</h3>
+  <div class="box by" data-icon="📖">
+    <div class="btitle">Pre vs Post — The Critical Difference</div>
+    <p><strong>Pre-increment <code>++x</code></strong>: increment FIRST, then use the NEW value.<br><strong>Post-increment <code>x++</code></strong>: use the OLD value FIRST, then increment.</p>
+    <p>Both result in x being incremented — the difference is only what value is <em>used</em> in the expression at that moment.</p>
+  </div>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Increment & Decrement — Deep Dive</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Standalone — pre and post produce IDENTICAL results:</span>
+<span class="kw">int</span> a = <span class="num">5</span>;
+a++;    <span class="cmt">// a = 6 (post-increment standalone)</span>
+++a;    <span class="cmt">// a = 7 (pre-increment standalone)</span>
+a--;    <span class="cmt">// a = 6 (post-decrement)</span>
+--a;    <span class="cmt">// a = 5 (pre-decrement)</span>
+
+<span class="cmt">// In an expression — CRITICAL DIFFERENCE:</span>
+<span class="kw">int</span> x = <span class="num">5</span>;
+<span class="kw">int</span> y = x++;  <span class="cmt">// POST: y gets old value (5), then x increments → y=5, x=6</span>
+
+<span class="kw">int</span> p = <span class="num">5</span>;
+<span class="kw">int</span> q = ++p;  <span class="cmt">// PRE: p increments first (6), then q gets new value → q=6, p=6</span>
+
+<span class="cmt">// Tricky example frequently in exams:</span>
+<span class="kw">int</span> a2 = <span class="num">5</span>;
+<span class="cls">System</span>.out.<span class="fn">println</span>(a2++);  <span class="cmt">// prints 5 (old value), then a2 becomes 6</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a2);    <span class="cmt">// prints 6</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(++a2);  <span class="cmt">// a2 becomes 7 first, then prints 7</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(a2);    <span class="cmt">// prints 7</span>
+
+<span class="cmt">// Complex expression (exam trap!):</span>
+<span class="kw">int</span> n = <span class="num">5</span>;
+<span class="kw">int</span> result = n++ + ++n;
+<span class="cmt">// Step 1: n++ uses 5 (old n), n becomes 6</span>
+<span class="cmt">// Step 2: ++n increments 6 to 7, uses 7</span>
+<span class="cmt">// result = 5 + 7 = 12,  n = 7</span></pre>
+  </div>
+  <div class="drb">
+    <div class="drh">📋 Pre vs Post Increment Dry Run</div>
+    <table>
+      <thead><tr><th>Code</th><th>n before</th><th>Expression value</th><th>n after</th></tr></thead>
+      <tbody>
+        <tr><td><code>int n=5; int y=n++;</code></td><td>5</td><td>y = 5 (old n)</td><td>n = 6</td></tr>
+        <tr class="hl"><td><code>int n=5; int y=++n;</code></td><td>5</td><td>y = 6 (new n)</td><td>n = 6</td></tr>
+        <tr><td><code>int n=5; int y=n--;</code></td><td>5</td><td>y = 5 (old n)</td><td>n = 4</td></tr>
+        <tr class="hl"><td><code>int n=5; int y=--n;</code></td><td>5</td><td>y = 4 (new n)</td><td>n = 4</td></tr>
+        <tr><td><code>int n=5; println(n++);</code></td><td>5</td><td>prints 5</td><td>n = 6</td></tr>
+        <tr><td><code>int n=5; println(++n);</code></td><td>5</td><td>prints 6</td><td>n = 6</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ════ 5.7 BITWISE ════ -->
+  <div class="sec-hdr" id="bitwise">
+    <div class="sicon ip">💻</div>
+    <div class="sec-title"><small>5.7 — Category 6</small>Bitwise Operators</div>
+  </div>
+  <p>Bitwise operators work directly on the binary (bit-level) representation of integers. Important for exams and low-level programming.</p>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Operator</th><th>Name</th><th>Action</th><th>Example</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td><code>&</code></td><td>Bitwise AND</td><td>1 only if both bits are 1</td><td><code>5 & 3</code></td><td>1 (0101 & 0011 = 0001)</td></tr>
+        <tr><td><code>|</code></td><td>Bitwise OR</td><td>1 if at least one bit is 1</td><td><code>5 | 3</code></td><td>7 (0101 | 0011 = 0111)</td></tr>
+        <tr><td><code>^</code></td><td>Bitwise XOR</td><td>1 if bits are different</td><td><code>5 ^ 3</code></td><td>6 (0101 ^ 0011 = 0110)</td></tr>
+        <tr><td><code>~</code></td><td>Bitwise NOT</td><td>Flips all bits</td><td><code>~5</code></td><td>-6</td></tr>
+        <tr><td><code>&lt;&lt;</code></td><td>Left Shift</td><td>Shift bits left (×2 per shift)</td><td><code>5 &lt;&lt; 1</code></td><td>10</td></tr>
+        <tr><td><code>&gt;&gt;</code></td><td>Right Shift</td><td>Shift bits right (÷2 per shift)</td><td><code>10 &gt;&gt; 1</code></td><td>5</td></tr>
+        <tr><td><code>&gt;&gt;&gt;</code></td><td>Unsigned Right Shift</td><td>Shifts without sign extension</td><td><code>-1 &gt;&gt;&gt; 1</code></td><td>Integer.MAX_VALUE</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Bitwise — Examples with Binary</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// 5 = 0101,  3 = 0011</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">5</span> &amp; <span class="num">3</span>);   <span class="cmt">// 1  (0101 & 0011 = 0001)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">5</span> | <span class="num">3</span>);   <span class="cmt">// 7  (0101 | 0011 = 0111)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">5</span> ^ <span class="num">3</span>);   <span class="cmt">// 6  (0101 ^ 0011 = 0110)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(~<span class="num">5</span>);      <span class="cmt">// -6 (flip all bits of 5)</span>
+
+<span class="cmt">// Bit shifting (fast multiply/divide by powers of 2):</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">5</span> &lt;&lt; <span class="num">1</span>);  <span class="cmt">// 10  (5 × 2¹)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">5</span> &lt;&lt; <span class="num">2</span>);  <span class="cmt">// 20  (5 × 2²)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">20</span> &gt;&gt; <span class="num">2</span>); <span class="cmt">// 5   (20 ÷ 2²)</span>
+
+<span class="cmt">// Practical use: check if number is even (fast even/odd):</span>
+<span class="kw">int</span> n = <span class="num">42</span>;
+<span class="kw">boolean</span> isEven = (n &amp; <span class="num">1</span>) == <span class="num">0</span>;  <span class="cmt">// true — faster than n%2==0</span></pre>
+  </div>
+
+  <!-- ════ 5.8 TERNARY ════ -->
+  <div class="sec-hdr" id="ternary">
+    <div class="sicon ig">❓</div>
+    <div class="sec-title"><small>5.8 — Category 7</small>Ternary Operator</div>
+  </div>
+  <p>The ternary operator is Java's shorthand for a simple if-else. It is the only <strong>three-operand</strong> operator in Java. Syntax: <code>condition ? valueIfTrue : valueIfFalse</code></p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Ternary Operator — Complete Guide</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Basic ternary:</span>
+<span class="kw">int</span> a = <span class="num">10</span>, b = <span class="num">20</span>;
+<span class="kw">int</span> max = (a &gt; b) ? a : b;      <span class="cmt">// max = 20</span>
+<span class="kw">int</span> min = (a &lt; b) ? a : b;      <span class="cmt">// min = 10</span>
+<span class="cls">String</span> result = (a % <span class="num">2</span> == <span class="num">0</span>) ? <span class="str">"Even"</span> : <span class="str">"Odd"</span>;  <span class="cmt">// "Even"</span>
+
+<span class="cmt">// Equivalent if-else:</span>
+<span class="kw">int</span> max2;
+<span class="kw">if</span> (a &gt; b) { max2 = a; } <span class="kw">else</span> { max2 = b; }
+
+<span class="cmt">// Ternary inside println:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Pass or Fail: "</span> + (a &gt; <span class="num">50</span> ? <span class="str">"Pass"</span> : <span class="str">"Fail"</span>));
+
+<span class="cmt">// Nested ternary (use sparingly — hurts readability):</span>
+<span class="kw">int</span> score = <span class="num">75</span>;
+<span class="cls">String</span> grade = score &gt;= <span class="num">90</span> ? <span class="str">"A"</span>
+              : score &gt;= <span class="num">80</span> ? <span class="str">"B"</span>
+              : score &gt;= <span class="num">70</span> ? <span class="str">"C"</span>
+              : <span class="str">"F"</span>;
+<span class="cls">System</span>.out.<span class="fn">println</span>(grade);  <span class="cmt">// "C"</span>
+
+<span class="cmt">// Max of three numbers using nested ternary:</span>
+<span class="kw">int</span> x = <span class="num">5</span>, y = <span class="num">9</span>, z = <span class="num">3</span>;
+<span class="kw">int</span> maxThree = (x &gt; y) ? ((x &gt; z) ? x : z) : ((y &gt; z) ? y : z);
+<span class="cmt">// maxThree = 9</span></pre>
+  </div>
+
+  <!-- ════ 5.9 STRING CONCAT ════ -->
+  <div class="sec-hdr" id="string-concat">
+    <div class="sicon iy">🔗</div>
+    <div class="sec-title"><small>5.9 — Category 8</small>String Concatenation with +</div>
+  </div>
+  <p>The <code>+</code> operator is <strong>overloaded</strong> in Java — it means addition for numbers AND concatenation (joining) for Strings. The rules for mixed expressions are a favourite exam topic.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">String Concatenation Rules</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// String + anything = String (left to right evaluation)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello"</span> + <span class="str">" World"</span>);  <span class="cmt">// "Hello World"</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Age: "</span> + <span class="num">20</span>);        <span class="cmt">// "Age: 20" (int→String)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Pi: "</span> + <span class="num">3.14</span>);      <span class="cmt">// "Pi: 3.14"</span>
+
+<span class="cmt">// TRICKY: + is evaluated LEFT TO RIGHT</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">1</span> + <span class="num">2</span> + <span class="str">"3"</span>);   <span class="cmt">// "33"  (1+2=3, then "3"+"3"="33")</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"1"</span> + <span class="num">2</span> + <span class="num">3</span>);   <span class="cmt">// "123" ("1"+2="12", "12"+3="123")</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">1</span> + <span class="num">2</span> + <span class="num">3</span>);    <span class="cmt">// 6     (all ints: 1+2+3=6)</span>
+
+<span class="cmt">// Use () to force desired evaluation order:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Sum: "</span> + (<span class="num">1</span> + <span class="num">2</span> + <span class="num">3</span>));  <span class="cmt">// "Sum: 6" (brackets first)</span>
+
+<span class="cmt">// Char concatenation — VERY tricky:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">'A'</span> + <span class="str">'B'</span>);    <span class="cmt">// 131  (char + char = int! 65+66)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">""</span> + <span class="str">'A'</span> + <span class="str">'B'</span>); <span class="cmt">// "AB"  (empty String forces concatenation)</span></pre>
+  </div>
+
+  <!-- ════ 5.10 PRECEDENCE ════ -->
+  <div class="sec-hdr" id="precedence">
+    <div class="sicon ir">🏆</div>
+    <div class="sec-title"><small>5.10 — Critical Rule</small>Operator Precedence & Associativity</div>
+  </div>
+  <p>When an expression has multiple operators, Java uses <strong>operator precedence</strong> to determine which operations to perform first — exactly like BODMAS/PEMDAS in mathematics. Higher precedence = evaluated first.</p>
+
+  <div style="margin:20px 0">
+    <div class="prec-row">
+      <div class="prec-num">1</div>
+      <div class="prec-body"><div class="prec-ops">() [] . method calls</div><div class="prec-desc">Highest — parentheses, array access, member access</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">2</div>
+      <div class="prec-body"><div class="prec-ops">++ -- ! ~ (unary -) (type)</div><div class="prec-desc">Unary operators — right to left</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">3</div>
+      <div class="prec-body"><div class="prec-ops">* / %</div><div class="prec-desc">Multiplicative — left to right</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">4</div>
+      <div class="prec-body"><div class="prec-ops">+ -</div><div class="prec-desc">Additive — left to right</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">5</div>
+      <div class="prec-body"><div class="prec-ops">&lt;&lt; &gt;&gt; &gt;&gt;&gt;</div><div class="prec-desc">Shift operators — left to right</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">6</div>
+      <div class="prec-body"><div class="prec-ops">&lt; &gt; &lt;= &gt;= instanceof</div><div class="prec-desc">Relational — left to right</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">7</div>
+      <div class="prec-body"><div class="prec-ops">== !=</div><div class="prec-desc">Equality — left to right</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">8</div>
+      <div class="prec-body"><div class="prec-ops">&amp;</div><div class="prec-desc">Bitwise AND</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">9</div>
+      <div class="prec-body"><div class="prec-ops">^</div><div class="prec-desc">Bitwise XOR</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">10</div>
+      <div class="prec-body"><div class="prec-ops">|</div><div class="prec-desc">Bitwise OR</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">11</div>
+      <div class="prec-body"><div class="prec-ops">&amp;&amp;</div><div class="prec-desc">Logical AND</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">12</div>
+      <div class="prec-body"><div class="prec-ops">||</div><div class="prec-desc">Logical OR</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">13</div>
+      <div class="prec-body"><div class="prec-ops">?:</div><div class="prec-desc">Ternary — right to left</div></div>
+    </div>
+    <div class="prec-row">
+      <div class="prec-num">14</div>
+      <div class="prec-body"><div class="prec-ops">= += -= *= /= %= &lt;&lt;= &gt;&gt;= &amp;= ^= |=</div><div class="prec-desc">Lowest — assignment — right to left</div></div>
+    </div>
+  </div>
+
+  <h3 id="prec-examples">Precedence Examples — Step by Step</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Precedence — Trace Each Expression</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Example 1:</span>
+<span class="kw">int</span> r = <span class="num">2</span> + <span class="num">3</span> * <span class="num">4</span> - <span class="num">8</span> / <span class="num">2</span>;
+<span class="cmt">// Step 1: * and / (same level, left to right): 3*4=12, 8/2=4</span>
+<span class="cmt">// Step 2: + and - (left to right): 2+12=14, 14-4=10</span>
+<span class="cmt">// r = 10</span>
+
+<span class="cmt">// Example 2:</span>
+<span class="kw">boolean</span> b = <span class="num">5</span> + <span class="num">3</span> &gt; <span class="num">6</span> &amp;&amp; <span class="num">10</span> - <span class="num">4</span> == <span class="num">6</span>;
+<span class="cmt">// Step 1: + and -: 5+3=8, 10-4=6</span>
+<span class="cmt">// Step 2: > and ==: 8>6 is true, 6==6 is true</span>
+<span class="cmt">// Step 3: &&: true && true = true</span>
+<span class="cmt">// b = true</span>
+
+<span class="cmt">// Example 3:</span>
+<span class="kw">int</span> x = <span class="num">5</span>;
+<span class="kw">int</span> r2 = x++ * <span class="num">2</span> + ++x;
+<span class="cmt">// Step 1: x++ uses 5 (post), x becomes 6</span>
+<span class="cmt">// Step 2: 5 * 2 = 10</span>
+<span class="cmt">// Step 3: ++x increments 6 to 7, uses 7</span>
+<span class="cmt">// Step 4: 10 + 7 = 17</span>
+<span class="cmt">// r2 = 17, x = 7</span>
+
+<span class="cmt">// Example 4 — mixing + and String:</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">2</span> + <span class="num">3</span> + <span class="str">" apples"</span>);   <span class="cmt">// "5 apples"</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"apples: "</span> + <span class="num">2</span> + <span class="num">3</span>); <span class="cmt">// "apples: 23" (NOT "apples: 5"!)</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"sum: "</span> + (<span class="num">2</span>+<span class="num">3</span>));    <span class="cmt">// "sum: 5" (brackets force addition first)</span></pre>
+  </div>
+
+  <div class="box bp" data-icon="💡">
+    <div class="btitle">Golden Rule — When in Doubt, Use Parentheses</div>
+    <p>Don't rely on memorizing all 14 precedence levels. When you're unsure, just use <strong>parentheses <code>()</code></strong> to make the intended order explicit. This also makes your code more readable. <code>(a + b) * (c - d)</code> is clearer than relying on precedence.</p>
+  </div>
+
+  <!-- ════ COMMON MISTAKES ════ -->
+  <div class="sec-hdr" id="common-mistakes">
+    <div class="sicon ir">🚫</div>
+    <div class="sec-title"><small>5.11 — Watch Out</small>Most Common Operator Mistakes</div>
+  </div>
+  <div class="trap">
+    <div class="trap-title">Top 8 Operator Mistakes</div>
+    <ol>
+      <li><strong>= instead of ==</strong> — Assignment vs comparison. <code>if (x = 5)</code> is an error in Java (compile error). Always use <code>==</code> to compare.</li>
+      <li><strong>Integer division</strong> — <code>7/2</code> gives 3, not 3.5. Cast to double first: <code>(double)7/2</code>.</li>
+      <li><strong>Post vs pre increment in expressions</strong> — <code>y = x++</code> gives old x. <code>y = ++x</code> gives new x. Know the difference cold.</li>
+      <li><strong>Short-circuit side effects</strong> — <code>x > 0 || ++count > 0</code> — if x>0, ++count never runs. Avoid side effects in short-circuit expressions.</li>
+      <li><strong>String + int confusion</strong> — <code>"Value: " + 1 + 2</code> gives "Value: 12". Use <code>"Value: " + (1+2)</code> for "Value: 3".</li>
+      <li><strong>char arithmetic becomes int</strong> — <code>'A' + 1</code> gives 66, not 'B'. Cast back: <code>(char)('A' + 1)</code>.</li>
+      <li><strong>Negative modulus</strong> — <code>-7 % 3</code> gives -1 in Java, not 2. The sign follows the dividend.</li>
+      <li><strong>Cast placement for division</strong> — <code>(double)(x/y)</code> ≠ <code>(double)x/y</code>. First casts after integer division; second forces double division.</li>
+    </ol>
+  </div>
+
+  <!-- ════ DRY RUN ════ -->
+  <div class="sec-hdr" id="dry-run">
+    <div class="sicon ig">🔍</div>
+    <div class="sec-title"><small>5.12 — Trace</small>Dry Run — Predict Output</div>
+  </div>
+
+  <div class="box bb" data-icon="👁️">
+    <div class="btitle">Predict All Outputs Before Revealing</div>
+
+    <p><strong>Program 1:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">int</span> a = <span class="num">5</span>, b = <span class="num">5</span>;
+<span class="kw">int</span> c = a++ + ++b;
+<span class="cls">System</span>.out.<span class="fn">println</span>(a + <span class="str">" "</span> + b + <span class="str">" "</span> + c);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">Output: 6 6 11<br><br>Trace: a++ uses old a(5), then a becomes 6. ++b increments b to 6 first, uses 6. c = 5 + 6 = 11. Final: a=6, b=6, c=11.</div>
+
+    <p style="margin-top:16px"><strong>Program 2:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">10</span> + <span class="num">20</span> + <span class="str">"30"</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"10"</span> + <span class="num">20</span> + <span class="num">30</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="num">10</span> + (<span class="num">20</span> + <span class="str">"30"</span>));</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">3030<br>102030<br>12030<br><br>Trace 1: 10+20=30 (both ints), then "30"+"30"="3030". Trace 2: "10"+20="1020", "1020"+30="102030". Trace 3: inside brackets: 20+"30"="2030". Then: 10+"2030"="102030" — wait, no. 10 is int, "2030" is String. 10+"2030"="102030". Actually: 10+("2030") = "10"+"2030" = "102030". Let me recheck: 10 + "2030" — int + String = String: "102030". Yes.</div>
+
+    <p style="margin-top:16px"><strong>Program 3:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">int</span> x = <span class="num">10</span>;
+<span class="kw">boolean</span> r = (x &gt; <span class="num">5</span>) || (++x &gt; <span class="num">0</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(x + <span class="str">" "</span> + r);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">Output: 10 true<br><br>Short-circuit: (x > 5) = (10 > 5) = true. Since left side of || is true, the right side (++x > 0) is NEVER evaluated. So x remains 10, not 11. r = true.</div>
+  </div>
+
+  <!-- ════ MEMORY TIPS ════ -->
+  <div class="mem" id="memory-tips">
+    <div class="mem-title">Memory Tips — Chapter 5</div>
+    <ul>
+      <li><strong>Precedence mnemonic:</strong> <em>"Unary Makes Additions Seem Ridiculously Easy And Logical"</em> → Unary, Multiplicative, Additive, Shift, Relational, Equality, And (bitwise), Logical</li>
+      <li><strong>Short-circuit:</strong> "&& stops at first FALSE. || stops at first TRUE." — like a security guard: && checks everyone (strict), || lets first good one in (lenient).</li>
+      <li><strong>Post vs pre:</strong> "POST = pay AFTER. PRE = pay BEFORE." Post-increment: use first, pay (increment) later. Pre-increment: pay first, use after.</li>
+      <li><strong>Integer division:</strong> "Two integers fighting for division lose the decimal in the battle." Cast to double to save it.</li>
+      <li><strong>String + int:</strong> "If String is at the party, everything becomes a String." Once Java sees a String, + means concatenation.</li>
+    </ul>
+  </div>
+
+  <!-- ════ EXAM PREP ════ -->
+  <div class="sec-hdr" id="exam-prep">
+    <div class="sicon io">📝</div>
+    <div class="sec-title"><small>5.13 — Exam</small>University Exam Preparation</div>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">3 Marks — Explain</div>
+    <p><strong>Q: What is short-circuit evaluation in Java? Explain with an example showing why it is useful.</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> Short-circuit evaluation means that in a logical expression with <code>&&</code> or <code>||</code>, the second operand is only evaluated if necessary. For <code>&&</code>: if the first operand is false, the result is always false regardless of the second — so Java skips evaluating the second. For <code>||</code>: if the first operand is true, the result is always true — so the second is skipped. Example: <code>if (n != 0 && 10/n > 1)</code> — if n is 0, the second condition (10/n) is never evaluated, preventing a division-by-zero ArithmeticException. This makes short-circuit evaluation both a performance optimization AND a safety mechanism.</p>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">4 Marks — Output Prediction</div>
+    <p><strong>Q: What is the output of the following? Show step-by-step working.</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Exam Question</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">int</span> a = <span class="num">5</span>;
+<span class="cls">System</span>.out.<span class="fn">println</span>(a++);
+<span class="cls">System</span>.out.<span class="fn">println</span>(++a);
+<span class="cls">System</span>.out.<span class="fn">println</span>(a-- + --a);
+<span class="cls">System</span>.out.<span class="fn">println</span>(a);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">
+      Output: 5 / 7 / 12 / 5<br><br>
+      Line 1: a++ — prints old a (5), then a becomes 6.<br>
+      Line 2: ++a — increments a from 6 to 7, prints 7. a=7.<br>
+      Line 3: a-- — uses old a (7) in expression, then a becomes 6. --a — decrements a from 6 to 5, uses 5. Expression: 7 + 5 = 12. a=5.<br>
+      Line 4: prints a = 5.
+    </div>
+  </div>
+
+  <h3>MCQ Bank</h3>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q1.</span>What is the output of: <code>System.out.println(7 / 2);</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>3.5</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>3</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>3.0</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>4</div>
+    </div>
+    <div class="qa">✓ Integer / Integer = Integer. 7/2 = 3 (decimal .5 is silently dropped). To get 3.5, use: 7.0/2 or (double)7/2.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q2.</span>What is the output of: <code>int x=5; System.out.println(x++ + " " + ++x);</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>5 6</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>5 7</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>6 7</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>6 6</div>
+    </div>
+    <div class="qa">✓ x++ uses old x (5) in expression, then x becomes 6. ++x increments x from 6 to 7, uses new value 7. Output: "5 7".</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q3.</span>What is <code>-7 % 3</code> in Java?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>2</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>-1</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>1</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>-2</div>
+    </div>
+    <div class="qa">✓ In Java, the sign of the modulus result follows the sign of the DIVIDEND (left operand). -7 = 3×(-2) + (-1). The remainder is -1. Different languages handle negative modulus differently — Java always follows the dividend's sign.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q4.</span>Given <code>int x=5; boolean r = (x > 10) && (++x > 0);</code> What is x after this statement?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,true)"><span class="ol">A</span>5 (unchanged)</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>6</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>7</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>Depends on JVM</div>
+    </div>
+    <div class="qa">✓ Short-circuit with &&: (x > 10) = (5 > 10) = false. Since left side is false, the right side (++x > 0) is NEVER evaluated. x remains 5. r = false.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q5.</span>What is the output of: <code>System.out.println("a" + 1 + 2);</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>a3</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>a12</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>3a</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>12a</div>
+    </div>
+    <div class="qa">✓ Evaluated left to right. "a" + 1 = "a1" (String concatenation). "a1" + 2 = "a12". If you wanted "a3", use: "a" + (1 + 2).</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q6.</span>What is the ternary expression for: "return max of a and b"?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span><code>a ? b : a > b</code></div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span><code>(a > b) ? a : b</code></div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span><code>a > b ? b : a</code></div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span><code>(a < b) ? a : b</code></div>
+    </div>
+    <div class="qa">✓ Ternary: condition ? valueIfTrue : valueIfFalse. If a > b is true, a is the max. If false, b is the max. So: (a > b) ? a : b.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q7.</span>What is the output of: <code>System.out.println(5 & 3);</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,true)"><span class="ol">A</span>1</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>7</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>6</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>15</div>
+    </div>
+    <div class="qa">✓ Bitwise AND: 5=0101, 3=0011. AND operation: 0101 & 0011 = 0001 = 1. Both bits must be 1 for the result to be 1.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <!-- ════ REVISION ════ -->
+  <div class="rev" id="revision">
+    <div class="rev-title">Quick Revision — Chapter 5</div>
+    <div class="rvpt">Operators: arithmetic (+,-,*,/,%), relational (==,!=,>,<,>=,<=), logical (&&,||,!), assignment (=,+=,-=...), unary (++,--,!,-), bitwise (&,|,^,~,<<,>>), ternary (?:), string (+).</div>
+    <div class="rvpt">Integer division: int/int = int (decimal dropped). Cast to double BEFORE dividing: <code>(double)x/y</code>.</div>
+    <div class="rvpt">% modulus: gives remainder. Sign follows dividend. Uses: even/odd, last digit, cycling.</div>
+    <div class="rvpt">Post-increment x++: use old value, then increment. Pre-increment ++x: increment first, use new value.</div>
+    <div class="rvpt">Short-circuit &&: skips right if left is false. ||: skips right if left is true. Prevents errors and side effects.</div>
+    <div class="rvpt">String + number: left-to-right, once a String appears, subsequent + is concatenation. Use () to force addition.</div>
+    <div class="rvpt">Ternary: <code>condition ? trueValue : falseValue</code> — compact if-else. Returns a value.</div>
+    <div class="rvpt">Precedence: () → unary → * / % → + - → shifts → relational → == != → bitwise → && → || → ?: → assignment.</div>
+    <div class="rvpt">When in doubt about precedence: use parentheses for clarity and correctness.</div>
+  </div>
+
+  <!-- ════ PRACTICE ════ -->
+  <div class="sec-hdr" id="practice">
+    <div class="sicon ic">💪</div>
+    <div class="sec-title"><small>5.14 — Practice</small>Practice Problems</div>
+  </div>
+
+  <h3>Easy</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P5.1</div><div><div class="pt">Arithmetic Playground</div><div class="pd">Given a=17, b=5. Compute and print: sum, difference, product, integer quotient, real quotient (as double), and remainder. Label each result.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.2</div><div><div class="pt">Even/Odd Checker</div><div class="pd">Read an integer. Using the modulus operator and ternary, print "Even" or "Odd" in one statement.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.3</div><div><div class="pt">Digit Extractor</div><div class="pd">Given number 4827, extract and print: last digit, tens digit, hundreds digit, thousands digit using / and % operators only.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.4</div><div><div class="pt">Truth Table Printer</div><div class="pd">Declare boolean a=true, b=false. Print results of: a&&b, a||b, !a, !b, a&&!b, !a||b in a formatted table.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.5</div><div><div class="pt">Compound Assignment</div><div class="pd">Start with x=100. Apply these in order: +=25, -=15, *=2, /=3, %=7. Print x after each operation. Show the math.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.6</div><div><div class="pt">Max of Three</div><div class="pd">Using ONLY ternary operators (no if-else, no Math.max), find the maximum of three integers a, b, c.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.7</div><div><div class="pt">Increment Predict</div><div class="pd">Before running, manually predict the value of a, b, and result for: <code>int a=3,b=4; int result=a++ + ++b + a;</code> Verify by running.</div><div class="ptags"><span class="ptag pe">Easy</span><span class="ptag po">Predict</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.8</div><div><div class="pt">Bitwise Practice</div><div class="pd">Compute 5&3, 5|3, 5^3, ~5, 5<<1, 5>>1. Write the binary representation of each input next to the result.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+  </div>
+
+  <h3>Medium</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P5.9</div><div><div class="pt">Expression Evaluator</div><div class="pd">Without running, evaluate step-by-step: <code>3 + 4 * 2 - 8 / 4 % 3 + 1</code>. Show every step using operator precedence rules. Then verify.</div><div class="ptags"><span class="ptag pm">Medium</span><span class="ptag po">Predict</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.10</div><div><div class="pt">Short-Circuit Safety</div><div class="pd">Write a program where short-circuit evaluation prevents a divide-by-zero. Then deliberately remove the safety condition and observe the exception.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.11</div><div><div class="pt">Loan Eligibility</div><div class="pd">Using only logical operators: print eligibility message for applicants. Eligible if: (age >= 18) AND (income >= 25000) AND (NOT bankrupt). Test with various combinations.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.12</div><div><div class="pt">Clock Arithmetic</div><div class="pd">Use modulus to simulate a clock. Given current hour (0-23) and hours to add, compute the new hour (stays in 0-23 range). Example: 22 + 5 = 3 (next day 3AM).</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.13</div><div><div class="pt">String + Trap</div><div class="pd">Predict the output of 6 different expressions mixing int + String + int in different orders. Write your predictions first, then run to verify. Explain each result.</div><div class="ptags"><span class="ptag pm">Medium</span><span class="ptag po">Predict</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.14</div><div><div class="pt">Grade Calculator Ternary</div><div class="pd">Using nested ternary ONLY, convert a numeric score (0-100) to a letter grade: A+(95+), A(85+), B(75+), C(65+), D(55+), F(below 55).</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+  </div>
+
+  <h3>Hard</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P5.15</div><div><div class="pt">Swap Without Variable</div><div class="pd">Swap two integers a and b WITHOUT using a third temporary variable. Use: (1) arithmetic trick (a = a+b; b = a-b; a = a-b), and (2) XOR trick. Prove both work.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.16</div><div><div class="pt">Bit Flag System</div><div class="pd">Use bit flags to store multiple boolean states in one int. Assign: READ=1 (bit 0), WRITE=2 (bit 1), EXECUTE=4 (bit 2). Write methods to set, clear, and check each permission using bitwise operators.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.17</div><div><div class="pt">Operator Priority Mystery</div><div class="pd">Predict the output of this without running: <code>int a=1; int b=a++ + a++ + ++a; System.out.println(a+" "+b);</code> Trace every step. Then verify.</div><div class="ptags"><span class="ptag ph">Hard</span><span class="ptag po">Predict</span></div></div></div>
+    <div class="pc"><div class="pnum">P5.18</div><div><div class="pt">Power of Two Checker</div><div class="pd">Using only bitwise operators, write an expression that returns true if a number is a power of 2. Hint: a power of 2 in binary has exactly one 1-bit. Think about what n & (n-1) gives.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+  </div>
+
+  <div class="challenge">
+    <div class="ch-ctitle">Chapter 5 Challenge</div>
+    <p style="color:var(--text-dim);margin-bottom:14px">True operator mastery — no IDE, no hints.</p>
+    <ul>
+      <li>Write from memory: the complete operator precedence table (14 levels) without looking.</li>
+      <li>Trace without running: <code>int x=5; int y = x++ * 2 + ++x - x-- + --x; println(x+" "+y);</code></li>
+      <li>Research: What is the difference between <code>&&</code> and <code>&</code>? When would you intentionally use <code>&</code> instead of <code>&&</code>? Write a practical example.</li>
+      <li>Challenge: Using ONLY bitwise operators (no +, -, *, /), add two integers. Research "bitwise addition" and implement it.</li>
+    </ul>
+  </div>
+
+  <div class="chnav">
+    <a href="ch04-variables.html" class="navbtn">
+      <div class="navlbl">← Previous</div>
+      <div class="navtitle">Chapter 4: Variables & Data Types</div>
+    </a>
+    <a href="ch06-input.html" class="navbtn nxt">
+      <div class="navlbl">Next Chapter →</div>
+      <div class="navtitle">Chapter 6: Taking Input</div>
+    </a>
+  </div>
+
+</div><!-- .main -->
+</div><!-- .layout -->
+
+<script>
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('prog').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+});
+const tocLinks=document.querySelectorAll('.toc-item');
+const secs=[...document.querySelectorAll('[id]')].filter(el=>[...tocLinks].some(l=>l.getAttribute('href')==='#'+el.id));
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id;});
+  tocLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+function ca(el,correct){
+  el.closest('.qopts').querySelectorAll('.qo').forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(correct?'correct':'wrong');
+  if(!correct)el.closest('.qopts').querySelectorAll('.qo').forEach(o=>{if(o.getAttribute('onclick').includes('true'))o.classList.add('correct');});
+  const qa=el.closest('.qi').querySelector('.qa');
+  if(qa)qa.classList.add('show');
+}
+function ra(btn){
+  const qa=btn.previousElementSibling;
+  qa.classList.toggle('show');
+  btn.textContent=qa.classList.contains('show')?'Hide Answer':'Reveal Answer';
+}
+</script>
+</body>
+</html>
