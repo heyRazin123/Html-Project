@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chapter 8 — Loops & Iteration</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--surface3:#21262d;--border:#30363d;--accent:#f0a500;--accent2:#e05c2a;--text:#e6edf3;--text-dim:#8b949e;--text-muted:#484f58;--red:#ff6b6b;--green:#3fb950;--blue:#58a6ff;--purple:#bc8cff;--yellow:#f0a500;--orange:#e05c2a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.8}
+header{position:sticky;top:0;z-index:100;height:56px;background:rgba(13,17,23,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;backdrop-filter:blur(12px)}
+.logo{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--text-dim);display:flex;align-items:center;gap:10px}
+.logo a{color:var(--accent);text-decoration:none;font-weight:700}.logo a:hover{text-decoration:underline}
+.ch-badge{font-family:'JetBrains Mono',monospace;font-size:.65rem;padding:3px 10px;border-radius:12px;background:rgba(240,165,0,.1);color:var(--accent);border:1px solid rgba(240,165,0,.3)}
+.top-progress{height:3px;background:var(--surface2);position:sticky;top:56px;z-index:99}
+.top-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0%}
+.layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 56px)}
+.toc{position:sticky;top:59px;height:calc(100vh - 59px);overflow-y:auto;border-right:1px solid var(--border);padding:24px 0;background:var(--surface)}
+.toc::-webkit-scrollbar{width:3px}.toc::-webkit-scrollbar-thumb{background:var(--border)}
+.toc-title{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);padding:0 18px 10px;font-weight:700}
+.toc-item{display:block;padding:6px 18px;font-size:.82rem;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent;transition:all .15s;line-height:1.4}
+.toc-item:hover{color:var(--text);border-left-color:var(--border);background:var(--surface2)}
+.toc-item.active{color:var(--accent);border-left-color:var(--accent);background:rgba(240,165,0,.06)}
+.toc-item.sub{padding-left:30px;font-size:.78rem}
+.toc-div{height:1px;background:var(--border);margin:10px 18px}
+.main{padding:52px 60px 80px;max-width:860px}
+.ch-hero{margin-bottom:48px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.ch-tag{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ch-tag::before{content:'';width:28px;height:2px;background:var(--accent)}
+.ch-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;line-height:1.08;margin-bottom:14px;letter-spacing:-1.5px}
+.ch-title em{color:var(--accent);font-style:italic}
+.ch-sub{font-size:1.05rem;color:var(--text-dim);max-width:580px;font-weight:300;line-height:1.7;margin-bottom:28px}
+.ch-meta{display:flex;gap:22px;flex-wrap:wrap}
+.meta{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted)}
+.mdot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.sec-hdr{display:flex;align-items:center;gap:14px;margin:48px 0 20px}
+.sicon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.ic{background:rgba(88,166,255,.12);color:var(--blue)}.ig{background:rgba(63,185,80,.12);color:var(--green)}.ip{background:rgba(188,140,255,.12);color:var(--purple)}.iy{background:rgba(240,165,0,.12);color:var(--yellow)}.ir{background:rgba(255,107,107,.12);color:var(--red)}.io{background:rgba(224,92,42,.12);color:var(--orange)}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700}
+.sec-title small{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:2px}
+h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin:28px 0 10px;padding-left:12px;border-left:3px solid var(--accent2)}
+h4{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin:18px 0 7px}
+p{margin-bottom:15px}p:last-child{margin-bottom:0}
+strong{color:var(--accent);font-weight:600}em{color:var(--blue);font-style:italic}
+.cb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;margin:20px 0;overflow:hidden}
+.cbh{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--border);background:var(--surface3)}
+.cbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+.dots{display:flex;gap:5px}.dots span{width:10px;height:10px;border-radius:50%}
+.dr{background:#ff5f57}.dy{background:#febc2e}.dg{background:#28c840}
+pre{padding:20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.86rem;line-height:1.7}
+pre::-webkit-scrollbar{height:4px}pre::-webkit-scrollbar-thumb{background:var(--border)}
+.kw{color:#ff79c6;font-weight:600}.str{color:#f1fa8c}.num{color:#bd93f9}.cls{color:#8be9fd;font-weight:600}.fn{color:#50fa7b}.cmt{color:#6272a4;font-style:italic}.type{color:#cba6f7}
+code{font-family:'JetBrains Mono',monospace;font-size:.84rem;background:var(--surface3);padding:2px 7px;border-radius:4px;color:var(--purple);border:1px solid var(--border)}
+.box{border-radius:10px;padding:20px 24px;margin:20px 0;border-left:4px solid;position:relative;overflow:hidden}
+.box::before{content:attr(data-icon);position:absolute;right:16px;top:12px;font-size:1.7rem;opacity:.1}
+.bb{background:rgba(88,166,255,.06);border-color:var(--blue)}.bg{background:rgba(63,185,80,.06);border-color:var(--green)}.by{background:rgba(240,165,0,.06);border-color:var(--yellow)}.br{background:rgba(255,107,107,.06);border-color:var(--red)}.bp{background:rgba(188,140,255,.06);border-color:var(--purple)}.bo{background:rgba(224,92,42,.06);border-color:var(--orange)}
+.btitle{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-weight:700}
+.bb .btitle{color:var(--blue)}.bg .btitle{color:var(--green)}.by .btitle{color:var(--yellow)}.br .btitle{color:var(--red)}.bp .btitle{color:var(--purple)}.bo .btitle{color:var(--orange)}
+.diag{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0;font-family:'JetBrains Mono',monospace;font-size:.8rem;line-height:1.65;overflow-x:auto;white-space:pre;color:var(--text)}
+.tw{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+thead tr{background:var(--surface3)}
+th{padding:10px 14px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);border-bottom:2px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}tr:hover td{background:rgba(255,255,255,.02)}
+td code{font-family:'JetBrains Mono',monospace;font-size:.8rem;background:var(--surface3);padding:2px 5px;border-radius:4px;color:var(--purple)}
+ul,ol{margin:10px 0 16px;padding-left:0;list-style:none}
+ul li,ol li{padding:5px 0 5px 24px;position:relative}
+ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:.8rem}
+ol{counter-reset:cnt}ol li{counter-increment:cnt}
+ol li::before{content:counter(cnt)'.';position:absolute;left:0;font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);font-weight:700}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.cside{background:var(--surface2);padding:20px 22px}
+.clbl{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:700}
+.cr{color:var(--red)}.cg{color:var(--green)}.cb2{color:var(--blue)}
+.drb{background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:20px 0}
+.drh{background:var(--surface3);padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--green);text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid var(--border)}
+.drb table{font-size:.82rem}.drb th{color:var(--green);font-size:.66rem}.drb td{font-family:'JetBrains Mono',monospace}
+.drb tr.hl td{background:rgba(63,185,80,.06);color:var(--green)}
+.mem{background:linear-gradient(135deg,rgba(188,140,255,.08),rgba(240,165,0,.05));border:1px solid rgba(188,140,255,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative;overflow:hidden}
+.mem::after{content:'🧠';position:absolute;right:18px;top:14px;font-size:1.8rem;opacity:.25}
+.mem-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin-bottom:8px}
+.trap{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.3);border-radius:10px;padding:20px 24px;margin:20px 0;position:relative}
+.trap::after{content:'⚠️';position:absolute;right:18px;top:14px;font-size:1.4rem;opacity:.4}
+.trap-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--red);margin-bottom:8px}
+.qi{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:14px 0;transition:border-color .2s}
+.qi:hover{border-color:rgba(240,165,0,.3)}
+.qq{font-weight:600;margin-bottom:12px;font-size:.93rem}
+.qnum{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);margin-right:7px}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qo{padding:8px 14px;border-radius:7px;border:1px solid var(--border);cursor:pointer;font-size:.88rem;transition:all .15s;display:flex;align-items:center;gap:10px}
+.qo:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.qo.correct{border-color:var(--green);background:rgba(63,185,80,.1);color:var(--green);pointer-events:none}
+.qo.wrong{border-color:var(--red);background:rgba(255,107,107,.1);color:var(--red);pointer-events:none}
+.ol{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text-muted);min-width:18px;font-weight:700}
+.qa{margin-top:10px;padding:10px 14px;background:rgba(63,185,80,.08);border:1px solid rgba(63,185,80,.3);border-radius:7px;font-size:.84rem;display:none;color:var(--green);line-height:1.6}
+.qa.show{display:block}
+.rbtn{margin-top:9px;padding:6px 14px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .15s}
+.rbtn:hover{border-color:var(--accent);color:var(--accent)}
+.pgrid{display:grid;gap:10px}
+.pc{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;transition:border-color .15s}
+.pc:hover{border-color:rgba(240,165,0,.25)}
+.pnum{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text-muted);min-width:28px;padding-top:2px}
+.pt{font-weight:600;margin-bottom:3px;font-size:.9rem}
+.pd{font-size:.84rem;color:var(--text-dim);margin-bottom:5px;line-height:1.55}
+.ptags{display:flex;gap:5px;flex-wrap:wrap}
+.ptag{font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:2px 7px;border-radius:10px;text-transform:uppercase;letter-spacing:.5px;border:1px solid}
+.pe{color:var(--green);border-color:rgba(63,185,80,.4);background:rgba(63,185,80,.07)}
+.pm{color:var(--yellow);border-color:rgba(240,165,0,.4);background:rgba(240,165,0,.07)}
+.ph{color:var(--red);border-color:rgba(255,107,107,.4);background:rgba(255,107,107,.07)}
+.pd2{color:var(--purple);border-color:rgba(188,140,255,.4);background:rgba(188,140,255,.07)}
+.po{color:var(--blue);border-color:rgba(88,166,255,.4);background:rgba(88,166,255,.07)}
+.rev{background:linear-gradient(135deg,rgba(240,165,0,.07),rgba(224,92,42,.05));border:1px solid rgba(240,165,0,.25);border-radius:10px;padding:24px 28px;margin:32px 0}
+.rev-title{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.rev-title::before{content:'★';font-size:.85rem}
+.rvpt{display:flex;gap:10px;align-items:baseline;font-size:.88rem;margin-bottom:6px;line-height:1.65}
+.rvpt::before{content:'→';color:var(--accent);flex-shrink:0;font-family:'JetBrains Mono',monospace}
+.challenge{background:linear-gradient(135deg,rgba(224,92,42,.1),rgba(255,107,107,.07));border:1px solid rgba(224,92,42,.35);border-radius:12px;padding:28px 32px;margin:32px 0}
+.ch-ctitle{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--orange);margin-bottom:8px}
+.ch-ctitle::before{content:'🔥 '}
+.exam-card{background:var(--surface2);border:1px solid rgba(224,92,42,.3);border-radius:10px;padding:20px 24px;margin:14px 0}
+.exam-tag{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--orange);margin-bottom:8px}
+.chnav{display:flex;justify-content:space-between;gap:20px;margin-top:60px;padding-top:32px;border-top:1px solid var(--border)}
+.navbtn{background:var(--surface2);border:1px solid var(--border);padding:14px 22px;border-radius:10px;transition:all .2s;flex:1;max-width:250px;text-decoration:none;color:inherit;display:block}
+.navbtn:hover{border-color:var(--accent);background:rgba(240,165,0,.05)}
+.navbtn.nxt{text-align:right}
+.navlbl{font-family:'JetBrains Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:3px}
+.navtitle{font-weight:600;font-size:.9rem}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.toc{display:none}.main{padding:32px 24px 60px}.ch-title{font-size:2.2rem}.cmp{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">☕ Java Mastery</a> / Chapter 08 — Loops &amp; Iteration</div>
+  <span class="ch-badge">Chapter 08 of 21</span>
+</header>
+<div class="top-progress"><div class="top-progress-fill" id="prog"></div></div>
+
+<div class="layout">
+<nav class="toc">
+  <div class="toc-title">On This Page</div>
+  <a class="toc-item active" href="#what-loops">What are Loops?</a>
+  <a class="toc-item" href="#for-loop">for Loop</a>
+  <a class="toc-item sub" href="#for-syntax">Syntax Breakdown</a>
+  <a class="toc-item sub" href="#for-flow">Execution Flow</a>
+  <a class="toc-item sub" href="#for-variations">Variations</a>
+  <a class="toc-item" href="#while-loop">while Loop</a>
+  <a class="toc-item sub" href="#while-syntax">Syntax & Flow</a>
+  <a class="toc-item sub" href="#while-vs-for">while vs for</a>
+  <a class="toc-item" href="#do-while">do-while Loop</a>
+  <a class="toc-item sub" href="#do-while-flow">When to Use</a>
+  <a class="toc-item" href="#loop-compare">Loop Comparison</a>
+  <a class="toc-item" href="#nested-loops">Nested Loops</a>
+  <a class="toc-item sub" href="#nested-flow">Execution Order</a>
+  <a class="toc-item" href="#break-continue">break and continue</a>
+  <a class="toc-item sub" href="#break">break</a>
+  <a class="toc-item sub" href="#continue">continue</a>
+  <a class="toc-item sub" href="#labeled">Labeled Loops</a>
+  <a class="toc-item" href="#enhanced-for">Enhanced for (for-each)</a>
+  <a class="toc-item" href="#classic-problems">Classic Problems</a>
+  <div class="toc-div"></div>
+  <a class="toc-item" href="#common-mistakes">Common Mistakes</a>
+  <a class="toc-item" href="#dry-run">Dry Run</a>
+  <a class="toc-item" href="#memory-tips">Memory Tips</a>
+  <a class="toc-item" href="#exam-prep">Exam Prep</a>
+  <a class="toc-item" href="#revision">Quick Revision</a>
+  <a class="toc-item" href="#practice">Practice Problems</a>
+</nav>
+
+<div class="main">
+  <div class="ch-hero">
+    <div class="ch-tag">Chapter 08 — Phase 1: Fundamentals</div>
+    <div class="ch-title">Loops &amp; <em>Iteration</em></div>
+    <div class="ch-sub">Loops are one of the most powerful ideas in all of programming. Repeat code, traverse data, solve problems that would take thousands of manual lines. This is where real programming begins.</div>
+    <div class="ch-meta">
+      <div class="meta"><div class="mdot"></div>~55 min read</div>
+      <div class="meta"><div class="mdot"></div>3 Loop Types + break/continue</div>
+      <div class="meta"><div class="mdot"></div>7 MCQs</div>
+      <div class="meta"><div class="mdot"></div>25 Practice Problems</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ 8.1 WHAT ARE LOOPS ══════════════ -->
+  <div class="sec-hdr" id="what-loops">
+    <div class="sicon ic">🔁</div>
+    <div class="sec-title"><small>8.1 — Concept</small>What are Loops?</div>
+  </div>
+  <p>A loop is a control structure that <strong>repeats a block of code multiple times</strong>. Without loops, if you wanted to print "Hello" 1,000 times, you'd need 1,000 lines of code. With a loop, you need 3 lines. Loops are the foundation of automation.</p>
+  <div class="box by" data-icon="🔄">
+    <div class="btitle">Real-World Analogy — Assembly Line</div>
+    <p>Imagine a car factory. The same set of steps (weld frame → add engine → paint) is performed repeatedly on each car that comes down the assembly line. Nobody rewrites the instructions for each car. A loop is your assembly line — define the steps once, execute them for as long as needed.</p>
+  </div>
+  <p>Java has three loop constructs: <code>for</code>, <code>while</code>, and <code>do-while</code>. They are all equally powerful — any loop can be written with any of the three. The choice depends on which reads most naturally for your use case.</p>
+
+  <!-- ══════════════ 8.2 FOR LOOP ══════════════ -->
+  <div class="sec-hdr" id="for-loop">
+    <div class="sicon ig">🔢</div>
+    <div class="sec-title"><small>8.2 — Loop 1</small>The for Loop</div>
+  </div>
+  <p>Use the <code>for</code> loop when you <strong>know in advance how many times</strong> the loop should run. It is the most compact loop — init, condition, and update are all in one line.</p>
+
+  <h3 id="for-syntax">Anatomy of a for Loop</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">for Loop — Full Breakdown</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Syntax: for (initialization; condition; update) { body }</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">5</span>; i++) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"i = "</span> + i);
+}
+
+<span class="cmt">// ↑ Breakdown:</span>
+<span class="cmt">// int i = 1  → initialization: runs ONCE before loop starts</span>
+<span class="cmt">// i <= 5     → condition:      checked BEFORE each iteration</span>
+<span class="cmt">// i++        → update:         runs AFTER each iteration body</span></pre>
+  </div>
+
+  <h3 id="for-flow">Execution Flow — Step by Step</h3>
+  <div class="diag">  for (int i = 1; i <= 5; i++) { println(i); }
+
+  ┌─────────────────────────────────────────────────────┐
+  │ Step 1: Initialize    → int i = 1  (runs ONCE only) │
+  │ Step 2: Check         → i <= 5?  YES                │
+  │ Step 3: Body          → println(1)                  │
+  │ Step 4: Update        → i++ → i = 2                 │
+  │ Step 5: Check         → i <= 5?  YES                │
+  │ Step 6: Body          → println(2)                  │
+  │ Step 7: Update        → i++ → i = 3                 │
+  │   ... (same for 3, 4, 5)                            │
+  │ Step N: Check         → i <= 5?  i=6 → NO → EXIT   │
+  └─────────────────────────────────────────────────────┘
+  
+  Order: Init → [Check → Body → Update] → [Check → Body → Update] → ... → Check(false) → Done</div>
+
+  <h3 id="for-variations">Common for Loop Variations</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">for Loop Variations</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Count UP (1 to n):</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; i++) { ... }
+
+<span class="cmt">// Count DOWN (n to 1):</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">10</span>; i &gt;= <span class="num">1</span>; i--) { ... }
+
+<span class="cmt">// Count by 2s (evens: 0,2,4,6,8):</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">10</span>; i += <span class="num">2</span>) { ... }
+
+<span class="cmt">// Count by 5s:</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt;= <span class="num">100</span>; i += <span class="num">5</span>) { ... }
+
+<span class="cmt">// Index starts at 0 (array traversal):</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; arr.length; i++) { ... }
+
+<span class="cmt">// Multiple variables (rare but valid):</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>, j = <span class="num">10</span>; i &lt; j; i++, j--) { ... }
+
+<span class="cmt">// Infinite loop (use with care):</span>
+<span class="kw">for</span> (;;) { <span class="cmt">/* runs forever — needs break inside */</span> }
+
+<span class="cmt">// Classic: Sum 1 to N</span>
+<span class="kw">int</span> sum = <span class="num">0</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">100</span>; i++) sum += i;
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Sum = "</span> + sum);  <span class="cmt">// 5050</span></pre>
+  </div>
+
+  <!-- ══════════════ 8.3 WHILE LOOP ══════════════ -->
+  <div class="sec-hdr" id="while-loop">
+    <div class="sicon iy">⏳</div>
+    <div class="sec-title"><small>8.3 — Loop 2</small>The while Loop</div>
+  </div>
+  <p>Use <code>while</code> when you <strong>don't know in advance</strong> how many times the loop should run — it depends on a condition that changes during execution. The condition is checked <em>before</em> each iteration.</p>
+
+  <h3 id="while-syntax">while Loop Syntax and Flow</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">while Loop</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Syntax:</span>
+<span class="kw">while</span> (condition) {
+    <span class="cmt">// body — runs as long as condition is true</span>
+    <span class="cmt">// MUST eventually make condition false (or use break)</span>
+}
+
+<span class="cmt">// Example 1: Same as for loop (count 1-5)</span>
+<span class="kw">int</span> i = <span class="num">1</span>;            <span class="cmt">// initialization (outside)</span>
+<span class="kw">while</span> (i &lt;= <span class="num">5</span>) {       <span class="cmt">// condition</span>
+    <span class="cls">System</span>.out.<span class="fn">println</span>(i);
+    i++;               <span class="cmt">// update (inside body)</span>
+}
+
+<span class="cmt">// Example 2: Digit extraction (count unknown)</span>
+<span class="kw">int</span> n = <span class="num">12345</span>;
+<span class="kw">int</span> count = <span class="num">0</span>;
+<span class="kw">while</span> (n &gt; <span class="num">0</span>) {
+    count++;
+    n /= <span class="num">10</span>;   <span class="cmt">// remove last digit</span>
+}
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Digits: "</span> + count);  <span class="cmt">// 5</span>
+
+<span class="cmt">// Example 3: Read until sentinel (-1)</span>
+<span class="cls">Scanner</span> sc = <span class="kw">new</span> <span class="cls">Scanner</span>(<span class="cls">System</span>.in);
+<span class="kw">int</span> total = <span class="num">0</span>, num;
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Enter numbers (-1 to stop):"</span>);
+<span class="kw">while</span> ((num = sc.<span class="fn">nextInt</span>()) != -<span class="num">1</span>) {
+    total += num;
+}
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Total: "</span> + total);</pre>
+  </div>
+
+  <div class="diag">  while FLOW:
+
+  ┌──────────────────────────────┐
+  │                              │
+  │   ┌──────────────────────┐   │
+  │   │ Check condition      │   │
+  │   └──────────┬───────────┘   │
+  │              │               │
+  │         ┌────┴────┐          │
+  │         │         │          │
+  │       TRUE      FALSE ──────►│ (exit loop)
+  │         │                    │
+  │         ▼                    │
+  │   ┌──────────────────────┐   │
+  │   │ Execute body         │   │
+  │   └──────────┬───────────┘   │
+  │              │               │
+  │              └───────────────┘ (back to check)
+  
+  KEY: Condition checked BEFORE body. May run 0 times if condition starts false.</div>
+
+  <h3 id="while-vs-for">while vs for — When to Choose</h3>
+  <div class="cmp">
+    <div class="cside">
+      <div class="clbl cb2">Use for when:</div>
+      <ul>
+        <li>Number of iterations <strong>known in advance</strong></li>
+        <li>Iterating over a range (1 to n)</li>
+        <li>Iterating over an array</li>
+        <li>Counter-based loops</li>
+      </ul>
+      <p style="font-size:.82rem;color:var(--text-dim);margin-top:8px">Example: Print multiplication table — you know it runs exactly n times.</p>
+    </div>
+    <div class="cside">
+      <div class="clbl cg">Use while when:</div>
+      <ul>
+        <li>Number of iterations <strong>NOT known</strong> in advance</li>
+        <li>Reading input until user stops</li>
+        <li>Processing until condition changes</li>
+        <li>Game loops, menu loops</li>
+      </ul>
+      <p style="font-size:.82rem;color:var(--text-dim);margin-top:8px">Example: Read numbers until -1 — you don't know how many numbers the user will enter.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ 8.4 DO-WHILE ══════════════ -->
+  <div class="sec-hdr" id="do-while">
+    <div class="sicon ip">🔃</div>
+    <div class="sec-title"><small>8.4 — Loop 3</small>The do-while Loop</div>
+  </div>
+  <p>The <code>do-while</code> loop is like a <code>while</code> loop, but with one critical difference: it checks the condition <strong>after</strong> the body runs. This guarantees the body executes <strong>at least once</strong>, regardless of whether the condition is true or false.</p>
+
+  <div class="cb">
+    <div class="cbh"><div class="cbl">do-while Loop</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Syntax: (note semicolon at end!)</span>
+<span class="kw">do</span> {
+    <span class="cmt">// body — runs at LEAST once</span>
+} <span class="kw">while</span> (condition);  <span class="cmt">// ← semicolon required here</span>
+
+<span class="cmt">// Example 1: Always runs once even if condition is false</span>
+<span class="kw">int</span> x = <span class="num">100</span>;
+<span class="kw">do</span> {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"This runs once!"</span>);  <span class="cmt">// prints despite x > 5</span>
+} <span class="kw">while</span> (x &lt; <span class="num">5</span>);  <span class="cmt">// false from the start — but body ran once</span>
+
+<span class="cmt">// Example 2: Input validation — BEST use case for do-while</span>
+<span class="cls">Scanner</span> sc = <span class="kw">new</span> <span class="cls">Scanner</span>(<span class="cls">System</span>.in);
+<span class="kw">int</span> choice;
+<span class="kw">do</span> {
+    <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"Enter a number between 1-10: "</span>);
+    choice = sc.<span class="fn">nextInt</span>();
+    <span class="kw">if</span> (choice &lt; <span class="num">1</span> || choice &gt; <span class="num">10</span>)
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Invalid! Try again."</span>);
+} <span class="kw">while</span> (choice &lt; <span class="num">1</span> || choice &gt; <span class="num">10</span>);
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"You entered: "</span> + choice);
+
+<span class="cmt">// Example 3: Menu-driven program</span>
+<span class="kw">int</span> option;
+<span class="kw">do</span> {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"1. Play  2. Settings  3. Quit"</span>);
+    option = sc.<span class="fn">nextInt</span>();
+    <span class="kw">switch</span> (option) {
+        <span class="kw">case</span> <span class="num">1</span>: <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Playing..."</span>); <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="num">2</span>: <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Settings..."</span>); <span class="kw">break</span>;
+        <span class="kw">case</span> <span class="num">3</span>: <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Goodbye!"</span>); <span class="kw">break</span>;
+        <span class="kw">default</span>: <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Invalid choice"</span>);
+    }
+} <span class="kw">while</span> (option != <span class="num">3</span>);</pre>
+  </div>
+
+  <h3 id="do-while-flow">do-while: Check After, Not Before</h3>
+  <div class="diag">  do-while FLOW:
+
+  ┌──────────────────────────────┐
+  │                              │
+  │   ┌──────────────────────┐   │
+  │   │ Execute body ←───────┼───┘ (FIRST run — no check)
+  │   └──────────┬───────────┘
+  │              │
+  │   ┌──────────▼───────────┐
+  │   │ Check condition      │
+  │   └──────────┬───────────┘
+  │              │
+  │         ┌────┴────┐
+  │         │         │
+  │       TRUE      FALSE ──────► (exit loop)
+  │         │
+  │         └─────────────────────► (back to body)
+
+  KEY: Body always runs at least ONCE.
+  Use case: show menu at least once, validate input at least once.</div>
+
+  <!-- ══════════════ 8.5 LOOP COMPARISON ══════════════ -->
+  <div class="sec-hdr" id="loop-compare">
+    <div class="sicon io">⚖️</div>
+    <div class="sec-title"><small>8.5 — Comparison</small>All Three Loops Side by Side</div>
+  </div>
+  <div class="tw">
+    <table>
+      <thead><tr><th>Feature</th><th>for</th><th>while</th><th>do-while</th></tr></thead>
+      <tbody>
+        <tr><td>Condition checked</td><td>Before body</td><td>Before body</td><td><strong>After body</strong></td></tr>
+        <tr><td>Minimum executions</td><td>0</td><td>0</td><td><strong>1 (always)</strong></td></tr>
+        <tr><td>Init / update location</td><td>In header</td><td>Manually outside/inside</td><td>Manually outside/inside</td></tr>
+        <tr><td>Best use case</td><td>Known count</td><td>Condition-based, count unknown</td><td>Menu, input validation</td></tr>
+        <tr><td>Semicolon after?</td><td>No</td><td>No</td><td><strong>Yes — do { } while (cond);</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Same Logic, Three Loops</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Print 1 to 5 — three equivalent ways:</span>
+
+<span class="cmt">// for:</span>
+<span class="kw">for</span> (<span class="kw">int</span> i=<span class="num">1</span>; i&lt;=<span class="num">5</span>; i++) <span class="cls">System</span>.out.<span class="fn">print</span>(i+<span class="str">" "</span>);
+
+<span class="cmt">// while:</span>
+<span class="kw">int</span> i=<span class="num">1</span>;
+<span class="kw">while</span>(i&lt;=<span class="num">5</span>) { <span class="cls">System</span>.out.<span class="fn">print</span>(i+<span class="str">" "</span>); i++; }
+
+<span class="cmt">// do-while:</span>
+<span class="kw">int</span> i=<span class="num">1</span>;
+<span class="kw">do</span> { <span class="cls">System</span>.out.<span class="fn">print</span>(i+<span class="str">" "</span>); i++; } <span class="kw">while</span>(i&lt;=<span class="num">5</span>);
+
+<span class="cmt">// All three output: 1 2 3 4 5</span></pre>
+  </div>
+
+  <!-- ══════════════ 8.6 NESTED LOOPS ══════════════ -->
+  <div class="sec-hdr" id="nested-loops">
+    <div class="sicon ig">🪆</div>
+    <div class="sec-title"><small>8.6 — Advanced</small>Nested Loops</div>
+  </div>
+  <p>A nested loop is a loop inside another loop. The <strong>inner loop runs completely</strong> for every single iteration of the outer loop. This creates a grid-like pattern of execution.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Nested Loops — Multiplication Table</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// 3x3 multiplication table</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {        <span class="cmt">// outer: 3 rows</span>
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">1</span>; j &lt;= <span class="num">3</span>; j++) {    <span class="cmt">// inner: 3 columns per row</span>
+        <span class="cls">System</span>.out.<span class="fn">printf</span>(<span class="str">"%4d"</span>, i * j);
+    }
+    <span class="cls">System</span>.out.<span class="fn">println</span>();               <span class="cmt">// new line after each row</span>
+}
+<span class="cmt">// Output:
+//    1   2   3
+//    2   4   6
+//    3   6   9
+//
+// Total iterations: 3 × 3 = 9</span></pre>
+  </div>
+
+  <h3 id="nested-flow">How Nested Loops Execute</h3>
+  <div class="diag">  for (i=1; i<=3; i++) {          ← OUTER LOOP
+    for (j=1; j<=3; j++) {        ← INNER LOOP
+        print(i*j);
+    }
+    println();
+  }
+
+  Execution trace:
+  i=1: j runs 1→2→3  (inner completes fully) then newline
+  i=2: j runs 1→2→3  (inner completes fully) then newline
+  i=3: j runs 1→2→3  (inner completes fully) then newline
+  
+  Rule: Inner loop = outer_iterations × inner_iterations total runs
+  Here: 3 × 3 = 9 total print(i*j) calls</div>
+
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Nested Loop — Right Triangle Pattern</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> n = <span class="num">5</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= n; i++) {          <span class="cmt">// outer: row number</span>
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">1</span>; j &lt;= i; j++) {      <span class="cmt">// inner: row i has i stars</span>
+        <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"* "</span>);
+    }
+    <span class="cls">System</span>.out.<span class="fn">println</span>();
+}
+<span class="cmt">// Output:
+// *
+// * *
+// * * *
+// * * * *
+// * * * * *</span></pre>
+  </div>
+
+  <!-- ══════════════ 8.7 BREAK AND CONTINUE ══════════════ -->
+  <div class="sec-hdr" id="break-continue">
+    <div class="sicon ir">⏭️</div>
+    <div class="sec-title"><small>8.7 — Control</small>break and continue</div>
+  </div>
+
+  <h3 id="break">break — Exit the Loop Immediately</h3>
+  <p><code>break</code> immediately exits the <strong>innermost enclosing loop</strong> (or switch). Execution continues with the statement after the loop. Used when you've found what you need and want to stop early.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">break — Exit Loop Early</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Example 1: Find first number divisible by 7 between 1-50</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">50</span>; i++) {
+    <span class="kw">if</span> (i % <span class="num">7</span> == <span class="num">0</span>) {
+        <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"First: "</span> + i);  <span class="cmt">// prints 7</span>
+        <span class="kw">break</span>;  <span class="cmt">// stop — no need to continue</span>
+    }
+}
+
+<span class="cmt">// Example 2: Linear search with break</span>
+<span class="kw">int</span>[] arr = {<span class="num">5</span>, <span class="num">12</span>, <span class="num">8</span>, <span class="num">3</span>, <span class="num">19</span>, <span class="num">7</span>};
+<span class="kw">int</span> target = <span class="num">8</span>, foundAt = -<span class="num">1</span>;
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; arr.length; i++) {
+    <span class="kw">if</span> (arr[i] == target) {
+        foundAt = i;
+        <span class="kw">break</span>;  <span class="cmt">// found it — stop searching</span>
+    }
+}
+<span class="cls">System</span>.out.<span class="fn">println</span>(foundAt == -<span class="num">1</span> ? <span class="str">"Not found"</span> : <span class="str">"Found at index "</span> + foundAt);
+<span class="cmt">// Found at index 2</span></pre>
+  </div>
+
+  <h3 id="continue">continue — Skip to Next Iteration</h3>
+  <p><code>continue</code> skips the <strong>rest of the current iteration</strong> and jumps directly to the update step (for loop) or back to the condition check (while/do-while). The loop does NOT exit — it continues with the next iteration.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">continue — Skip Current Iteration</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Example 1: Print only odd numbers 1-10</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; i++) {
+    <span class="kw">if</span> (i % <span class="num">2</span> == <span class="num">0</span>) <span class="kw">continue</span>;  <span class="cmt">// skip even numbers</span>
+    <span class="cls">System</span>.out.<span class="fn">print</span>(i + <span class="str">" "</span>);
+}
+<span class="cmt">// Output: 1 3 5 7 9</span>
+
+<span class="cmt">// Example 2: Skip number 5 in 1-10</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">10</span>; i++) {
+    <span class="kw">if</span> (i == <span class="num">5</span>) <span class="kw">continue</span>;
+    <span class="cls">System</span>.out.<span class="fn">print</span>(i + <span class="str">" "</span>);
+}
+<span class="cmt">// Output: 1 2 3 4 6 7 8 9 10  (5 is skipped)</span>
+
+<span class="cmt">// Example 3: Sum positive numbers only</span>
+<span class="kw">int</span>[] data = {<span class="num">5</span>, -<span class="num">3</span>, <span class="num">8</span>, -<span class="num">1</span>, <span class="num">4</span>, -<span class="num">7</span>, <span class="num">2</span>};
+<span class="kw">int</span> sum = <span class="num">0</span>;
+<span class="kw">for</span> (<span class="kw">int</span> val : data) {
+    <span class="kw">if</span> (val &lt; <span class="num">0</span>) <span class="kw">continue</span>;  <span class="cmt">// skip negative numbers</span>
+    sum += val;
+}
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Sum of positives: "</span> + sum);  <span class="cmt">// 19</span></pre>
+  </div>
+
+  <div class="diag">  break vs continue comparison:
+
+  for (i=1; i<=5; i++) {        for (i=1; i<=5; i++) {
+    if (i==3) BREAK;              if (i==3) CONTINUE;
+    print(i);                     print(i);
+  }                             }
+  Output: 1 2                   Output: 1 2 4 5
+          ↑                             ↑
+          stops at 3                    skips 3, resumes at 4</div>
+
+  <h3 id="labeled">Labeled Loops — break/continue Outer Loop</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Labeled break — Exit Outer Loop from Inner</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// Without label: break exits INNER loop only</span>
+<span class="cmt">// With label: break exits the NAMED loop</span>
+
+outer:  <span class="cmt">// label — can be any name</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">1</span>; j &lt;= <span class="num">3</span>; j++) {
+        <span class="kw">if</span> (i == <span class="num">2</span> &amp;&amp; j == <span class="num">2</span>) {
+            <span class="kw">break</span> outer;  <span class="cmt">// exits BOTH loops</span>
+        }
+        <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"("</span>+i+<span class="str">","</span>+j+<span class="str">") "</span>);
+    }
+}
+<span class="cmt">// Output: (1,1) (1,2) (1,3) (2,1)</span>
+<span class="cmt">// Stops when i=2,j=2 — both loops exited</span></pre>
+  </div>
+
+  <!-- ══════════════ 8.8 ENHANCED FOR ══════════════ -->
+  <div class="sec-hdr" id="enhanced-for">
+    <div class="sicon ig">✨</div>
+    <div class="sec-title"><small>8.8 — Modern</small>Enhanced for Loop (for-each)</div>
+  </div>
+  <p>The enhanced for loop (also called for-each) provides a cleaner syntax for iterating over arrays and collections. It eliminates index management entirely — use it when you need to <strong>read</strong> every element but don't need the index.</p>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Enhanced for — for-each Loop</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span>[] scores = {<span class="num">85</span>, <span class="num">92</span>, <span class="num">78</span>, <span class="num">96</span>, <span class="num">88</span>};
+
+<span class="cmt">// Regular for (need index):</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+    <span class="cls">System</span>.out.<span class="fn">print</span>(scores[i] + <span class="str">" "</span>);
+}
+
+<span class="cmt">// Enhanced for (cleaner, no index):</span>
+<span class="kw">for</span> (<span class="kw">int</span> score : scores) {       <span class="cmt">// "for each score in scores"</span>
+    <span class="cls">System</span>.out.<span class="fn">print</span>(score + <span class="str">" "</span>);
+}
+<span class="cmt">// Output: 85 92 78 96 88</span>
+
+<span class="cmt">// Computing sum with enhanced for:</span>
+<span class="kw">int</span> sum = <span class="num">0</span>;
+<span class="kw">for</span> (<span class="kw">int</span> score : scores) sum += score;
+<span class="kw">double</span> avg = (<span class="kw">double</span>) sum / scores.length;
+
+<span class="cmt">// Works with String arrays too:</span>
+<span class="cls">String</span>[] names = {<span class="str">"Ali"</span>, <span class="str">"Sara"</span>, <span class="str">"Omar"</span>};
+<span class="kw">for</span> (<span class="cls">String</span> name : names) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Hello, "</span> + name);
+}
+
+<span class="cmt">// LIMITATION: cannot modify array elements (reads only)</span>
+<span class="kw">for</span> (<span class="kw">int</span> score : scores) {
+    score = score + <span class="num">10</span>;  <span class="cmt">// modifies local copy, NOT the array!</span>
+}
+<span class="cmt">// Use regular indexed for if you need to modify elements</span></pre>
+  </div>
+
+  <!-- ══════════════ 8.9 CLASSIC PROBLEMS ══════════════ -->
+  <div class="sec-hdr" id="classic-problems">
+    <div class="sicon io">💡</div>
+    <div class="sec-title"><small>8.9 — Programs</small>Classic Loop Problems</div>
+  </div>
+
+  <h3>Factorial</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Factorial — n!</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">import</span> java.util.Scanner;
+<span class="kw">public class</span> <span class="cls">Factorial</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">Scanner</span> sc = <span class="kw">new</span> <span class="cls">Scanner</span>(<span class="cls">System</span>.in);
+        <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"Enter n: "</span>);
+        <span class="kw">int</span> n = sc.<span class="fn">nextInt</span>();
+
+        <span class="kw">long</span> factorial = <span class="num">1</span>;  <span class="cmt">// use long — factorials get big fast!</span>
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= n; i++) {
+            factorial *= i;
+        }
+        <span class="cls">System</span>.out.<span class="fn">println</span>(n + <span class="str">"! = "</span> + factorial);
+        sc.<span class="fn">close</span>();
+    }
+}
+<span class="cmt">// n=5: 1×2×3×4×5 = 120
+// n=0: factorial = 1 (loop never runs, correct — 0! = 1)</span></pre>
+  </div>
+
+  <h3>Fibonacci Sequence</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Fibonacci</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> n = <span class="num">10</span>;  <span class="cmt">// print first 10 Fibonacci numbers</span>
+<span class="kw">long</span> a = <span class="num">0</span>, b = <span class="num">1</span>;
+<span class="cls">System</span>.out.<span class="fn">print</span>(a + <span class="str">" "</span> + b + <span class="str">" "</span>);  <span class="cmt">// print first two</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">3</span>; i &lt;= n; i++) {
+    <span class="kw">long</span> c = a + b;
+    <span class="cls">System</span>.out.<span class="fn">print</span>(c + <span class="str">" "</span>);
+    a = b;
+    b = c;
+}
+<span class="cmt">// Output: 0 1 1 2 3 5 8 13 21 34</span></pre>
+  </div>
+
+  <h3>Prime Number Checker</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Prime Checker — Optimised</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> num = <span class="num">29</span>;
+<span class="kw">boolean</span> isPrime = <span class="kw">true</span>;
+
+<span class="kw">if</span> (num &lt; <span class="num">2</span>) {
+    isPrime = <span class="kw">false</span>;
+} <span class="kw">else</span> {
+    <span class="cmt">// Only need to check divisors up to sqrt(num)</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">2</span>; i &lt;= Math.<span class="fn">sqrt</span>(num); i++) {
+        <span class="kw">if</span> (num % i == <span class="num">0</span>) {
+            isPrime = <span class="kw">false</span>;
+            <span class="kw">break</span>;  <span class="cmt">// found a factor — no need to continue</span>
+        }
+    }
+}
+<span class="cls">System</span>.out.<span class="fn">println</span>(num + (isPrime ? <span class="str">" is prime"</span> : <span class="str">" is not prime"</span>));
+<span class="cmt">// 29 is prime</span></pre>
+  </div>
+
+  <h3>Number Reversal and Digit Sum</h3>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Reverse a Number + Digit Sum</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="kw">int</span> n = <span class="num">12345</span>;
+<span class="kw">int</span> reversed = <span class="num">0</span>, digitSum = <span class="num">0</span>;
+<span class="kw">int</span> temp = n;  <span class="cmt">// preserve original</span>
+
+<span class="kw">while</span> (temp &gt; <span class="num">0</span>) {
+    <span class="kw">int</span> lastDigit = temp % <span class="num">10</span>;   <span class="cmt">// extract last digit</span>
+    digitSum += lastDigit;         <span class="cmt">// add to sum</span>
+    reversed = reversed * <span class="num">10</span> + lastDigit;  <span class="cmt">// build reversed</span>
+    temp /= <span class="num">10</span>;                   <span class="cmt">// remove last digit</span>
+}
+
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Original:  "</span> + n);          <span class="cmt">// 12345</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Reversed:  "</span> + reversed);   <span class="cmt">// 54321</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Digit sum: "</span> + digitSum);   <span class="cmt">// 15</span></pre>
+  </div>
+
+  <!-- ══════════════ COMMON MISTAKES ══════════════ -->
+  <div class="sec-hdr" id="common-mistakes">
+    <div class="sicon ir">🚫</div>
+    <div class="sec-title"><small>8.10 — Watch Out</small>Most Common Loop Mistakes</div>
+  </div>
+  <div class="trap">
+    <div class="trap-title">Top 8 Loop Mistakes</div>
+    <ol>
+      <li><strong>Off-by-one error</strong> — Loop runs one time too many or too few. Check: should condition be <code>&lt;</code> or <code>&lt;=</code>? Should i start at 0 or 1? Think through the first and last iteration manually.</li>
+      <li><strong>Infinite loop</strong> — Condition never becomes false. Common causes: forgetting to increment <code>i</code>, wrong condition direction, modifying the wrong variable.</li>
+      <li><strong>Semicolon after for/while</strong> — <code>for (int i=0; i&lt;5; i++);</code> — the empty statement is the entire loop body. The block after it runs once, after the loop ends.</li>
+      <li><strong>Using wrong variable in nested loops</strong> — Using outer <code>i</code> where inner <code>j</code> is needed inside a nested loop. Carefully name variables.</li>
+      <li><strong>Modifying loop variable inside body</strong> — <code>for(int i=0; i&lt;n; i++){ i+=2; }</code> — the update in the header AND inside body both change i. Unpredictable.</li>
+      <li><strong>Using enhanced for to modify array</strong> — <code>for(int x : arr) { x = x*2; }</code> — this modifies the local copy x, NOT the array element. Use indexed for to modify.</li>
+      <li><strong>Forgetting println() after inner loop</strong> — In nested loops for patterns, the newline must go inside the outer loop but OUTSIDE the inner loop.</li>
+      <li><strong>Integer overflow in accumulator</strong> — Using <code>int</code> for factorial or sum of large numbers. Use <code>long</code> to avoid silent overflow.</li>
+    </ol>
+  </div>
+  <div class="cb">
+    <div class="cbh"><div class="cbl">Semicolon Bug + Off-by-One</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div>
+    <pre><span class="cmt">// BUG 1: Semicolon after for — empty loop body</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++);   <span class="cmt">// loops 5 times doing NOTHING</span>
+<span class="cls">System</span>.out.<span class="fn">println</span>(<span class="str">"Only once!"</span>); <span class="cmt">// runs once AFTER loop</span>
+
+<span class="cmt">// BUG 2: Off by one — should be <= but uses <</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt; <span class="num">10</span>; i++)     <span class="cmt">// prints 1-9 (misses 10!)</span>
+    <span class="cls">System</span>.out.<span class="fn">print</span>(i + <span class="str">" "</span>);
+
+<span class="cmt">// BUG 3: Infinite loop — forgot increment</span>
+<span class="kw">int</span> i = <span class="num">0</span>;
+<span class="kw">while</span> (i &lt; <span class="num">5</span>) {
+    <span class="cls">System</span>.out.<span class="fn">println</span>(i);
+    <span class="cmt">// i++ MISSING — loops forever!</span>
+}</pre>
+  </div>
+
+  <!-- ══════════════ DRY RUN ══════════════ -->
+  <div class="sec-hdr" id="dry-run">
+    <div class="sicon ig">🔍</div>
+    <div class="sec-title"><small>8.11 — Trace</small>Dry Run</div>
+  </div>
+  <div class="drb">
+    <div class="drh">📋 for Loop Trace — sum of 1 to 5</div>
+    <table>
+      <thead><tr><th>Iteration</th><th>i</th><th>Condition i&lt;=5</th><th>sum += i</th><th>sum after</th><th>i after update</th></tr></thead>
+      <tbody>
+        <tr><td>Init</td><td>1</td><td>—</td><td>—</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>true</td><td>0+1</td><td>1</td><td>2</td></tr>
+        <tr><td>2</td><td>2</td><td>true</td><td>1+2</td><td>3</td><td>3</td></tr>
+        <tr><td>3</td><td>3</td><td>true</td><td>3+3</td><td>6</td><td>4</td></tr>
+        <tr><td>4</td><td>4</td><td>true</td><td>6+4</td><td>10</td><td>5</td></tr>
+        <tr class="hl"><td>5</td><td>5</td><td>true</td><td>10+5</td><td>15</td><td>6</td></tr>
+        <tr><td>Exit check</td><td>6</td><td>false → exit</td><td>—</td><td>15</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box bb" data-icon="👁️">
+    <div class="btitle">Predict These Outputs Before Revealing</div>
+
+    <p><strong>Program 1:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">4</span>; i++) {
+    <span class="kw">if</span> (i == <span class="num">3</span>) <span class="kw">continue</span>;
+    <span class="cls">System</span>.out.<span class="fn">print</span>(i + <span class="str">" "</span>);
+}</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">1 2 4<br><br>When i=3, continue skips the print statement and jumps to i++ (update). So 3 is never printed. Loop runs for i=1,2,3,4 but prints only when i≠3.</div>
+
+    <p style="margin-top:16px"><strong>Program 2:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">int</span> i = <span class="num">0</span>;
+<span class="kw">do</span> {
+    <span class="cls">System</span>.out.<span class="fn">print</span>(i + <span class="str">" "</span>);
+    i++;
+} <span class="kw">while</span> (i &lt; <span class="num">0</span>);</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">0<br><br>do-while runs body FIRST (prints 0, i becomes 1). Then checks condition: 1 &lt; 0 is false → exits. Only one iteration. Note: if this were a while loop, it would print nothing (0 &lt; 0 is false from the start).</div>
+
+    <p style="margin-top:16px"><strong>Program 3:</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Predict Nested Loop</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
+    <span class="kw">for</span> (<span class="kw">int</span> j = <span class="num">1</span>; j &lt;= i; j++) {
+        <span class="cls">System</span>.out.<span class="fn">print</span>(j);
+    }
+    <span class="cls">System</span>.out.<span class="fn">println</span>();
+}</pre></div>
+    <button class="rbtn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="qa">1<br>12<br>123<br><br>i=1: j runs 1 to 1 → prints "1" then newline.<br>i=2: j runs 1 to 2 → prints "12" then newline.<br>i=3: j runs 1 to 3 → prints "123" then newline.</div>
+  </div>
+
+  <!-- ══════════════ MEMORY TIPS ══════════════ -->
+  <div class="mem" id="memory-tips">
+    <div class="mem-title">Memory Tips — Chapter 8</div>
+    <ul>
+      <li><strong>for vs while:</strong> "for = known count (FOR a set number of times). while = unknown count (WHILE a condition holds)."</li>
+      <li><strong>do-while guarantee:</strong> "do-while is the 'at least once' loop — like a restaurant that makes you try a dish at least once."</li>
+      <li><strong>break vs continue:</strong> "break = break out of the loop entirely. continue = continue to the next iteration (skip the rest of this one)."</li>
+      <li><strong>Off-by-one check:</strong> Always trace the first and last iteration mentally. Ask: "Does i=1 work? Does the last valid value get included?"</li>
+      <li><strong>Enhanced for limitation:</strong> "for-each reads, indexed for writes. Use for-each when you only need to READ array elements."</li>
+      <li><strong>Semicolon bug:</strong> Same as if — a semicolon after <code>for()</code> or <code>while()</code> creates an empty loop body. Never put <code>;</code> right after the closing parenthesis of a loop header.</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════ EXAM PREP ══════════════ -->
+  <div class="sec-hdr" id="exam-prep">
+    <div class="sicon io">📝</div>
+    <div class="sec-title"><small>8.12 — Exam</small>University Exam Preparation</div>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">3 Marks — Compare</div>
+    <p><strong>Q: Compare while and do-while loops with examples. When would you specifically choose do-while over while?</strong></p>
+    <p style="color:var(--text-dim);font-size:.88rem;margin-top:8px"><strong>Answer:</strong> Both <code>while</code> and <code>do-while</code> repeat based on a condition, but differ in when they check it. <code>while</code> checks the condition BEFORE the body — if the condition is false initially, the body never executes (can run 0 times). <code>do-while</code> checks the condition AFTER the body — the body always executes at least once regardless of the condition. Use <code>do-while</code> specifically when the loop body must execute at least once: most common for input validation (show a prompt at least once, keep asking until valid input) and menu-driven programs (show the menu at least once, repeat while user doesn't choose exit).</p>
+  </div>
+
+  <div class="exam-card">
+    <div class="exam-tag">4 Marks — Write a Program</div>
+    <p><strong>Q: Write a Java program to check whether a number is an Armstrong number. (An Armstrong number equals the sum of its digits each raised to the power of the number of digits. e.g., 153 = 1³ + 5³ + 3³)</strong></p>
+    <div class="cb"><div class="cbh"><div class="cbl">Model Answer</div><div class="dots"><span class="dr"></span><span class="dy"></span><span class="dg"></span></div></div><pre><span class="kw">import</span> java.util.Scanner;
+<span class="kw">public class</span> <span class="cls">Armstrong</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(<span class="cls">String</span>[] args) {
+        <span class="cls">Scanner</span> sc = <span class="kw">new</span> <span class="cls">Scanner</span>(<span class="cls">System</span>.in);
+        <span class="cls">System</span>.out.<span class="fn">print</span>(<span class="str">"Enter number: "</span>);
+        <span class="kw">int</span> n = sc.<span class="fn">nextInt</span>();
+        <span class="kw">int</span> temp = n, digits = <span class="num">0</span>, sum = <span class="num">0</span>;
+        <span class="cmt">// Count digits</span>
+        <span class="kw">while</span> (temp &gt; <span class="num">0</span>) { digits++; temp /= <span class="num">10</span>; }
+        <span class="cmt">// Calculate sum of digit^digits</span>
+        temp = n;
+        <span class="kw">while</span> (temp &gt; <span class="num">0</span>) {
+            <span class="kw">int</span> d = temp % <span class="num">10</span>;
+            sum += (<span class="kw">int</span>) Math.<span class="fn">pow</span>(d, digits);
+            temp /= <span class="num">10</span>;
+        }
+        <span class="cls">System</span>.out.<span class="fn">println</span>(n + (sum == n ? <span class="str">" IS"</span> : <span class="str">" is NOT"</span>) + <span class="str">" an Armstrong number"</span>);
+        sc.<span class="fn">close</span>();
+    }
+}</pre></div>
+  </div>
+
+  <h3>MCQ Bank</h3>
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q1.</span>How many times does the body of <code>for(int i=1; i&lt;5; i++)</code> execute?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>5</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>4</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>3</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>6</div>
+    </div>
+    <div class="qa">✓ Condition is i &lt; 5 (strictly less than, NOT &lt;=). i runs through: 1, 2, 3, 4. When i=5, condition is false and loop exits. That's 4 iterations. Common off-by-one: &lt;5 gives 4 iterations, &lt;=5 gives 5.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q2.</span>Which loop is guaranteed to execute its body at least once?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>for</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>while</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>do-while</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>All loops</div>
+    </div>
+    <div class="qa">✓ do-while checks condition AFTER the body runs. The body always runs at least once — even if the condition is false from the beginning. for and while check condition BEFORE and may run 0 times.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q3.</span>What is the output of: <code>for(int i=1;i&lt;=5;i++){if(i==3)break;System.out.print(i+" ");}</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,true)"><span class="ol">A</span>1 2</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>1 2 4 5</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>1 2 3</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>1 2 3 4 5</div>
+    </div>
+    <div class="qa">✓ When i=3, break exits the entire loop immediately. 1 and 2 were already printed (before i reached 3). 3 is not printed (break happens before print). Loop ends.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q4.</span>What is the output of: <code>for(int i=1;i&lt;=5;i++){if(i==3)continue;System.out.print(i+" ");}</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>1 2</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>1 2 3</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>1 2 4 5</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>3 4 5</div>
+    </div>
+    <div class="qa">✓ When i=3, continue skips the print for that iteration and jumps to i++ (update). Loop continues with i=4. So 1, 2, 4, 5 are printed; 3 is skipped.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q5.</span>In a nested loop with outer running 4 times and inner running 3 times, the inner body executes how many total times?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>7</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">B</span>4</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">C</span>12</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>3</div>
+    </div>
+    <div class="qa">✓ Inner loop completes entirely for each iteration of outer loop. Total = outer × inner = 4 × 3 = 12 executions of the inner body.</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q6.</span>Can you modify array elements using an enhanced for loop?</div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>Yes — changes are reflected in the original array</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>No — the loop variable is a copy; modifying it doesn't change the array</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>Yes, but only for int arrays</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>Depends on the data type</div>
+    </div>
+    <div class="qa">✓ In <code>for(int x : arr) { x = x * 2; }</code>, x is a local copy of the element. Modifying x does NOT change arr. To modify array elements, use a regular indexed for loop: <code>for(int i=0; i&lt;arr.length; i++) arr[i] *= 2;</code></div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <div class="qi">
+    <div class="qq"><span class="qnum">Q7.</span>What is the output of: <code>int i=5; while(i&gt;0){System.out.print(i+" ");i-=2;}</code></div>
+    <div class="qopts">
+      <div class="qo" onclick="ca(this,false)"><span class="ol">A</span>5 4 3 2 1</div>
+      <div class="qo" onclick="ca(this,true)"><span class="ol">B</span>5 3 1</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">C</span>5 3 1 -1</div>
+      <div class="qo" onclick="ca(this,false)"><span class="ol">D</span>Infinite loop</div>
+    </div>
+    <div class="qa">✓ i starts at 5. Each iteration decrements by 2: 5→3→1→-1. When i=-1, condition i&gt;0 is false → exits. Values printed: 5, 3, 1. (-1 is not printed because the condition fails before the body runs with i=-1).</div>
+    <button class="rbtn" onclick="ra(this)">Reveal Answer</button>
+  </div>
+
+  <!-- ══════════════ REVISION ══════════════ -->
+  <div class="rev" id="revision">
+    <div class="rev-title">Quick Revision — Chapter 8</div>
+    <div class="rvpt">Three loops: <code>for</code> (known count), <code>while</code> (condition-based, 0+ runs), <code>do-while</code> (always 1+ runs).</div>
+    <div class="rvpt">for order: Init(once) → [Condition → Body → Update] → repeat → Condition(false) → done.</div>
+    <div class="rvpt">while: check BEFORE body. do-while: check AFTER body — body always runs at least once.</div>
+    <div class="rvpt">Nested loops: inner runs completely for each outer iteration. Total = outer × inner iterations.</div>
+    <div class="rvpt">break: exits loop entirely. continue: skips rest of current iteration, moves to next.</div>
+    <div class="rvpt">Labeled break/continue: <code>outer: for{...} → break outer;</code> exits the labeled loop.</div>
+    <div class="rvpt">Enhanced for: <code>for(type var : array)</code> — reads elements cleanly. Cannot modify array elements.</div>
+    <div class="rvpt">Common bugs: off-by-one (&lt; vs &lt;=), infinite loop (missing update), semicolon after for/while.</div>
+    <div class="rvpt">Digit ops pattern: <code>lastDigit = n%10; n/=10;</code> in a while loop to process each digit.</div>
+  </div>
+
+  <!-- ══════════════ PRACTICE ══════════════ -->
+  <div class="sec-hdr" id="practice">
+    <div class="sicon ic">💪</div>
+    <div class="sec-title"><small>8.13 — Practice</small>Practice Problems</div>
+  </div>
+
+  <h3>Easy</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P8.1</div><div><div class="pt">Sum 1 to N</div><div class="pd">Read N. Compute and print sum of 1 to N using a for loop. Verify: sum of 1 to 100 = 5050.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.2</div><div><div class="pt">Multiplication Table</div><div class="pd">Read N. Print N's multiplication table from N×1 to N×10 using a for loop.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.3</div><div><div class="pt">Factorial</div><div class="pd">Read N. Compute N! using a for loop. Use long to handle large values. Test with 0!, 1!, 5!, 10!</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.4</div><div><div class="pt">Count Even Numbers</div><div class="pd">Read N numbers from user. Count how many are even. Use a for loop and the modulus operator.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.5</div><div><div class="pt">Reverse Print</div><div class="pd">Read N. Print numbers from N down to 1 using a for loop with decrement.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.6</div><div><div class="pt">do-while Menu</div><div class="pd">Display a menu (1=Add, 2=Sub, 3=Exit) using do-while. Perform the selected operation. Keep showing menu until Exit (3) is chosen.</div><div class="ptags"><span class="ptag pe">Easy</span></div></div></div>
+  </div>
+
+  <h3>Medium</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P8.7</div><div><div class="pt">Sum of Digits</div><div class="pd">Read an integer. Using a while loop, extract and sum all its digits. Example: 4728 → 4+7+2+8 = 21.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.8</div><div><div class="pt">Prime Numbers in Range</div><div class="pd">Print all prime numbers between 1 and N. For each candidate, use a nested loop to check primality. Optimise with sqrt and break.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.9</div><div><div class="pt">Fibonacci Series</div><div class="pd">Read N. Print first N Fibonacci numbers (0,1,1,2,3,5,8...). Also print the sum of the series.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.10</div><div><div class="pt">Reverse a Number</div><div class="pd">Read an integer. Reverse its digits using a while loop. 12345 → 54321. Handle negative numbers correctly.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.11</div><div><div class="pt">GCD with Loop</div><div class="pd">Implement GCD of two numbers using Euclidean algorithm: while(b != 0) { temp = b; b = a%b; a = temp; }. Then compute LCM = (a*b)/GCD.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.12</div><div><div class="pt">Sentinel Sum</div><div class="pd">Keep reading integers until user enters 0. Print sum, count, average, max, and min of all entered numbers (excluding 0).</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.13</div><div><div class="pt">Number Pattern</div><div class="pd">Print this pattern using nested loops (n=4): 1 / 22 / 333 / 4444. Each row i prints i repeated i times.</div><div class="ptags"><span class="ptag pm">Medium</span></div></div></div>
+  </div>
+
+  <h3>Hard</h3>
+  <div class="pgrid">
+    <div class="pc"><div class="pnum">P8.14</div><div><div class="pt">Armstrong Numbers</div><div class="pd">Print all Armstrong numbers between 1 and 9999. An Armstrong number = sum of each digit^(number of digits). E.g., 153=1³+5³+3³.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.15</div><div><div class="pt">Perfect Numbers</div><div class="pd">A perfect number equals the sum of its proper divisors (e.g., 6=1+2+3). Print all perfect numbers up to 10000.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.16</div><div><div class="pt">Palindrome Number</div><div class="pd">Read a number. Reverse it using a while loop. Check if it equals the original. Example: 121 is palindrome, 123 is not. Also handle negative numbers.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.17</div><div><div class="pt">Nested Loop Challenge</div><div class="pd">Use nested loops to print a full multiplication table (1-10 × 1-10) with row and column headers, properly aligned using printf.</div><div class="ptags"><span class="ptag ph">Hard</span></div></div></div>
+    <div class="pc"><div class="pnum">P8.18</div><div><div class="pt">Output Prediction</div><div class="pd">Without running, predict exact output of 5 programs with mixed loops, break, continue, and nested loops. Show step-by-step trace for each.</div><div class="ptags"><span class="ptag ph">Hard</span><span class="ptag po">Predict</span></div></div></div>
+  </div>
+
+  <div class="challenge">
+    <div class="ch-ctitle">Chapter 8 Challenge</div>
+    <p style="color:var(--text-dim);margin-bottom:14px">These will truly test your loop mastery.</p>
+    <ul>
+      <li><strong>Without IDE:</strong> Write a program from memory that reads N numbers, finds max/min/sum/average, and counts positives and negatives — all in ONE loop.</li>
+      <li><strong>Think deeply:</strong> Why does checking up to sqrt(n) for primality work? Prove it mathematically. Then implement an optimised Sieve of Eratosthenes for all primes up to 100.</li>
+      <li><strong>Trace this:</strong> <code>int x=10, y=0; while(x&gt;0){y+=x; x-=3;} System.out.println(x+" "+y);</code> — trace every iteration showing x and y values.</li>
+      <li><strong>Research:</strong> What is an infinite loop intentionally used for in real software? Give three legitimate real-world examples where an infinite loop with break is the correct approach.</li>
+    </ul>
+  </div>
+
+  <div class="chnav">
+    <a href="ch07-conditionals.html" class="navbtn">
+      <div class="navlbl">← Previous</div>
+      <div class="navtitle">Chapter 7: Conditional Statements</div>
+    </a>
+    <a href="ch09-patterns.html" class="navbtn nxt">
+      <div class="navlbl">Next Chapter →</div>
+      <div class="navtitle">Chapter 9: Pattern Printing</div>
+    </a>
+  </div>
+
+</div><!-- .main -->
+</div><!-- .layout -->
+
+<script>
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('prog').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+});
+const tocLinks=document.querySelectorAll('.toc-item');
+const secs=[...document.querySelectorAll('[id]')].filter(el=>[...tocLinks].some(l=>l.getAttribute('href')==='#'+el.id));
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id;});
+  tocLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+cur));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+function ca(el,correct){
+  el.closest('.qopts').querySelectorAll('.qo').forEach(o=>o.style.pointerEvents='none');
+  el.classList.add(correct?'correct':'wrong');
+  if(!correct)el.closest('.qopts').querySelectorAll('.qo').forEach(o=>{if(o.getAttribute('onclick').includes('true'))o.classList.add('correct');});
+  const qa=el.closest('.qi').querySelector('.qa');
+  if(qa)qa.classList.add('show');
+}
+function ra(btn){
+  const qa=btn.previousElementSibling;
+  qa.classList.toggle('show');
+  btn.textContent=qa.classList.contains('show')?'Hide Answer':'Reveal Answer';
+}
+</script>
+</body>
+</html>
